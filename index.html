@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEB 1st Semester - Games</title>
-    
+
     <style>
         /* Estilos generales */
         body {
@@ -85,7 +85,7 @@
             color: #1a1a1a;
             text-shadow: 0 1px 2px rgba(255,255,255,0.8);
         }
-        
+
         .class-card .class-number {
             font-size: 12px;
             color: #555;
@@ -105,7 +105,7 @@
 
     <script>
         // Número total de clases
-        const totalClasses = 48; 
+        const totalClasses = 48;
         const container = document.getElementById('menu-container');
 
         // 48 colores pasteles
@@ -118,12 +118,12 @@
             "#FFAD85", "#FFD185", "#F5FF85", "#85FFB5", "#85D1FF", "#AD85FF", "#FF85D1", "#B5FF85"
         ];
 
-        // 48 temas en inglés (con sus respectivos iconos de la vida real)
-        // Cada tema tiene su propia URL de imagen aquí
+        // 48 temas en inglés
+        // ⚠️ CAMBIO: Las primeras 3 clases ahora son The Alphabet, Pronouns, To Be
         const classData = [
-            { topic: "Colors", icon: "https://cdn-icons-png.flaticon.com/512/1170/1170673.png" },
-            { topic: "Animals", icon: "https://cdn-icons-png.flaticon.com/512/616/616430.png" },
-            { topic: "Fruits", icon: "https://cdn-icons-png.flaticon.com/512/1625/1625098.png" },
+            { topic: "The Alphabet", icon: "https://cdn-icons-png.flaticon.com/512/2436/2436874.png" },
+            { topic: "Pronouns", icon: "https://cdn-icons-png.flaticon.com/512/3014/3014456.png" },
+            { topic: "To Be", icon: "https://cdn-icons-png.flaticon.com/512/2828/2828775.png" },
             { topic: "My Body", icon: "https://cdn-icons-png.flaticon.com/512/3004/3004458.png" },
             { topic: "Family", icon: "https://cdn-icons-png.flaticon.com/512/3014/3014456.png" },
             { topic: "Numbers", icon: "https://cdn-icons-png.flaticon.com/512/564/564437.png" },
@@ -174,14 +174,12 @@
         let htmlContent = '';
 
         for (let i = 1; i <= totalClasses; i++) {
-            // Formato del número (1 -> 01)
             let formattedNumber = i.toString().padStart(2, '0');
             let folderName = `clase${formattedNumber}`;
             let url = `${folderName}/index.html`;
 
-            // Seleccionar color, tema e imagen
-            let color = colors[i-1]; 
-            let data = classData[i-1]; 
+            let color = colors[i-1];
+            let data = classData[i-1];
 
             htmlContent += `
                 <a href="${url}" class="class-card" style="background-color: ${color};">
@@ -192,7 +190,6 @@
             `;
         }
 
-        // Mostrar todo en pantalla
         container.innerHTML = htmlContent;
     </script>
 
