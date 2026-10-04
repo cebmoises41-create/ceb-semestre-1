@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 1: Colors - Context Clues</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+
+        /* Panel de puntuación y tiempo */
+        .scoreboard {
+            background: #fff;
+            padding: 10px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 40px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .scoreboard .correct { color: #27ae60; }
+        .scoreboard .wrong { color: #c0392b; }
+        
+        .timer {
+            color: #e67e22;
+            min-width: 100px;
+            text-align: center;
+        }
+        .timer.danger {
+            color: #c0392b;
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; }
+            to { opacity: 0.4; }
+        }
+
+        /* Contenedor principal de las dos columnas */
+        .game-board {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* Columna Izquierda: Oraciones */
+        .sentences-col {
+            flex: 2;
+            min-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sentence-box {
+            background: #ffffff;
+            padding: 18px 20px;
+            border-radius: 10px;
+            border: 2px dashed #bdc3c7;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 18px;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sentence-box.drag-over {
+            border-color: #3498db;
+            background: #ebf5fb;
+        }
+
+        .sentence-box.matched {
+            border: 2px solid #27ae60;
+            background: #eafaf1;
+        }
+
+        .sentence-box.matched span {
+            display: inline-block;
+            font-weight: bold;
+            color: #27ae60;
+            background: #d5f5e3;
+            padding: 0 10px;
+            border-radius: 5px;
+        }
+
+        .sentence-text {
+            flex: 1;
+        }
+
+        .sentence-text .blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            text-align: center;
+        }
+
+        /* Columna Derecha: Colores para arrastrar */
+        .colors-col {
+            flex: 1;
+            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .color-drag {
+            padding: 18px 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border: 1px solid rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: grab;
+            transition: all 0.2s;
+            user-select: none;
+            color: #1a1a1a;
+            text-shadow: 0px 1px 2px rgba(255,255,255,0.8);
+        }
+
+        /* Si el color es muy oscuro, el texto se pone blanco */
+        .color-drag.dark-text {
+            color: #ffffff;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .color-drag:active {
+            cursor: grabbing;
+        }
+
+        .color-drag.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .color-drag.used {
+            opacity: 0.3;
+            cursor: default;
+            text-decoration: line-through;
+            pointer-events: none;
+        }
+
+        /* Botón de reinicio */
+        .btn-reset {
+            margin-top: 30px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-reset:hover {
+            background: #2980b9;
+        }
+
+        .celebration {
+            display: none;
+            text-align: center;
+            color: #27ae60;
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .game-over {
+            display: none;
+            text-align: center;
+            color: #c0392b;
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            .game-board { flex-direction: column; align-items: center; }
+            .sentences-col, .colors-col { width: 100%; min-width: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Class 1: Logical Colors</h1>
+    <p class="subtitle">Read the sentence. Drag the correct color to complete it.</p>
+
+    <div class="scoreboard">
+        <span class="timer" id="timer-display">⏱️ 70s</span>
+        <span>✅ <span id="correct-count" class="correct">0</span></span>
+        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    </div>
+
+    <div class="game-board" id="game-board">
+        <!-- Columna Izquierda: Oraciones -->
+        <div class="sentences-col" id="sentences-container"></div>
+
+        <!-- Columna Derecha: Colores -->
+        <div class="colors-col" id="colors-container"></div>
+    </div>
+
+    <div id="celebration-msg" class="celebration">🎉 Perfect! You matched all the colors! 🎉</div>
+    <div id="game-over-msg" class="game-over">⏰ Time is up! Click Restart to try again.</div>
+    <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+
+    <script>
+        // Datos del juego: Objeto + el color lógico que le corresponde en inglés
+        const gameData = [
+            { sentence: "A tree is ___", answer: "green" },
+            { sentence: "The sky is ___", answer: "blue" },
+            { sentence: "A strawberry is ___", answer: "red" },
+            { sentence: "The sun is ___", answer: "yellow" },
+            { sentence: "An orange is ___", answer: "orange" },
+            { sentence: "Snow is ___", answer: "white" },
+            { sentence: "Dark chocolate is ___", answer: "brown" },
+            { sentence: "A grape is ___", answer: "purple" },
+            { sentence: "An elephant is ___", answer: "gray" },
+            { sentence: "A shoe is ___", answer: "red" }
+        ];
+
+        let correctCount = 0;
+        let wrongCount = 0;
+        let draggedWord = null;
+        
+        // Variables para el temporizador
+        let timeLeft = 70;
+        let timerInterval = null;
+        let isGameActive = false;
+
+        // Colores en código HEX para los botones
+        const colorHex = {
+            "green": "#2ecc71",
+            "blue": "#3498db",
+            "red": "#e74c3c",
+            "yellow": "#f1c40f",
+            "orange": "#f39c12",
+            "white": "#ffffff",
+            "brown": "#8B4513",
+            "purple": "#9b59b6",
+            "gray": "#95a5a6"
+        };
+
+        function initGame() {
+            // Reiniciar variables
+            clearInterval(timerInterval);
+            timeLeft = 70;
+            isGameActive = true;
+            correctCount = 0;
+            wrongCount = 0;
+            
+            document.getElementById('correct-count').textContent = 0;
+            document.getElementById('wrong-count').textContent = 0;
+            document.getElementById('celebration-msg').style.display = 'none';
+            document.getElementById('game-over-msg').style.display = 'none';
+            document.getElementById('timer-display').textContent = '⏱️ 70s';
+            document.getElementById('timer-display').classList.remove('danger');
+
+            const sentencesCol = document.getElementById('sentences-container');
+            const colorsCol = document.getElementById('colors-container');
+            sentencesCol.innerHTML = '';
+            colorsCol.innerHTML = '';
+
+            // 1. MEZCLAR los colores para que no estén en orden
+            const shuffledColors = [...gameData].sort(() => Math.random() - 0.5);
+
+            // 2. Crear las 10 oraciones (COLUMNA IZQUIERDA)
+            gameData.forEach((item, index) => {
+                const box = document.createElement('div');
+                box.className = 'sentence-box';
+                box.dataset.answer = item.answer;
+                box.dataset.matchId = index;
+
+                // Crear el HTML de la oración
+                const textDiv = document.createElement('div');
+                textDiv.className = 'sentence-text';
+                const parts = item.sentence.split('___');
+                textDiv.innerHTML = `${parts[0]}<span class="blank"></span>${parts[1] || ''}`;
+                box.appendChild(textDiv);
+
+                // Espacio para mostrar el color cuando acierten
+                const answerSpan = document.createElement('span');
+                answerSpan.className = 'color-answer';
+                answerSpan.style.display = 'none';
+                box.appendChild(answerSpan);
+
+                // Eventos para soltar (Drop)
+                box.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    if (!box.classList.contains('matched') && isGameActive) {
+                        box.classList.add('drag-over');
+                    }
+                });
+
+                box.addEventListener('dragleave', () => {
+                    box.classList.remove('drag-over');
+                });
+
+                box.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    box.classList.remove('drag-over');
+                    if (box.classList.contains('matched') || !draggedWord || !isGameActive) return;
+
+                    const wordText = draggedWord.textContent.toLowerCase().trim();
+                    const correctAnswer = box.dataset.answer;
+
+                    if (wordText === correctAnswer) {
+                        // ¡ACERTO!
+                        box.classList.add('matched');
+                        const span = box.querySelector('.color-answer');
+                        span.textContent = wordText.toUpperCase();
+                        span.style.display = 'inline';
+                        
+                        draggedWord.classList.add('used');
+                        correctCount++;
+                        document.getElementById('correct-count').textContent = correctCount;
+                        draggedWord = null;
+
+                        // Verificar si ganó
+                        if (correctCount === gameData.length) {
+                            isGameActive = false;
+                            clearInterval(timerInterval);
+                            document.getElementById('celebration-msg').style.display = 'block';
+                        }
+                    } else {
+                        // ¡ERROR!
+                        wrongCount++;
+                        document.getElementById('wrong-count').textContent = wrongCount;
+                        box.style.borderColor = '#c0392b';
+                        setTimeout(() => box.style.borderColor = '#bdc3c7', 400);
+                        draggedWord = null;
+                    }
+                });
+
+                sentencesCol.appendChild(box);
+            });
+
+            // 3. Crear los botones de colores para arrastrar (COLUMNA DERECHA)
+            shuffledColors.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'color-drag';
+                card.textContent = item.answer; // Ej: "green"
+                card.draggable = true;
+                
+                // Asignar el color de fondo al botón
+                const hexColor = colorHex[item.answer];
+                card.style.backgroundColor = hexColor;
+                if (hexColor === '#ffffff' || hexColor === '#f1c40f') {
+                    card.classList.add('dark-text'); // Texto oscuro si el fondo es claro
+                }
+
+                // Eventos para arrastrar
+                card.addEventListener('dragstart', (e) => {
+                    if (card.classList.contains('used') || !isGameActive) return;
+                    draggedWord = card;
+                    card.classList.add('dragging');
+                });
+
+                card.addEventListener('dragend', () => {
+                    card.classList.remove('dragging');
+                });
+
+                colorsCol.appendChild(card);
+            });
+
+            // Iniciar el temporizador
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+                
+                if (timeLeft <= 10) {
+                    document.getElementById('timer-display').classList.add('danger');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    isGameActive = false;
+                    document.getElementById('timer-display').textContent = '⏱️ 0s';
+                    document.getElementById('game-over-msg').style.display = 'block';
+                    
+                    // Bloquear arrastre
+                    document.querySelectorAll('.color-drag').forEach(el => {
+                        el.draggable = false;
+                    });
+                }
+            }, 1000);
+        }
+
+        // Iniciar juego al cargar
+        window.onload = initGame;
+    </script>
+</body>
+</html>

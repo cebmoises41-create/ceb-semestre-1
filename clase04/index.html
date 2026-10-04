@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 4: My Body</title>
+    
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            
+            /* IMAGEN DE FONDO */
+            background-image: url('https://img.freepik.com/free-vector/gradient-abstract-wavy-background_23-2149129221.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* FIRMA DEL AUTOR */
+        .author-box {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 { color: #ffffff; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .subtitle { color: #ffffff; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* Panel de puntuación */
+        .scoreboard {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 35px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 40px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .scoreboard .correct { color: #27ae60; }
+        .scoreboard .wrong { color: #c0392b; }
+        
+        .timer {
+            color: #2980b9;
+            min-width: 80px;
+            text-align: center;
+        }
+        .timer.danger {
+            color: #c0392b;
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Tarjeta principal (Glassmorphism) */
+        .game-container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .progress-bar {
+            font-size: 14px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* Palabra a adivinar */
+        .body-word {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 10px 0 25px 0;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Cuadrícula de imágenes (2x2) */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px; /* Tamaño del emoji */
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            background: #ffffff;
+        }
+
+        /* ESTILOS DE ACIERTO Y ERROR (Sin el nombre de abajo) */
+        .option-btn.correct-answer {
+            border-color: #27ae60 !important;
+            background: #d5f5e3 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.5);
+        }
+
+        .option-btn.wrong-answer {
+            border-color: #c0392b !important;
+            background: #fadbd8 !important;
+        }
+
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+
+        /* Botón de reinicio */
+        .btn-reset {
+            margin-top: 30px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: #2c3e50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 220px;
+        }
+
+        .btn-reset:hover { background: #1a252f; }
+
+        .celebration { display: none; color: #d5f5e3; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        .game-over { display: none; color: #fadbd8; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+
+        @media (max-width: 500px) {
+            .game-container { padding: 20px; }
+            .body-word { font-size: 36px; }
+            .option-btn { font-size: 40px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIRMA DEL AUTOR -->
+    <div class="author-box">FPB with AI</div>
+
+    <h1>Class 4: My Body</h1>
+    <p class="subtitle">Select the picture that matches the word.</p>
+
+    <div class="scoreboard">
+        <span class="timer" id="timer-display">⏱️ 60s</span>
+        <span>✅ <span id="correct-count" class="correct">0</span></span>
+        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    </div>
+
+    <div class="game-container">
+        <div class="progress-bar" id="progress-text">Part 1 of 10</div>
+        
+        <div class="body-word" id="body-word">EAR</div>
+
+        <div class="options-grid" id="options-container">
+            <!-- Aquí se generarán 4 botones con solo el emoji -->
+        </div>
+
+        <div id="celebration-msg" class="celebration">💪 Amazing! You know your body! 💪</div>
+        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
+        
+        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    </div>
+
+    <script>
+        // Base de datos (SIN el nombre del label, solo el emoji y la palabra clave)
+        const bodyData = [
+            { id: "eye", word: "EYE", icon: "👁️" },
+            { id: "ear", word: "EAR", icon: "👂" },
+            { id: "nose", word: "NOSE", icon: "👃" },
+            { id: "mouth", word: "MOUTH", icon: "👄" },
+            { id: "hand", word: "HAND", icon: "✋" },
+            { id: "foot", word: "FOOT", icon: "🦶" },
+            { id: "arm", word: "ARM", icon: "💪" },
+            { id: "leg", word: "LEG", icon: "🦵" },
+            { id: "head", word: "HEAD", icon: "🧠" },
+            { id: "heart", word: "HEART", icon: "❤️" }
+        ];
+
+        let correctCount = 0, wrongCount = 0, currentIndex = 0;
+        let timeLeft = 60, timerInterval = null;
+        let isGameActive = false, isAnswered = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initGame() {
+            clearInterval(timerInterval);
+            timeLeft = 60; isGameActive = true; correctCount = 0; wrongCount = 0; currentIndex = 0;
+            
+            document.getElementById('correct-count').textContent = 0;
+            document.getElementById('wrong-count').textContent = 0;
+            document.getElementById('celebration-msg').style.display = 'none';
+            document.getElementById('game-over-msg').style.display = 'none';
+            document.getElementById('timer-display').textContent = '⏱️ 60s';
+            document.getElementById('timer-display').classList.remove('danger');
+
+            shuffleArray(bodyData);
+            loadBodyPart();
+            startTimer();
+        }
+
+        function loadBodyPart() {
+            if (currentIndex >= bodyData.length) { gameWon(); return; }
+
+            isAnswered = false;
+            const currentPart = bodyData[currentIndex];
+            
+            document.getElementById('progress-text').textContent = `Part ${currentIndex + 1} of ${bodyData.length}`;
+            document.getElementById('body-word').textContent = currentPart.word; // Solo la palabra arriba
+
+            // Generar 4 opciones visuales (Solo el emoji gigante, sin texto)
+            let options = [currentPart];
+            let others = bodyData.filter(b => b.id !== currentPart.id);
+            shuffleArray(others);
+            for(let i=0; i<3; i++) { options.push(others[i]); }
+            shuffleArray(options);
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            options.forEach(part => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `${part.icon}`; // SOLO EL EMOJI, sin texto extra
+                btn.dataset.correct = (part.id === currentPart.id);
+
+                btn.addEventListener('click', function() {
+                    if (!isGameActive || isAnswered) return;
+                    isAnswered = true;
+                    clearInterval(timerInterval);
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+                    if (this.dataset.correct === 'true') {
+                        this.classList.add('correct-answer');
+                        correctCount++;
+                        document.getElementById('correct-count').textContent = correctCount;
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= bodyData.length) gameWon(); 
+                            else { loadBodyPart(); startTimer(); } 
+                        }, 600);
+                    } else {
+                        this.classList.add('wrong-answer');
+                        wrongCount++;
+                        document.getElementById('wrong-count').textContent = wrongCount;
+                        // Mostrar la correcta
+                        document.querySelectorAll('.option-btn').forEach(b => {
+                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                        });
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= bodyData.length) gameWon(); 
+                            else { loadBodyPart(); startTimer(); } 
+                        }, 1000);
+                    }
+                });
+                container.appendChild(btn);
+            });
+        }
+
+        function startTimer() {
+            timeLeft = 60;
+            document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+            document.getElementById('timer-display').classList.remove('danger');
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+                if (timeLeft <= 10) document.getElementById('timer-display').classList.add('danger');
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (isAnswered) return;
+                    isGameActive = false;
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    
+                    // Mostrar respuesta correcta si se acabó el tiempo
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                    });
+                    wrongCount++;
+                    document.getElementById('wrong-count').textContent = wrongCount;
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        isGameActive = true;
+                        if (currentIndex >= bodyData.length) gameWon();
+                        else { loadBodyPart(); startTimer(); }
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function gameWon() {
+            isGameActive = false; clearInterval(timerInterval);
+            document.getElementById('celebration-msg').style.display = 'block';
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>

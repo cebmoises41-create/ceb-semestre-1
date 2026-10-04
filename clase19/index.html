@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 19: School Objects</title>
+    
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            
+            /* FONDO ELEGANTE */
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+        }
+
+        /* FIRMA DEL AUTOR */
+        .author-box {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 { 
+            color: #ffffff; 
+            margin-bottom: 5px; 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5); 
+        }
+        .subtitle { 
+            color: #ffffff; 
+            margin-bottom: 20px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+        }
+
+        /* Panel de puntuación */
+        .scoreboard {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 35px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 40px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .scoreboard .correct { color: #27ae60; }
+        .scoreboard .wrong { color: #c0392b; }
+        
+        .timer {
+            color: #2980b9;
+            min-width: 80px;
+            text-align: center;
+        }
+        .timer.danger {
+            color: #c0392b;
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Tarjeta principal */
+        .game-container {
+            background: rgba(44, 62, 80, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .progress-bar {
+            font-size: 14px;
+            color: #bdc3c7;
+            margin-bottom: 15px;
+        }
+
+        /* Tarjeta de la pregunta */
+        .question-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .description-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .hint-text {
+            font-size: 15px;
+            color: #7f8c8d;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* Botón de audio */
+        .audio-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.05);
+            background: #2980b9;
+        }
+
+        .audio-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Botones de opciones */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid #ecf0f1;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-color: #3498db;
+        }
+
+        .option-btn.correct-answer {
+            border-color: #27ae60 !important;
+            background: #d5f5e3 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .option-btn.wrong-answer {
+            border-color: #c0392b !important;
+            background: #fadbd8 !important;
+        }
+
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+
+        /* Botón de reinicio */
+        .btn-reset {
+            margin-top: 25px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: #2c3e50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 220px;
+        }
+
+        .btn-reset:hover { background: #1a252f; }
+
+        .celebration { display: none; color: #2ecc71; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        .game-over { display: none; color: #e74c3c; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+
+        @media (max-width: 500px) {
+            .game-container { padding: 20px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .description-text { font-size: 18px; }
+            .scoreboard { gap: 15px; font-size: 15px; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIRMA DEL AUTOR -->
+    <div class="author-box">FPB with AI</div>
+
+    <h1>Class 19: School</h1>
+    <p class="subtitle">🔊 Read or listen. What object or place is it?</p>
+
+    <div class="scoreboard">
+        <span class="timer" id="timer-display">⏱️ 8:00</span>
+        <span>✅ <span id="correct-count" class="correct">0</span></span>
+        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    </div>
+
+    <div class="game-container">
+        <div class="progress-bar" id="progress-text">Question 1 of 20</div>
+
+        <div class="question-card">
+            <div class="description-text" id="description-text">I am a room with many books. You can read and borrow them.</div>
+            <div class="hint-text" id="hint-text">💡 Read or tap the audio to listen.</div>
+            <button class="audio-btn" id="play-audio-btn">🔊 Play Audio</button>
+        </div>
+
+        <div class="options-grid" id="options-container">
+            <!-- Botones generados -->
+        </div>
+
+        <div id="celebration-msg" class="celebration">📚 Amazing! You know the school perfectly! 📚</div>
+        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
+        
+        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    </div>
+
+    <script>
+        // BASE DE DATOS DE 20 OBJETOS Y LUGARES DE LA ESCUELA
+        const schoolData = [
+            { answer: "library", description: "I am a room with many books. You can read and borrow them.", audio: "I am a room with many books. You can read and borrow them." },
+            { answer: "classroom", description: "I am the room where students sit and learn from the teacher.", audio: "I am the room where students sit and learn from the teacher." },
+            { answer: "desk", description: "I am a piece of furniture where you sit and write your homework.", audio: "I am a piece of furniture where you sit and write your homework." },
+            { answer: "chalkboard", description: "I am a large board on the wall where the teacher writes notes.", audio: "I am a large board on the wall where the teacher writes notes." },
+            { answer: "pen", description: "I am a tool used for writing with ink.", audio: "I am a tool used for writing with ink." },
+            { answer: "pencil", description: "I am a writing tool that can be erased.", audio: "I am a writing tool that can be erased." },
+            { answer: "eraser", description: "I am used to remove pencil marks from paper.", audio: "I am used to remove pencil marks from paper." },
+            { answer: "book", description: "I have many pages with words. You read me to learn.", audio: "I have many pages with words. You read me to learn." },
+            { answer: "notebook", description: "I am a book of blank pages where students take notes.", audio: "I am a book of blank pages where students take notes." },
+            { answer: "ruler", description: "I am a straight tool used to measure things.", audio: "I am a straight tool used to measure things." },
+            { answer: "backpack", description: "I am a bag with straps. You carry your books in me.", audio: "I am a bag with straps. You carry your books in me." },
+            { answer: "cafeteria", description: "I am the place where students eat their lunch.", audio: "I am the place where students eat their lunch." },
+            { answer: "gym", description: "I am the large room where students play sports.", audio: "I am the large room where students play sports." },
+            { answer: "playground", description: "I am the outdoor area where children play and run.", audio: "I am the outdoor area where children play and run." },
+            { answer: "principal", description: "I am the person who directs the school.", audio: "I am the person who directs the school." },
+            { answer: "teacher", description: "I am the person who teaches you new things.", audio: "I am the person who teaches you new things." },
+            { answer: "student", description: "I am a person who goes to school to learn.", audio: "I am a person who goes to school to learn." },
+            { answer: "calculator", description: "I am a machine used for doing math operations.", audio: "I am a machine used for doing math operations." },
+            { answer: "scissors", description: "I am a tool used for cutting paper.", audio: "I am a tool used for cutting paper." },
+            { answer: "grade", description: "I am a letter or number on a test that shows your performance.", audio: "I am a letter or number on a test that shows your performance." }
+        ];
+
+        let correctCount = 0, wrongCount = 0, currentIndex = 0;
+        let timeLeft = 480; // 8 minutos
+        let timerInterval = null;
+        let isGameActive = false, isAnswered = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function initGame() {
+            clearInterval(timerInterval);
+            timeLeft = 480;
+            isGameActive = true;
+            correctCount = 0;
+            wrongCount = 0;
+            currentIndex = 0;
+            
+            document.getElementById('correct-count').textContent = 0;
+            document.getElementById('wrong-count').textContent = 0;
+            document.getElementById('celebration-msg').style.display = 'none';
+            document.getElementById('game-over-msg').style.display = 'none';
+            document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
+            document.getElementById('timer-display').classList.remove('danger');
+
+            shuffleArray(schoolData);
+            loadQuestion();
+            startTimer();
+        }
+
+        function loadQuestion() {
+            if (currentIndex >= schoolData.length) { gameWon(); return; }
+
+            isAnswered = false;
+            const current = schoolData[currentIndex];
+            
+            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${schoolData.length}`;
+            document.getElementById('description-text').textContent = current.description;
+            document.getElementById('hint-text').textContent = `💡 Read or tap the audio to listen.`;
+            document.getElementById('play-audio-btn').dataset.audio = current.audio;
+
+            // Generar 4 opciones
+            let options = [current.answer];
+            let others = schoolData.filter(f => f.answer !== current.answer);
+            shuffleArray(others);
+            for(let i=0; i<3; i++) { options.push(others[i].answer); }
+            shuffleArray(options);
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+                btn.dataset.correct = (opt === current.answer);
+
+                btn.addEventListener('click', function() {
+                    if (!isGameActive || isAnswered) return;
+                    isAnswered = true;
+                    clearInterval(timerInterval);
+                    window.speechSynthesis.cancel();
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+                    if (this.dataset.correct === 'true') {
+                        this.classList.add('correct-answer');
+                        correctCount++;
+                        document.getElementById('correct-count').textContent = correctCount;
+                        
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= schoolData.length) gameWon(); 
+                            else { loadQuestion(); startTimer(); } 
+                        }, 800);
+                    } else {
+                        this.classList.add('wrong-answer');
+                        wrongCount++;
+                        document.getElementById('wrong-count').textContent = wrongCount;
+                        
+                        document.querySelectorAll('.option-btn').forEach(b => {
+                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                        });
+
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= schoolData.length) gameWon(); 
+                            else { loadQuestion(); startTimer(); } 
+                        }, 1200);
+                    }
+                });
+                container.appendChild(btn);
+            });
+        }
+
+        // Lógica del botón de Audio
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            if (!isGameActive || isAnswered) return;
+            const audioText = this.dataset.audio;
+            if (audioText) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(audioText);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        });
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
+                if (timeLeft <= 60) document.getElementById('timer-display').classList.add('danger');
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (isAnswered) return;
+                    isGameActive = false;
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    window.speechSynthesis.cancel();
+                    
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                    });
+                    wrongCount++;
+                    document.getElementById('wrong-count').textContent = wrongCount;
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        isGameActive = true;
+                        if (currentIndex >= schoolData.length) gameWon();
+                        else { loadQuestion(); startTimer(); }
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function gameWon() {
+            isGameActive = false; 
+            clearInterval(timerInterval);
+            window.speechSynthesis.cancel();
+            document.getElementById('celebration-msg').style.display = 'block';
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>

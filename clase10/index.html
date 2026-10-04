@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 10: Calendar Master</title>
+    
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            
+            /* FONDO ELEGANTE */
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+        }
+
+        /* FIRMA DEL AUTOR */
+        .author-box {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 { 
+            color: #ffffff; 
+            margin-bottom: 5px; 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5); 
+        }
+        .subtitle { 
+            color: #ffffff; 
+            margin-bottom: 20px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+        }
+
+        /* Panel de puntuación */
+        .scoreboard {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 35px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 40px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .scoreboard .correct { color: #27ae60; }
+        .scoreboard .wrong { color: #c0392b; }
+        
+        .timer {
+            color: #2980b9;
+            min-width: 80px;
+            text-align: center;
+        }
+        .timer.danger {
+            color: #c0392b;
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Tarjeta principal */
+        .game-container {
+            background: rgba(44, 62, 80, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .progress-bar {
+            font-size: 14px;
+            color: #bdc3c7;
+            margin-bottom: 15px;
+        }
+
+        /* Tarjeta de la pregunta */
+        .question-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .question-text .highlight {
+            color: #e67e22;
+            font-weight: 900;
+        }
+
+        .hint-text {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Botones de opciones */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid #ecf0f1;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-color: #3498db;
+        }
+
+        .option-btn.correct-answer {
+            border-color: #27ae60 !important;
+            background: #d5f5e3 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .option-btn.wrong-answer {
+            border-color: #c0392b !important;
+            background: #fadbd8 !important;
+        }
+
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+
+        /* Botón de reinicio */
+        .btn-reset {
+            margin-top: 25px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: #2c3e50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 220px;
+        }
+
+        .btn-reset:hover { background: #1a252f; }
+
+        .celebration { display: none; color: #2ecc71; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        .game-over { display: none; color: #e74c3c; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+
+        @media (max-width: 500px) {
+            .game-container { padding: 20px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .question-text { font-size: 18px; }
+            .scoreboard { gap: 15px; font-size: 15px; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIRMA DEL AUTOR -->
+    <div class="author-box">FPB with AI</div>
+
+    <h1>Class 10: Calendar Master</h1>
+    <p class="subtitle">Read the question about days, months, and dates.</p>
+
+    <div class="scoreboard">
+        <span class="timer" id="timer-display">⏱️ 8:00</span>
+        <span>✅ <span id="correct-count" class="correct">0</span></span>
+        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    </div>
+
+    <div class="game-container">
+        <div class="progress-bar" id="progress-text">Question 1 of 20</div>
+
+        <div class="question-card">
+            <div class="question-text" id="question-text">Loading question...</div>
+            <div class="hint-text" id="hint-text"></div>
+        </div>
+
+        <div class="options-grid" id="options-container">
+            <!-- Botones generados -->
+        </div>
+
+        <div id="celebration-msg" class="celebration">📅 Amazing! You are a Calendar Master! 📅</div>
+        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
+        
+        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    </div>
+
+    <script>
+        // BASE DE DATOS DE 20 PREGUNTAS SOBRE DÍAS, MESES Y FECHAS
+        const calendarData = [
+            // Ortografía de días
+            { answer: "Wednesday", question: "Which is the correct spelling?", hint: "It's the middle of the week.", options: ["Wenesday", "Wednesday", "Wensday", "Wedenesday"] },
+            { answer: "Thursday", question: "Which is the correct spelling?", hint: "It comes after Wednesday.", options: ["Thurday", "Thurseday", "Thursday", "Thurstday"] },
+            { answer: "February", question: "Which is the correct spelling?", hint: "It's the shortest month.", options: ["Febrary", "Feburary", "February", "Februery"] },
+            
+            // Secuencia lógica
+            { answer: "Thursday", question: "What comes <b>after</b> Wednesday?", hint: "Think about the week order.", options: ["Tuesday", "Friday", "Thursday", "Sunday"] },
+            { answer: "August", question: "What comes <b>after</b> July?", hint: "Think about the year order.", options: ["June", "August", "September", "October"] },
+            { answer: "Tuesday", question: "What comes <b>before</b> Wednesday?", hint: "Think about the week order.", options: ["Monday", "Thursday", "Tuesday", "Friday"] },
+            { answer: "March", question: "What comes <b>before</b> April?", hint: "Think about the year order.", options: ["May", "February", "March", "January"] },
+            { answer: "Sunday", question: "What is the <b>first</b> day of the week?", hint: "It starts with S.", options: ["Monday", "Sunday", "Saturday", "Friday"] },
+            { answer: "January", question: "What is the <b>first</b> month of the year?", hint: "It starts with J.", options: ["June", "July", "January", "February"] },
+            { answer: "December", question: "What is the <b>last</b> month of the year?", hint: "It has Christmas.", options: ["November", "October", "December", "January"] },
+            
+            // Festividades y fechas especiales
+            { answer: "December", question: "Christmas is celebrated in __________.", hint: "It's a winter month.", options: ["November", "December", "January", "October"] },
+            { answer: "October", question: "Halloween is celebrated in __________.", hint: "It's an autumn month.", options: ["September", "October", "November", "August"] },
+            { answer: "January", question: "New Year's Day is on the 1st of __________.", hint: "It's the first month.", options: ["January", "February", "December", "March"] },
+            { answer: "July", question: "The 4th of __________ is Independence Day in the USA.", hint: "It's a summer month.", options: ["June", "July", "August", "May"] },
+            { answer: "Sunday", question: "Weekends are Saturday and __________.", hint: "It's the day of rest.", options: ["Friday", "Monday", "Sunday", "Thursday"] },
+            
+            // Contar días
+            { answer: "31", question: "How many days are in <b>January</b>?", hint: "It's a long month.", options: ["30", "28", "31", "29"] },
+            { answer: "28", question: "How many days are in <b>February</b>?", hint: "It's a short month.", options: ["30", "28", "31", "29"] },
+            { answer: "30", question: "How many days are in <b>November</b>?", hint: "It has 30 days.", options: ["31", "30", "28", "29"] },
+            { answer: "365", question: "How many days are in a <b>normal year</b>?", hint: "It's not a leap year.", options: ["364", "366", "365", "360"] }
+        ];
+
+        let correctCount = 0, wrongCount = 0, currentIndex = 0;
+        let timeLeft = 480; // 8 minutos
+        let timerInterval = null;
+        let isGameActive = false, isAnswered = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function initGame() {
+            clearInterval(timerInterval);
+            timeLeft = 480;
+            isGameActive = true;
+            correctCount = 0;
+            wrongCount = 0;
+            currentIndex = 0;
+            
+            document.getElementById('correct-count').textContent = 0;
+            document.getElementById('wrong-count').textContent = 0;
+            document.getElementById('celebration-msg').style.display = 'none';
+            document.getElementById('game-over-msg').style.display = 'none';
+            document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
+            document.getElementById('timer-display').classList.remove('danger');
+
+            shuffleArray(calendarData);
+            loadQuestion();
+            startTimer();
+        }
+
+        function loadQuestion() {
+            if (currentIndex >= calendarData.length) { gameWon(); return; }
+
+            isAnswered = false;
+            const current = calendarData[currentIndex];
+            
+            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${calendarData.length}`;
+            document.getElementById('question-text').innerHTML = current.question;
+            document.getElementById('hint-text').textContent = `💡 Hint: ${current.hint}`;
+
+            // Usar las opciones predefinidas en los datos, o generarlas si no existen
+            let options = current.options ? current.options : [];
+            if (options.length === 0) {
+                // Si no tiene opciones predefinidas (por si acaso), se generan automáticas
+                options = [current.answer];
+                let others = calendarData.filter(f => f.answer !== current.answer);
+                shuffleArray(others);
+                for(let i=0; i<3; i++) { 
+                    if (others[i]) options.push(others[i].answer); 
+                }
+            }
+            shuffleArray(options);
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.dataset.correct = (opt === current.answer);
+
+                btn.addEventListener('click', function() {
+                    if (!isGameActive || isAnswered) return;
+                    isAnswered = true;
+                    clearInterval(timerInterval);
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+                    if (this.dataset.correct === 'true') {
+                        this.classList.add('correct-answer');
+                        correctCount++;
+                        document.getElementById('correct-count').textContent = correctCount;
+                        
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= calendarData.length) gameWon(); 
+                            else { loadQuestion(); startTimer(); } 
+                        }, 800);
+                    } else {
+                        this.classList.add('wrong-answer');
+                        wrongCount++;
+                        document.getElementById('wrong-count').textContent = wrongCount;
+                        
+                        document.querySelectorAll('.option-btn').forEach(b => {
+                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                        });
+
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= calendarData.length) gameWon(); 
+                            else { loadQuestion(); startTimer(); } 
+                        }, 1200);
+                    }
+                });
+                container.appendChild(btn);
+            });
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
+                if (timeLeft <= 60) document.getElementById('timer-display').classList.add('danger');
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (isAnswered) return;
+                    isGameActive = false;
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                    });
+                    wrongCount++;
+                    document.getElementById('wrong-count').textContent = wrongCount;
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        isGameActive = true;
+                        if (currentIndex >= calendarData.length) gameWon();
+                        else { loadQuestion(); startTimer(); }
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function gameWon() {
+            isGameActive = false; 
+            clearInterval(timerInterval);
+            document.getElementById('celebration-msg').style.display = 'block';
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 7: Clothes Riddles</title>
+    
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            
+            /* FONDO ELEGANTE */
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+        }
+
+        /* FIRMA DEL AUTOR */
+        .author-box {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 { 
+            color: #ffffff; 
+            margin-bottom: 5px; 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5); 
+        }
+        .subtitle { 
+            color: #ffffff; 
+            margin-bottom: 20px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+        }
+
+        /* Panel de puntuación */
+        .scoreboard {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 35px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 40px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .scoreboard .correct { color: #27ae60; }
+        .scoreboard .wrong { color: #c0392b; }
+        
+        .timer {
+            color: #2980b9;
+            min-width: 80px;
+            text-align: center;
+        }
+        .timer.danger {
+            color: #c0392b;
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Tarjeta principal (Fondo oscuro) */
+        .game-container {
+            background: rgba(44, 62, 80, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .progress-bar {
+            font-size: 14px;
+            color: #bdc3c7;
+            margin-bottom: 15px;
+        }
+
+        /* Tarjeta de la pregunta (Fondo blanco) */
+        .question-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .question-text .highlight {
+            color: #e67e22;
+            font-style: italic;
+        }
+
+        /* Botones de opciones */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid #ecf0f1;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-color: #3498db;
+        }
+
+        .option-btn.correct-answer {
+            border-color: #27ae60 !important;
+            background: #d5f5e3 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .option-btn.wrong-answer {
+            border-color: #c0392b !important;
+            background: #fadbd8 !important;
+        }
+
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+
+        /* Botón de reinicio */
+        .btn-reset {
+            margin-top: 25px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: #2c3e50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 220px;
+        }
+
+        .btn-reset:hover { background: #1a252f; }
+
+        .celebration { display: none; color: #2ecc71; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        .game-over { display: none; color: #e74c3c; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+
+        @media (max-width: 500px) {
+            .game-container { padding: 20px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .question-text { font-size: 18px; }
+            .scoreboard { gap: 15px; font-size: 15px; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIRMA DEL AUTOR -->
+    <div class="author-box">FPB with AI</div>
+
+    <h1>Class 7: Clothes Riddles</h1>
+    <p class="subtitle">Read the riddle. What piece of clothing is it?</p>
+
+    <div class="scoreboard">
+        <span class="timer" id="timer-display">⏱️ 8:00</span>
+        <span>✅ <span id="correct-count" class="correct">0</span></span>
+        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    </div>
+
+    <div class="game-container">
+        <div class="progress-bar" id="progress-text">Question 1 of 20</div>
+
+        <div class="question-card">
+            <div class="question-text" id="question-text">Loading riddle...</div>
+        </div>
+
+        <div class="options-grid" id="options-container">
+            <!-- Botones generados -->
+        </div>
+
+        <div id="celebration-msg" class="celebration">👔 Amazing! You know your clothes! 👔</div>
+        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
+        
+        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    </div>
+
+    <script>
+        // BASE DE DATOS DE 20 ADIVINANZAS SOBRE ROPA
+        const clothesData = [
+            { item: "T-shirt", riddle: "I am a casual top. I have short sleeves. You wear me on hot days." },
+            { item: "Jeans", riddle: "I am a type of pants. I am usually blue. I am made of denim." },
+            { item: "Jacket", riddle: "I am a warm outer coat. I have a zipper or buttons. You wear me in winter." },
+            { item: "Shoes", riddle: "I protect your feet. I am made of leather or fabric. You tie me." },
+            { item: "Scarf", riddle: "I am a long piece of fabric. You wrap me around your neck. I keep you warm." },
+            { item: "Socks", riddle: "You wear me on your feet, inside your shoes. I keep your feet warm." },
+            { item: "Dress", riddle: "I am a one-piece garment for women. I can be long or short." },
+            { item: "Hat", riddle: "I protect your head from the sun. I have a brim." },
+            { item: "Skirt", riddle: "I am a garment that hangs from the waist. I am usually worn by women." },
+            { item: "Gloves", riddle: "I come in a pair. I protect your hands from the cold." },
+            { item: "Belt", riddle: "I hold your pants up. You wear me around your waist." },
+            { item: "Sweater", riddle: "I am a warm knitted top. You wear me when it's chilly." },
+            { item: "Boots", riddle: "I am a type of strong shoe. I go above your ankles." },
+            { item: "Swimsuit", riddle: "I am worn at the beach or pool. I am made for swimming." },
+            { item: "Underwear", riddle: "I am worn under your clothes. I am the first layer." },
+            { item: "Pajamas", riddle: "I am a comfortable set of clothes. You wear me to sleep." },
+            { item: "Raincoat", riddle: "I am a waterproof coat. You wear me when it rains." },
+            { item: "Sunglasses", riddle: "I protect your eyes from the sun. I have dark lenses." },
+            { item: "Suit", riddle: "I am a formal set of clothes. You wear me to a wedding or interview." },
+            { item: "Tie", riddle: "I am a long piece of cloth. I go around your neck, under a shirt collar." }
+        ];
+
+        let correctCount = 0, wrongCount = 0, currentIndex = 0;
+        let timeLeft = 480; // 8 minutos
+        let timerInterval = null;
+        let isGameActive = false, isAnswered = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function initGame() {
+            clearInterval(timerInterval);
+            timeLeft = 480;
+            isGameActive = true;
+            correctCount = 0;
+            wrongCount = 0;
+            currentIndex = 0;
+            
+            document.getElementById('correct-count').textContent = 0;
+            document.getElementById('wrong-count').textContent = 0;
+            document.getElementById('celebration-msg').style.display = 'none';
+            document.getElementById('game-over-msg').style.display = 'none';
+            document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
+            document.getElementById('timer-display').classList.remove('danger');
+
+            shuffleArray(clothesData);
+            loadQuestion();
+            startTimer();
+        }
+
+        function loadQuestion() {
+            if (currentIndex >= clothesData.length) { gameWon(); return; }
+
+            isAnswered = false;
+            const current = clothesData[currentIndex];
+            
+            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${clothesData.length}`;
+            document.getElementById('question-text').textContent = current.riddle;
+
+            // Generar 4 opciones (1 correcta, 3 incorrectas aleatorias)
+            let options = [current.item];
+            let others = clothesData.filter(f => f.item !== current.item);
+            shuffleArray(others);
+            for(let i=0; i<3; i++) { options.push(others[i].item); }
+            shuffleArray(options);
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.dataset.correct = (opt === current.item);
+
+                btn.addEventListener('click', function() {
+                    if (!isGameActive || isAnswered) return;
+                    isAnswered = true;
+                    clearInterval(timerInterval);
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+                    if (this.dataset.correct === 'true') {
+                        this.classList.add('correct-answer');
+                        correctCount++;
+                        document.getElementById('correct-count').textContent = correctCount;
+                        
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= clothesData.length) gameWon(); 
+                            else { loadQuestion(); startTimer(); } 
+                        }, 800);
+                    } else {
+                        this.classList.add('wrong-answer');
+                        wrongCount++;
+                        document.getElementById('wrong-count').textContent = wrongCount;
+                        
+                        document.querySelectorAll('.option-btn').forEach(b => {
+                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                        });
+
+                        setTimeout(() => { 
+                            currentIndex++; 
+                            if (currentIndex >= clothesData.length) gameWon(); 
+                            else { loadQuestion(); startTimer(); } 
+                        }, 1200);
+                    }
+                });
+                container.appendChild(btn);
+            });
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
+                if (timeLeft <= 60) document.getElementById('timer-display').classList.add('danger');
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (isAnswered) return;
+                    isGameActive = false;
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+                    });
+                    wrongCount++;
+                    document.getElementById('wrong-count').textContent = wrongCount;
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        isGameActive = true;
+                        if (currentIndex >= clothesData.length) gameWon();
+                        else { loadQuestion(); startTimer(); }
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function gameWon() {
+            isGameActive = false; 
+            clearInterval(timerInterval);
+            document.getElementById('celebration-msg').style.display = 'block';
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>

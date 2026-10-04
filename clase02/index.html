@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 2: Who Am I? (Animals)</title>
+    
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        /* Panel de puntuación y tiempo */
+        .scoreboard {
+            background: #ffffff;
+            padding: 12px 35px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 40px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .scoreboard .correct { color: #27ae60; }
+        .scoreboard .wrong { color: #c0392b; }
+        
+        .timer {
+            color: #2980b9;
+            min-width: 80px;
+            text-align: center;
+        }
+        .timer.danger {
+            color: #c0392b;
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Contenedor del juego */
+        .game-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .progress-bar {
+            font-size: 14px;
+            color: #95a5a6;
+            margin-bottom: 20px;
+        }
+
+        /* Tarjeta de la pregunta */
+        .question-card {
+            background: #f7f9fa;
+            padding: 30px;
+            border-radius: 16px;
+            border-left: 6px solid #3498db;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        /* Botones de opciones */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .option-btn {
+            padding: 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            background: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #ecf0f1;
+            border-color: #bdc3c7;
+            transform: translateY(-2px);
+        }
+
+        .option-btn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .option-btn.correct-answer {
+            background: #27ae60 !important;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .option-btn.wrong-answer {
+            background: #c0392b !important;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Botón de reinicio y mensajes */
+        .btn-reset {
+            margin-top: 30px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .btn-reset:hover {
+            background: #2980b9;
+        }
+
+        .celebration {
+            display: none;
+            color: #27ae60;
+            margin-top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .game-over {
+            display: none;
+            color: #c0392b;
+            margin-top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* Responsividad para celulares */
+        @media (max-width: 500px) {
+            .game-container { padding: 20px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .scoreboard { gap: 15px; font-size: 16px; padding: 10px 20px; }
+            .question-text { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Class 2: Who Am I?</h1>
+    <p class="subtitle">Read the description and guess the animal.</p>
+
+    <div class="scoreboard">
+        <span class="timer" id="timer-display">⏱️ 60s</span>
+        <span>✅ <span id="correct-count" class="correct">0</span></span>
+        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    </div>
+
+    <div class="game-container">
+        <div class="progress-bar" id="progress-text">Question 1 of 10</div>
+        
+        <div class="question-card" id="question-card">
+            <p class="question-text" id="question-text">Loading description...</p>
+        </div>
+
+        <div class="options-grid" id="options-container">
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 3</button>
+            <button class="option-btn">Option 4</button>
+        </div>
+
+        <div id="celebration-msg" class="celebration">🎉 Amazing! You are a nature expert! 🎉</div>
+        <div id="game-over-msg" class="game-over">⏰ Time is up! Click Restart.</div>
+        
+        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    </div>
+
+    <script>
+        // BASE DE DATOS DE ANIMALES (Descripciones avanzadas para prepa)
+        const animalData = [
+            { name: "Elephant", desc: "I am the largest land animal. I have a long trunk and big ears. I am usually gray." },
+            { name: "Giraffe", desc: "I have a very long neck. I eat leaves from tall trees. My coat is yellow with brown spots." },
+            { name: "Lion", desc: "I am the king of the jungle. I am a big cat with a golden mane. I am very brave and loud." },
+            { name: "Penguin", desc: "I am a bird, but I cannot fly. I love cold places like Antarctica. I swim very well and I am black and white." },
+            { name: "Dolphin", desc: "I live in the ocean. I am very intelligent and friendly. I love to jump out of the water." },
+            { name: "Snake", desc: "I have no legs and I am very long. I slither on the ground. Some people are afraid of my bite." },
+            { name: "Horse", desc: "I am a large animal that people ride. I run very fast and I have a beautiful mane. I eat hay." },
+            { name: "Owl", desc: "I am a nocturnal bird. I have big eyes and I can turn my head almost all the way around. I say 'Who, who!'" },
+            { name: "Shark", desc: "I am a big fish in the sea. I have lots of sharp teeth. I am known as a dangerous predator." },
+            { name: "Monkey", desc: "I live in the jungle. I love to climb trees and eat bananas. I am very funny and I have a long tail." }
+        ];
+
+        let correctCount = 0;
+        let wrongCount = 0;
+        let currentIndex = 0;
+        let timeLeft = 60;
+        let timerInterval = null;
+        let isGameActive = false;
+        let isAnswered = false;
+
+        // Función para mezclar el array (algoritmo Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initGame() {
+            clearInterval(timerInterval);
+            timeLeft = 60;
+            isGameActive = true;
+            correctCount = 0;
+            wrongCount = 0;
+            currentIndex = 0;
+            
+            document.getElementById('correct-count').textContent = 0;
+            document.getElementById('wrong-count').textContent = 0;
+            document.getElementById('celebration-msg').style.display = 'none';
+            document.getElementById('game-over-msg').style.display = 'none';
+            document.getElementById('timer-display').textContent = '⏱️ 60s';
+            document.getElementById('timer-display').classList.remove('danger');
+
+            // Mezclar los animales para que no salgan siempre en el mismo orden
+            shuffleArray(animalData);
+
+            // Habilitar los botones
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('correct-answer', 'wrong-answer');
+            });
+
+            loadQuestion();
+            startTimer();
+        }
+
+        function loadQuestion() {
+            if (currentIndex >= animalData.length) {
+                isGameActive = false;
+                clearInterval(timerInterval);
+                document.getElementById('celebration-msg').style.display = 'block';
+                return;
+            }
+
+            isAnswered = false;
+            const currentAnimal = animalData[currentIndex];
+            
+            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${animalData.length}`;
+            document.getElementById('question-text').textContent = currentAnimal.desc;
+
+            // Generar 4 opciones: 1 correcta, 3 incorrectas al azar
+            let options = [currentAnimal.name];
+            let otherAnimals = animalData.filter(a => a.name !== currentAnimal.name);
+            shuffleArray(otherAnimals);
+            
+            // Tomamos 3 animales diferentes
+            for(let i=0; i<3; i++) {
+                options.push(otherAnimals[i].name);
+            }
+            
+            // Mezclar las opciones finales para que la correcta no esté siempre en la primera posición
+            shuffleArray(options);
+
+            // Asignar los nombres a los botones
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach((btn, index) => {
+                btn.textContent = options[index];
+                btn.style.display = 'block'; // Asegurarse de que estén visibles
+                btn.disabled = false;
+                btn.classList.remove('correct-answer', 'wrong-answer');
+            });
+        }
+
+        // Lógica de los botones
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!isGameActive || isAnswered) return;
+
+                const selectedAnimal = this.textContent;
+                const correctAnimal = animalData[currentIndex].name;
+                
+                isAnswered = true;
+                this.disabled = true;
+
+                // Deshabilitar los otros botones para que no puedan hacer clic en otro
+                document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+                if (selectedAnimal === correctAnimal) {
+                    // ¡ACERTO!
+                    this.classList.add('correct-answer');
+                    correctCount++;
+                    document.getElementById('correct-count').textContent = correctCount;
+                    
+                    // Premio: +5 segundos al reloj por acertar
+                    timeLeft += 5;
+                    document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex >= animalData.length) {
+                            // Ganó
+                            isGameActive = false;
+                            clearInterval(timerInterval);
+                            document.getElementById('celebration-msg').style.display = 'block';
+                        } else {
+                            loadQuestion();
+                        }
+                    }, 800); // Espera 0.8 segundos para que vea el color verde
+                } else {
+                    // ¡ERROR!
+                    this.classList.add('wrong-answer');
+                    wrongCount++;
+                    document.getElementById('wrong-count').textContent = wrongCount;
+                    
+                    // Castigo: Restar 3 segundos por fallar
+                    timeLeft -= 3;
+                    document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+                    if (timeLeft < 0) timeLeft = 0;
+
+                    // Resaltar la respuesta correcta para que aprenda
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        if (b.textContent === correctAnimal) {
+                            b.classList.add('correct-answer');
+                        }
+                    });
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex >= animalData.length) {
+                            // Si falló en el último, igual termina el juego
+                            isGameActive = false;
+                            clearInterval(timerInterval);
+                            document.getElementById('celebration-msg').style.display = 'block';
+                        } else {
+                            loadQuestion();
+                        }
+                    }, 1200); // Espera 1.2 segundos para que vea cuál era la buena
+                }
+            });
+        });
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+                
+                if (timeLeft <= 10) {
+                    document.getElementById('timer-display').classList.add('danger');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    isGameActive = false;
+                    document.getElementById('timer-display').textContent = '⏱️ 0s';
+                    document.getElementById('game-over-msg').style.display = 'block';
+                    
+                    // Bloquear todos los botones
+                    document.querySelectorAll('.option-btn').forEach(el => {
+                        el.disabled = true;
+                    });
+                }
+            }, 1000);
+        }
+
+        // Iniciar juego al cargar
+        window.onload = initGame;
+    </script>
+</body>
+</html>

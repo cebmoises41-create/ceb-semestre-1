@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 3: Fast Fruits</title>
+    
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.5s ease;
+            background-color: #f0f4f8;
+        }
+
+        h1 { color: #2c3e50; margin-bottom: 5px; }
+        .subtitle { color: #7f8c8d; margin-bottom: 20px; }
+
+        /* Panel de puntuación y tiempo */
+        .scoreboard {
+            background: #ffffff;
+            padding: 12px 35px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 40px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .scoreboard .correct { color: #27ae60; }
+        .scoreboard .wrong { color: #c0392b; }
+        
+        .timer {
+            color: #2980b9;
+            min-width: 80px;
+            text-align: center;
+        }
+        .timer.danger {
+            color: #c0392b;
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Tarjeta principal */
+        .game-container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .progress-bar {
+            font-size: 14px;
+            color: #95a5a6;
+            margin-bottom: 15px;
+        }
+
+        /* El emoji de la fruta */
+        .fruit-emoji {
+            font-size: 100px;
+            line-height: 1;
+            margin: 10px 0 20px 0;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+
+        /* Botones de opciones */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .option-btn {
+            padding: 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            background: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #ecf0f1;
+            border-color: #bdc3c7;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct-answer {
+            background: #27ae60 !important;
+            color: white;
+            border-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        .option-btn.wrong-answer {
+            background: #c0392b !important;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Botón de reinicio */
+        .btn-reset {
+            margin-top: 30px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .btn-reset:hover { background: #2980b9; }
+
+        .celebration { display: none; color: #27ae60; margin-top: 15px; font-size: 22px; font-weight: bold; }
+        .game-over { display: none; color: #c0392b; margin-top: 15px; font-size: 22px; font-weight: bold; }
+
+        /* Responsivo */
+        @media (max-width: 500px) {
+            .game-container { padding: 20px; }
+            .fruit-emoji { font-size: 80px; }
+            .scoreboard { gap: 15px; font-size: 16px; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Class 3: Fast Fruits</h1>
+    <p class="subtitle">Match the fruit with its English name!</p>
+
+    <div class="scoreboard">
+        <span class="timer" id="timer-display">⏱️ 15s</span>
+        <span>✅ <span id="correct-count" class="correct">0</span></span>
+        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    </div>
+
+    <div class="game-container">
+        <div class="progress-bar" id="progress-text">Fruit 1 of 10</div>
+        
+        <span class="fruit-emoji" id="fruit-emoji">🍎</span>
+
+        <div class="options-grid" id="options-container">
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 3</button>
+            <button class="option-btn">Option 4</button>
+        </div>
+
+        <div id="celebration-msg" class="celebration">🍒 Amazing! You are a fruit master! 🍒</div>
+        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
+        
+        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    </div>
+
+    <script>
+        // Base de datos de frutas
+        const fruitData = [
+            { emoji: "🍎", name: "Apple", color: "#ffd1d1" },
+            { emoji: "🍌", name: "Banana", color: "#fff6d1" },
+            { emoji: "🍇", name: "Grape", color: "#e3d1ff" },
+            { emoji: "🍊", name: "Orange", color: "#ffdfb3" },
+            { emoji: "🍓", name: "Strawberry", color: "#ffb3b3" },
+            { emoji: "🍉", name: "Watermelon", color: "#d6ffd6" },
+            { emoji: "🍍", name: "Pineapple", color: "#fff3b3" },
+            { emoji: "🥝", name: "Kiwi", color: "#dcf5b6" },
+            { emoji: "🍒", name: "Cherry", color: "#ffc1c1" },
+            { emoji: "🍑", name: "Peach", color: "#ffd8b3" }
+        ];
+
+        let correctCount = 0;
+        let wrongCount = 0;
+        let currentIndex = 0;
+        let timeLeft = 15;
+        let timerInterval = null;
+        let isGameActive = false;
+        let isAnswered = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initGame() {
+            clearInterval(timerInterval);
+            timeLeft = 15;
+            isGameActive = true;
+            correctCount = 0;
+            wrongCount = 0;
+            currentIndex = 0;
+            
+            document.getElementById('correct-count').textContent = 0;
+            document.getElementById('wrong-count').textContent = 0;
+            document.getElementById('celebration-msg').style.display = 'none';
+            document.getElementById('game-over-msg').style.display = 'none';
+            document.getElementById('timer-display').textContent = '⏱️ 15s';
+            document.getElementById('timer-display').classList.remove('danger');
+            document.body.style.backgroundColor = '#f0f4f8';
+
+            shuffleArray(fruitData);
+            loadFruit();
+            startTimer();
+        }
+
+        function loadFruit() {
+            if (currentIndex >= fruitData.length) {
+                gameWon();
+                return;
+            }
+
+            isAnswered = false;
+            const currentFruit = fruitData[currentIndex];
+            
+            document.getElementById('progress-text').textContent = `Fruit ${currentIndex + 1} of ${fruitData.length}`;
+            document.getElementById('fruit-emoji').textContent = currentFruit.emoji;
+            
+            // Cambiar el color de fondo según la fruta
+            document.body.style.backgroundColor = currentFruit.color;
+
+            // Generar 4 opciones
+            let options = [currentFruit.name];
+            let otherFruits = fruitData.filter(f => f.name !== currentFruit.name);
+            shuffleArray(otherFruits);
+            for(let i=0; i<3; i++) {
+                options.push(otherFruits[i].name);
+            }
+            shuffleArray(options);
+
+            // Reiniciar botones
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach((btn, index) => {
+                btn.textContent = options[index];
+                btn.disabled = false;
+                btn.classList.remove('correct-answer', 'wrong-answer');
+                btn.style.display = 'block';
+            });
+        }
+
+        // Eventos de los botones
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!isGameActive || isAnswered) return;
+
+                const selected = this.textContent;
+                const correct = fruitData[currentIndex].name;
+                
+                isAnswered = true;
+                clearInterval(timerInterval); // Detener el reloj momentáneamente
+                document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+                if (selected === correct) {
+                    this.classList.add('correct-answer');
+                    correctCount++;
+                    document.getElementById('correct-count').textContent = correctCount;
+                    
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex >= fruitData.length) gameWon();
+                        else { loadFruit(); startTimer(); }
+                    }, 600);
+                } else {
+                    this.classList.add('wrong-answer');
+                    wrongCount++;
+                    document.getElementById('wrong-count').textContent = wrongCount;
+                    
+                    // Mostrar la correcta
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        if (b.textContent === correct) b.classList.add('correct-answer');
+                    });
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex >= fruitData.length) gameWon();
+                        else { loadFruit(); startTimer(); }
+                    }, 1000);
+                }
+            });
+        });
+
+        function startTimer() {
+            timeLeft = 15;
+            document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+            document.getElementById('timer-display').classList.remove('danger');
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
+                if (timeLeft <= 5) document.getElementById('timer-display').classList.add('danger');
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (isAnswered) return; // Si ya contestó, no hacer nada.
+                    
+                    isGameActive = false;
+                    document.getElementById('timer-display').textContent = '⏱️ 0s';
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    
+                    // Mostrar la respuesta correcta si se le acabó el tiempo
+                    const correct = fruitData[currentIndex].name;
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        if (b.textContent === correct) b.classList.add('correct-answer');
+                    });
+                    wrongCount++;
+                    document.getElementById('wrong-count').textContent = wrongCount;
+
+                    setTimeout(() => {
+                        currentIndex++;
+                        isGameActive = true;
+                        if (currentIndex >= fruitData.length) gameWon();
+                        else { loadFruit(); startTimer(); }
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function gameWon() {
+            isGameActive = false;
+            clearInterval(timerInterval);
+            document.getElementById('celebration-msg').style.display = 'block';
+            document.body.style.backgroundColor = '#f0f4f8';
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>
