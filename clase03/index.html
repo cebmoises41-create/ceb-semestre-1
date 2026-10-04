@@ -81,13 +81,6 @@
     transform: translateY(-2px);
   }
 
-  .btn-audio:disabled {
-    background: #7f8c8d;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-
   .badge {
     display: inline-block;
     background: rgba(52, 152, 219, 0.3);
@@ -101,14 +94,12 @@
     font-weight: bold;
   }
 
-  .badge.audio { background: rgba(155, 89, 182, 0.3); color: #d7bde2; }
-
   .prompt {
     font-size: 1.3rem;
     margin: 20px 0;
-    line-height: 1.6;
+    line-height: 1.7;
     color: #ecf0f1;
-    min-height: 80px;
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -194,8 +185,8 @@
   <div id="intro-screen">
     <h1>Class 3: Pronouns</h1>
     <p class="subtitle">
-      📖 <strong>Part A (15):</strong> Read a sentence and choose the pronoun that replaces the highlighted noun.<br>
-      🎧 <strong>Part B (15):</strong> Listen to the incomplete sentence and choose the missing pronoun.
+      Read each sentence and choose the pronoun that replaces the highlighted noun.<br>
+      <strong>Vocabulary:</strong> jobs · public places · family
     </p>
     <p class="subtitle" style="color:#f1c40f; font-weight:bold;">30 questions · No time limit</p>
     <button class="btn-audio" id="btn-start" style="background:#27ae60;">▶ Start Game</button>
@@ -209,10 +200,8 @@
       <span>❌ <span id="score-wrong">0</span></span>
     </div>
 
-    <div id="badge-container"></div>
+    <div id="badge-container"><span class="badge">📖 Replace the Noun</span></div>
     <div class="prompt" id="prompt"></div>
-
-    <button class="btn-audio hidden" id="btn-play">🔊 Play Audio</button>
 
     <div class="options" id="options"></div>
 
@@ -231,49 +220,46 @@
 
 <script>
 // ================== DATA ==================
-// PART A: Replace the Noun (15)
-// PART B: Audio Context (15)
-// El audio dice SOLO la parte incompleta de la oración (sin el pronombre).
-// Ej: "is blue" → el estudiante elige "It" (It is blue).
-// Ej: "are in the school" → el estudiante elige "We" (We are in the school).
-// ⚠️ El audio NO dice "underscore" ni blanks. Solo la frase incompleta.
+// 30 oraciones · Replace the Noun
+// Vocabulario: profesiones, lugares públicos, familia
+// El estudiante lee la oración con el sustantivo resaltado y elige el pronombre.
 
 const QUESTIONS = [
-  // ---------- PART A: REPLACE THE NOUN (15) ----------
-  { type: "replace", sentence: "Maria is my sister.", highlight: "Maria", correct: "She", options: ["She", "He", "It", "They"] },
-  { type: "replace", sentence: "Peter and John are brothers.", highlight: "Peter and John", correct: "They", options: ["They", "We", "He", "It"] },
-  { type: "replace", sentence: "The cat is sleeping on the sofa.", highlight: "The cat", correct: "It", options: ["It", "She", "He", "You"] },
-  { type: "replace", sentence: "My father works in a hospital.", highlight: "My father", correct: "He", options: ["He", "She", "It", "They"] },
-  { type: "replace", sentence: "My mother and I are cooking dinner.", highlight: "My mother and I", correct: "We", options: ["We", "They", "You", "It"] },
-  { type: "replace", sentence: "You and your brother are very tall.", highlight: "You and your brother", correct: "You", options: ["You", "We", "They", "He"] },
-  { type: "replace", sentence: "The books are on the table.", highlight: "The books", correct: "They", options: ["They", "It", "We", "She"] },
-  { type: "replace", sentence: "Anna is a doctor.", highlight: "Anna", correct: "She", options: ["She", "He", "It", "You"] },
-  { type: "replace", sentence: "My dog is very friendly.", highlight: "My dog", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "replace", sentence: "Tom and I are classmates.", highlight: "Tom and I", correct: "We", options: ["We", "They", "You", "It"] },
-  { type: "replace", sentence: "The children are playing in the park.", highlight: "The children", correct: "They", options: ["They", "We", "It", "He"] },
-  { type: "replace", sentence: "My grandmother makes delicious cookies.", highlight: "My grandmother", correct: "She", options: ["She", "He", "It", "You"] },
-  { type: "replace", sentence: "The phone is ringing.", highlight: "The phone", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "replace", sentence: "My brother and my cousin live in Canada.", highlight: "My brother and my cousin", correct: "They", options: ["They", "We", "You", "He"] },
-  { type: "replace", sentence: "Sofia and I love pizza.", highlight: "Sofia and I", correct: "We", options: ["We", "They", "You", "She"] },
+  // ---------- PROFESIONES (10) ----------
+  { sentence: "The doctor is very busy today.",         highlight: "The doctor",       correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "The teacher explained the lesson clearly.", highlight: "The teacher",    correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "The engineer designed a new bridge.",     highlight: "The engineer",     correct: "He",   options: ["He", "She", "It", "We"] },
+  { sentence: "The nurse helped the patient.",           highlight: "The nurse",        correct: "She",  options: ["She", "He", "It", "You"] },
+  { sentence: "The chef prepared a delicious meal.",     highlight: "The chef",         correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "The police officer stopped the car.",     highlight: "The police officer", correct: "He", options: ["He", "She", "It", "We"] },
+  { sentence: "The lawyer won the case.",                highlight: "The lawyer",       correct: "She",  options: ["She", "He", "It", "You"] },
+  { sentence: "The pilot flew the plane safely.",        highlight: "The pilot",        correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "The firefighter rescued the family.",     highlight: "The firefighter",  correct: "He",   options: ["He", "She", "It", "We"] },
+  { sentence: "The dentist checked my teeth.",           highlight: "The dentist",      correct: "She",  options: ["She", "He", "It", "They"] },
 
-  // ---------- PART B: AUDIO CONTEXT (15) ----------
-  // Audio = solo la frase incompleta (sin pronombre)
-  // El estudiante elige el pronombre que falta al inicio.
-  { type: "audio", audio: "is blue", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "are in the school", correct: "We", options: ["We", "He", "She", "It"] },
-  { type: "audio", audio: "am a student", correct: "I", options: ["I", "You", "He", "She"] },
-  { type: "audio", audio: "is my father", correct: "He", options: ["He", "She", "It", "We"] },
-  { type: "audio", audio: "are my friends", correct: "They", options: ["They", "We", "You", "It"] },
-  { type: "audio", audio: "is my mother", correct: "She", options: ["She", "He", "It", "We"] },
-  { type: "audio", audio: "are happy today", correct: "We", options: ["We", "They", "You", "I"] },
-  { type: "audio", audio: "is raining outside", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "are very tall", correct: "You", options: ["You", "I", "We", "They"] },
-  { type: "audio", audio: "is my best friend", correct: "He", options: ["He", "She", "It", "We"] },
-  { type: "audio", audio: "are classmates", correct: "We", options: ["We", "They", "You", "I"] },
-  { type: "audio", audio: "is my sister", correct: "She", options: ["She", "He", "It", "They"] },
-  { type: "audio", audio: "are my parents", correct: "They", options: ["They", "We", "You", "He"] },
-  { type: "audio", audio: "am from Mexico", correct: "I", options: ["I", "You", "He", "They"] },
-  { type: "audio", audio: "is very cold today", correct: "It", options: ["It", "He", "She", "We"] }
+  // ---------- LUGARES PÚBLICOS (10) ----------
+  { sentence: "The hospital is near my house.",          highlight: "The hospital",     correct: "It",   options: ["It", "He", "She", "They"] },
+  { sentence: "The school opens at seven in the morning.", highlight: "The school",     correct: "It",   options: ["It", "He", "She", "We"] },
+  { sentence: "The park is full of children today.",     highlight: "The park",         correct: "It",   options: ["It", "He", "She", "They"] },
+  { sentence: "The library has many interesting books.", highlight: "The library",      correct: "It",   options: ["It", "He", "She", "You"] },
+  { sentence: "The restaurant serves Italian food.",     highlight: "The restaurant",   correct: "It",   options: ["It", "He", "She", "They"] },
+  { sentence: "The museum is open on Sundays.",          highlight: "The museum",       correct: "It",   options: ["It", "He", "She", "We"] },
+  { sentence: "The supermarket closes at ten.",          highlight: "The supermarket",  correct: "It",   options: ["It", "He", "She", "They"] },
+  { sentence: "The airport is very far from here.",      highlight: "The airport",      correct: "It",   options: ["It", "He", "She", "You"] },
+  { sentence: "The cinema shows new movies every week.", highlight: "The cinema",       correct: "It",   options: ["It", "He", "She", "They"] },
+  { sentence: "The bank opens at nine in the morning.",  highlight: "The bank",         correct: "It",   options: ["It", "He", "She", "We"] },
+
+  // ---------- FAMILIA (10) ----------
+  { sentence: "My mother cooks dinner every night.",     highlight: "My mother",        correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "My father works in a big company.",       highlight: "My father",        correct: "He",   options: ["He", "She", "It", "We"] },
+  { sentence: "My brother plays soccer on weekends.",    highlight: "My brother",       correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "My sister studies medicine at university.", highlight: "My sister",      correct: "She",  options: ["She", "He", "It", "You"] },
+  { sentence: "My grandparents live in another city.",   highlight: "My grandparents",  correct: "They", options: ["They", "We", "He", "She"] },
+  { sentence: "My uncle is a famous musician.",          highlight: "My uncle",         correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "My aunt works as a nurse.",               highlight: "My aunt",          correct: "She",  options: ["She", "He", "It", "We"] },
+  { sentence: "My cousins visit us every summer.",       highlight: "My cousins",       correct: "They", options: ["They", "We", "He", "She"] },
+  { sentence: "My baby brother is sleeping now.",        highlight: "My baby brother",  correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "My grandmother makes delicious cakes.",   highlight: "My grandmother",   correct: "She",  options: ["She", "He", "It", "You"] }
 ];
 
 // ================== STATE ==================
@@ -282,15 +268,6 @@ let currentQuestion = 0;
 let correctCount = 0;
 let wrongCount = 0;
 let locked = false;
-
-// ================== SPEECH ==================
-function speak(text, rate = 0.85) {
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'en-US';
-  utterance.rate = rate;
-  window.speechSynthesis.speak(utterance);
-}
 
 // ================== SHUFFLE ==================
 function shuffleArray(arr) {
@@ -319,27 +296,12 @@ function loadQuestion() {
   document.getElementById('q-current').textContent = currentQuestion + 1;
   document.getElementById('q-counter').textContent = `${currentQuestion + 1} / ${questions.length}`;
 
-  const badgeContainer = document.getElementById('badge-container');
-  if (q.type === "replace") {
-    badgeContainer.innerHTML = '<span class="badge">📖 Replace the Noun</span>';
-  } else {
-    badgeContainer.innerHTML = '<span class="badge audio">🎧 Listen & Complete</span>';
-  }
-
+  // Prompt con sustantivo resaltado
+  const parts = q.sentence.split(q.highlight);
   const promptEl = document.getElementById('prompt');
-  const playBtn = document.getElementById('btn-play');
+  promptEl.innerHTML = `<span class="instruction">Choose the pronoun that replaces the highlighted noun:</span>${parts[0]}<span class="highlight">${q.highlight}</span>${parts[1] || ''}`;
 
-  if (q.type === "replace") {
-    const parts = q.sentence.split(q.highlight);
-    promptEl.innerHTML = `<span class="instruction">Choose the pronoun that replaces the highlighted noun:</span>${parts[0]}<span class="highlight">${q.highlight}</span>${parts[1] || ''}`;
-    playBtn.classList.add('hidden');
-  } else {
-    promptEl.innerHTML = `<span class="instruction">Listen to the incomplete sentence and choose the missing pronoun.</span>`;
-    playBtn.classList.remove('hidden');
-    // Reproducir audio automáticamente
-    setTimeout(() => speak(q.audio, 0.85), 400);
-  }
-
+  // Opciones aleatorias
   const options = shuffleArray(q.options);
   const container = document.getElementById('options');
   container.innerHTML = '';
@@ -386,7 +348,6 @@ function nextQuestion() {
 }
 
 function endGame() {
-  window.speechSynthesis.cancel();
   document.getElementById('game-screen').classList.add('hidden');
   document.getElementById('final-screen').classList.remove('hidden');
   document.getElementById('final-correct').textContent = correctCount;
@@ -397,15 +358,6 @@ function endGame() {
 
 // ================== EVENTS ==================
 document.getElementById('btn-start').addEventListener('click', startGame);
-
-document.getElementById('btn-play').addEventListener('click', () => {
-  const q = questions[currentQuestion];
-  if (!locked && q && q.type === "audio") {
-    speak(q.audio, 0.85);
-  }
-});
-
-window.addEventListener('beforeunload', () => window.speechSynthesis.cancel());
 </script>
 
 </body>
