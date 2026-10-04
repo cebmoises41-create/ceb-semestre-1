@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Inglés I - Actividades</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+        .subtitle { text-align: center; color: #666; margin-bottom: 20px; }
+        .blocks { display: grid; gap: 25px; }
+        .block {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+        }
+        .block h2 { font-size: 1.1em; color: #333; }
+        .block .meta { color: #666; font-size: 0.9em; margin-bottom: 15px; }
+        .clases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+        }
+        .clase-link {
+            display: block;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .clase-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            border-color: #667eea;
+        }
+        .clase-link.completada {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .clase-link.completada::after { content: ' ✅'; }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .clases-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .clase-link { font-size: 0.8em; padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Inglés I - Actividades Interactivas</h1>
+        <p class="subtitle">Semestre A 2026-2027 | Nivel A1 | 48 actividades</p>
+        
+        <div style="margin:15px 0;">
+            <div style="background:#e0e0e0; border-radius:10px; height:20px; overflow:hidden;">
+                <div id="progress-bar" style="background:linear-gradient(90deg,#667eea,#764ba2); height:100%; width:0%; transition:width 0.5s;"></div>
+            </div>
+            <p style="text-align:center; font-size:0.9em; color:#666; margin-top:5px;">
+                Progreso: <span id="progress-text">0/48</span> actividades
+            </p>
+        </div>
+
+        <div class="blocks">
+            <!-- Bloque 1 -->
+            <div class="block">
+                <h2>📌 Bloque 1: Presentarse (Clases 1-7)</h2>
+                <p class="meta">Semanas 1-2</p>
+                <div class="clases-grid" id="bloque1"></div>
+            </div>
+            <!-- Bloque 2 -->
+            <div class="block">
+                <h2>📌 Bloque 2: Seguir indicaciones (Clases 8-13)</h2>
+                <p class="meta">Semanas 3-4</p>
+                <div class="clases-grid" id="bloque2"></div>
+            </div>
+            <!-- Bloque 3 -->
+            <div class="block">
+                <h2>📌 Bloque 3: Objetos y espacios (Clases 14-19)</h2>
+                <p class="meta">Semanas 5-6</p>
+                <div class="clases-grid" id="bloque3"></div>
+            </div>
+            <!-- Bloque 4 -->
+            <div class="block">
+                <h2>📌 Bloque 4: Información personal (Clases 20-25)</h2>
+                <p class="meta">Semanas 7-8</p>
+                <div class="clases-grid" id="bloque4"></div>
+            </div>
+            <!-- Bloque 5 -->
+            <div class="block">
+                <h2>📌 Bloque 5: Horarios y fechas (Clases 26-31)</h2>
+                <p class="meta">Semanas 9-10</p>
+                <div class="clases-grid" id="bloque5"></div>
+            </div>
+            <!-- Bloque 6 -->
+            <div class="block">
+                <h2>📌 Bloque 6: Descripción de personas (Clases 32-37)</h2>
+                <p class="meta">Semanas 11-12</p>
+                <div class="clases-grid" id="bloque6"></div>
+            </div>
+            <!-- Bloque 7 -->
+            <div class="block">
+                <h2>📌 Bloque 7: Gustos y opiniones (Clases 38-43)</h2>
+                <p class="meta">Semanas 13-14</p>
+                <div class="clases-grid" id="bloque7"></div>
+            </div>
+            <!-- Bloque 8 -->
+            <div class="block">
+                <h2>📌 Bloque 8: Posesión (Clases 44-48)</h2>
+                <p class="meta">Semanas 15-16</p>
+                <div class="clases-grid" id="bloque8"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Nombres de las actividades
+        const nombres = {
+            1: 'Saludo Match', 2: 'To Be Quiz', 3: 'Pronoun Click',
+            4: 'Singular to Plural', 5: 'ID Card Creator', 6: 'Number Race',
+            7: 'Countries Spelling', 8: 'Imperative Simon', 9: 'Classroom Treasure',
+            10: 'Verb Action', 11: 'Classroom Phrases', 12: 'Opposite Adjectives',
+            13: 'Demonstrative Drag', 14: 'Article Drop', 15: 'Classroom vs House',
+            16: 'Furniture Design', 17: 'Color & Size Hunt', 18: 'To Be Interrogative',
+            19: 'Yes/No Quiz', 20: 'Possessive Race', 21: 'Phone Number Typing',
+            22: 'Spelling Bee', 23: 'Profession Match', 24: 'Wh- Questions',
+            25: 'Mystery Interview', 26: 'Word Order', 27: 'Preposition Puzzle',
+            28: 'Calendar Flip', 29: 'Timeline Creator', 30: 'There is/are',
+            31: 'Preposition Placement', 32: 'Physical Description', 33: 'Map Directions',
+            34: 'House Rooms', 35: 'Memory Pair', 36: 'Wh- Wheel',
+            37: 'Preference Poll', 38: 'Verb-ing Match', 39: 'Very Intensifier',
+            40: 'Opposites Board', 41: 'Activity Quiz', 42: 'Whose Object?',
+            43: 'Genitive Practice', 44: 'Whose Questions', 45: 'Material Color Game',
+            46: 'Lost and Found', 47: 'Hobbies Connect', 48: 'Final Review'
+        };
+
+        // Definir bloques
+        const bloques = {
+            bloque1: [1,2,3,4,5,6,7],
+            bloque2: [8,9,10,11,12,13],
+            bloque3: [14,15,16,17,18,19],
+            bloque4: [20,21,22,23,24,25],
+            bloque5: [26,27,28,29,30,31],
+            bloque6: [32,33,34,35,36,37],
+            bloque7: [38,39,40,41,42,43],
+            bloque8: [44,45,46,47,48]
+        };
+
+        // Generar enlaces
+        Object.keys(bloques).forEach(bloqueId => {
+            const container = document.getElementById(bloqueId);
+            bloques[bloqueId].forEach(num => {
+                const numStr = String(num).padStart(2, '0');
+                const link = document.createElement('a');
+                link.href = `clase${numStr}.html`;
+                link.className = 'clase-link';
+                link.textContent = `📝 Clase ${numStr}`;
+                link.title = nombres[num];
+                link.dataset.clase = numStr;
+                container.appendChild(link);
+            });
+        });
+
+        // Progreso
+        function actualizarProgreso() {
+            const completadas = JSON.parse(localStorage.getItem('clases_completadas') || '[]');
+            const total = 48;
+            const porcentaje = (completadas.length / total) * 100;
+            document.getElementById('progress-bar').style.width = porcentaje + '%';
+            document.getElementById('progress-text').textContent = `${completadas.length}/${total}`;
+            
+            document.querySelectorAll('.clase-link').forEach(link => {
+                if (completadas.includes(link.dataset.clase)) {
+                    link.classList.add('completada');
+                }
+            });
+        }
+
+        actualizarProgreso();
+    </script>
+</body>
+</html>

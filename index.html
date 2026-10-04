@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEB 1st Semester - Games</title>
+    
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Cuadro de autoría */
+        .author-box {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: #ffffff;
+            color: #2c3e50;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Estilo de las tarjetas */
+        .class-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            padding: 20px 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            border: 2px solid rgba(255,255,255,0.5);
+            min-height: 150px;
+        }
+
+        .class-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Iconos descargados de internet */
+        .class-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 12px;
+            object-fit: contain;
+        }
+
+        .class-card span {
+            font-size: 14px;
+            text-align: center;
+            color: #1a1a1a;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+        }
+        
+        .class-card .class-number {
+            font-size: 12px;
+            color: #555;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="author-box">FPB with AI</div>
+
+    <h1>CEB 1st Semester</h1>
+    <p class="subtitle">Select a class to start the activity:</p>
+
+    <div class="grid-container" id="menu-container"></div>
+
+    <script>
+        // Número total de clases
+        const totalClasses = 48; 
+        const container = document.getElementById('menu-container');
+
+        // 48 colores pasteles
+        const colors = [
+            "#FFADAD", "#FFD6A5", "#FDFFB6", "#CAFFBF", "#9BF6FF", "#A0C4FF", "#BDB2FF", "#FFC6FF",
+            "#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#E8BAFF", "#FFB3E6", "#B3D9FF",
+            "#FFCCB3", "#FFEDB3", "#D4FFB3", "#B3FFE0", "#B3D9FF", "#E6B3FF", "#FFB3D9", "#B3FFB3",
+            "#F9B3B3", "#F9D9B3", "#F9F9B3", "#B3F9B3", "#B3F9D9", "#B3D9F9", "#D9B3F9", "#F9B3D9",
+            "#FFC4B3", "#FFE4B3", "#F0FFB3", "#B3FFD4", "#B3E4FF", "#C4B3FF", "#FFB3E4", "#D4FFB3",
+            "#FFAD85", "#FFD185", "#F5FF85", "#85FFB5", "#85D1FF", "#AD85FF", "#FF85D1", "#B5FF85"
+        ];
+
+        // 48 temas en inglés (con sus respectivos iconos de la vida real)
+        // Cada tema tiene su propia URL de imagen aquí
+        const classData = [
+            { topic: "Colors", icon: "https://cdn-icons-png.flaticon.com/512/1170/1170673.png" },
+            { topic: "Animals", icon: "https://cdn-icons-png.flaticon.com/512/616/616430.png" },
+            { topic: "Fruits", icon: "https://cdn-icons-png.flaticon.com/512/1625/1625098.png" },
+            { topic: "My Body", icon: "https://cdn-icons-png.flaticon.com/512/3004/3004458.png" },
+            { topic: "Family", icon: "https://cdn-icons-png.flaticon.com/512/3014/3014456.png" },
+            { topic: "Numbers", icon: "https://cdn-icons-png.flaticon.com/512/564/564437.png" },
+            { topic: "Clothes", icon: "https://cdn-icons-png.flaticon.com/512/3097/3097180.png" },
+            { topic: "Food", icon: "https://cdn-icons-png.flaticon.com/512/2672/2672186.png" },
+            { topic: "Verbs", icon: "https://cdn-icons-png.flaticon.com/512/2828/2828775.png" },
+            { topic: "Days & Months", icon: "https://cdn-icons-png.flaticon.com/512/3024/3024614.png" },
+            { topic: "The House", icon: "https://cdn-icons-png.flaticon.com/512/263/263115.png" },
+            { topic: "Pets", icon: "https://cdn-icons-png.flaticon.com/512/616/616554.png" },
+            { topic: "Transport", icon: "https://cdn-icons-png.flaticon.com/512/854/854878.png" },
+            { topic: "Jobs", icon: "https://cdn-icons-png.flaticon.com/512/3081/3081840.png" },
+            { topic: "Sports", icon: "https://cdn-icons-png.flaticon.com/512/2921/2921312.png" },
+            { topic: "Weather", icon: "https://cdn-icons-png.flaticon.com/512/1166/1166746.png" },
+            { topic: "Greetings", icon: "https://cdn-icons-png.flaticon.com/512/935/935692.png" },
+            { topic: "Emotions", icon: "https://cdn-icons-png.flaticon.com/512/2620/2620399.png" },
+            { topic: "School", icon: "https://cdn-icons-png.flaticon.com/512/2942/2942006.png" },
+            { topic: "Furniture", icon: "https://cdn-icons-png.flaticon.com/512/2526/2526574.png" },
+            { topic: "Instruments", icon: "https://cdn-icons-png.flaticon.com/512/186/186409.png" },
+            { topic: "Actions", icon: "https://cdn-icons-png.flaticon.com/512/201/201255.png" },
+            { topic: "Routines", icon: "https://cdn-icons-png.flaticon.com/512/3004/3004474.png" },
+            { topic: "Landscapes", icon: "https://cdn-icons-png.flaticon.com/512/998/998424.png" },
+            { topic: "Winter Clothes", icon: "https://cdn-icons-png.flaticon.com/512/3039/3039023.png" },
+            { topic: "Insects", icon: "https://cdn-icons-png.flaticon.com/512/197/197570.png" },
+            { topic: "Drinks", icon: "https://cdn-icons-png.flaticon.com/512/924/924514.png" },
+            { topic: "Desserts", icon: "https://cdn-icons-png.flaticon.com/512/2256/2256425.png" },
+            { topic: "Face Parts", icon: "https://cdn-icons-png.flaticon.com/512/2965/2965558.png" },
+            { topic: "The Bathroom", icon: "https://cdn-icons-png.flaticon.com/512/3144/3144831.png" },
+            { topic: "The City", icon: "https://cdn-icons-png.flaticon.com/512/2942/2942085.png" },
+            { topic: "Countryside", icon: "https://cdn-icons-png.flaticon.com/512/3280/3280752.png" },
+            { topic: "The Beach", icon: "https://cdn-icons-png.flaticon.com/512/2888/2888463.png" },
+            { topic: "The Mountain", icon: "https://cdn-icons-png.flaticon.com/512/2909/2909806.png" },
+            { topic: "Trades", icon: "https://cdn-icons-png.flaticon.com/512/3063/3063240.png" },
+            { topic: "Outfits", icon: "https://cdn-icons-png.flaticon.com/512/2942/2942453.png" },
+            { topic: "Daily Act.", icon: "https://cdn-icons-png.flaticon.com/512/2857/2857300.png" },
+            { topic: "Toys", icon: "https://cdn-icons-png.flaticon.com/512/3350/3350609.png" },
+            { topic: "Technology", icon: "https://cdn-icons-png.flaticon.com/512/2920/2920270.png" },
+            { topic: "Music", icon: "https://cdn-icons-png.flaticon.com/512/2991/2991240.png" },
+            { topic: "Art", icon: "https://cdn-icons-png.flaticon.com/512/2991/2991234.png" },
+            { topic: "Books", icon: "https://cdn-icons-png.flaticon.com/512/2826/2826718.png" },
+            { topic: "History", icon: "https://cdn-icons-png.flaticon.com/512/2086/2086000.png" },
+            { topic: "Countries", icon: "https://cdn-icons-png.flaticon.com/512/3541/3541846.png" },
+            { topic: "Flags", icon: "https://cdn-icons-png.flaticon.com/512/901/901386.png" },
+            { topic: "Extreme Sports", icon: "https://cdn-icons-png.flaticon.com/512/2784/2784203.png" },
+            { topic: "Seasons", icon: "https://cdn-icons-png.flaticon.com/512/992/992019.png" },
+            { topic: "Holidays", icon: "https://cdn-icons-png.flaticon.com/512/2493/2493230.png" }
+        ];
+
+        let htmlContent = '';
+
+        for (let i = 1; i <= totalClasses; i++) {
+            // Formato del número (1 -> 01)
+            let formattedNumber = i.toString().padStart(2, '0');
+            let folderName = `clase${formattedNumber}`;
+            let url = `${folderName}/index.html`;
+
+            // Seleccionar color, tema e imagen
+            let color = colors[i-1]; 
+            let data = classData[i-1]; 
+
+            htmlContent += `
+                <a href="${url}" class="class-card" style="background-color: ${color};">
+                    <img src="${data.icon}" alt="Class ${i} icon">
+                    <span>Class ${i}</span>
+                    <span class="class-number">${data.topic}</span>
+                </a>
+            `;
+        }
+
+        // Mostrar todo en pantalla
+        container.innerHTML = htmlContent;
+    </script>
+
+</body>
+</html>

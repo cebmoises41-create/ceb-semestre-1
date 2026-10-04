@@ -1,0 +1,416 @@
+/* styles.css - Estilos globales para todas las actividades */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 15px;
+    font-size: 2.2em;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Barra de progreso */
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+/* Bloques de clases */
+.blocks {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.block {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    border-left: 5px solid #667eea;
+    transition: transform 0.2s;
+}
+
+.block:hover {
+    transform: translateX(5px);
+}
+
+.block h2 {
+    color: #333;
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+.block .meta {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+/* Grid de clases */
+.clases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+}
+
+.clase-link {
+    display: block;
+    padding: 12px 10px;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s;
+    font-size: 0.9em;
+    font-weight: 500;
+    position: relative;
+}
+
+.clase-link:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    border-color: #667eea;
+}
+
+.clase-link.completada {
+    border-color: #28a745;
+    background: #d4edda;
+}
+
+.clase-link.completada::after {
+    content: ' ✅';
+}
+
+.clase-link .badge {
+    display: inline-block;
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 0.7em;
+    margin-left: 5px;
+}
+
+/* Botones generales */
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.3s;
+    margin: 5px;
+}
+
+.btn:hover {
+    background: #5a6fd6;
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-success {
+    background: #28a745;
+}
+
+.btn-success:hover {
+    background: #218838;
+}
+
+.btn-danger {
+    background: #dc3545;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: #333;
+}
+
+.btn-warning:hover {
+    background: #e0a800;
+}
+
+/* Tarjetas de actividad */
+.activity-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+}
+
+/* Feedback */
+.feedback {
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-weight: 500;
+}
+
+.feedback-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.feedback-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.feedback-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Estilos para actividades específicas */
+.drop-zone {
+    min-height: 120px;
+    border: 3px dashed #ccc;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0;
+    background: #fafafa;
+    transition: all 0.3s;
+}
+
+.drop-zone.dragover {
+    background: #e3f2fd;
+    border-color: #1976d2;
+    transform: scale(1.02);
+}
+
+.drop-zone.correct {
+    background: #d4edda;
+    border-color: #28a745;
+}
+
+.drop-zone.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+}
+
+.draggable-item {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 8px;
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    cursor: grab;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.draggable-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.draggable-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+.draggable-item.placed {
+    opacity: 0.7;
+    cursor: default;
+    background: #e0e0e0;
+}
+
+/* Grid de tarjetas */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.card-item {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.card-item:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.card-item.selected {
+    border-color: #28a745;
+    background: #d4edda;
+}
+
+.card-item.wrong {
+    border-color: #dc3545;
+    background: #f8d7da;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.6em;
+    }
+    
+    .clases-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .clase-link {
+        font-size: 0.8em;
+        padding: 8px 5px;
+    }
+    
+    .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .clases-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    
+    .clase-link {
+        font-size: 0.7em;
+        padding: 6px 3px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 0.3s ease;
+}
+
+/* Estilos para el modo oscuro (opcional) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    
+    .container {
+        background: #2d2d44;
+        color: #e0e0e0;
+    }
+    
+    h1, .block h2 {
+        color: #e0e0e0;
+    }
+    
+    .block {
+        background: #3d3d5c;
+        border-left-color: #764ba2;
+    }
+    
+    .clase-link {
+        background: #4d4d6e;
+        color: #e0e0e0;
+        border-color: #5d5d7e;
+    }
+    
+    .clase-link:hover {
+        background: #667eea;
+        color: white;
+    }
+    
+    .card-item, .draggable-item {
+        background: #3d3d5c;
+        color: #e0e0e0;
+        border-color: #5d5d7e;
+    }
+}
