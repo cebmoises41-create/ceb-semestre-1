@@ -104,8 +104,8 @@
   }
 
   .options {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-top: 20px;
   }
@@ -116,7 +116,7 @@
     border: 2px solid transparent;
     border-radius: 14px;
     padding: 16px 20px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s;
@@ -157,8 +157,9 @@
   @media (max-width: 500px) {
     .card { padding: 25px 18px; }
     h1 { font-size: 1.5rem; }
-    .option { font-size: 1rem; padding: 13px 15px; }
+    .option { font-size: 0.95rem; padding: 12px 10px; }
     .btn-audio { font-size: 1rem; padding: 12px 22px; }
+    .options { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -172,14 +173,14 @@
     <h1>Class 1: The Alphabet</h1>
     <p class="subtitle">Part A — Listen to the English alphabet</p>
     <button class="btn-audio" id="btn-alphabet">🔊 Play Alphabet</button>
-    <p class="subtitle" style="margin-top: 25px;">Part B — Listen to 15 words spelled letter by letter and choose the correct word.</p>
+    <p class="subtitle" style="margin-top: 25px;">Part B — Listen to 20 words spelled letter by letter and choose the correct word.</p>
     <button class="btn-audio" id="btn-start" style="background:#27ae60;">▶ Start Game</button>
   </div>
 
   <!-- PANTALLA DE JUEGO -->
   <div id="game-screen" class="hidden">
     <div class="score-bar">
-      <span>⏱️ <span id="timer" class="timer">08:00</span></span>
+      <span>⏱️ <span id="timer" class="timer">15:00</span></span>
       <span>✅ <span id="score-correct">0</span></span>
       <span>❌ <span id="score-wrong">0</span></span>
     </div>
@@ -189,7 +190,7 @@
 
     <div class="options" id="options"></div>
 
-    <p class="progress">Question <span id="q-current">1</span> of <span id="q-total">15</span></p>
+    <p class="progress">Question <span id="q-current">1</span> of <span id="q-total">20</span></p>
   </div>
 
   <!-- PANTALLA FINAL -->
@@ -205,28 +206,38 @@
 <script>
 // ================== DATA ==================
 const QUESTIONS = [
-  { word: "apple",    letters: "A - P - P - L - E",       options: ["apple", "carrot", "ape"] },
-  { word: "banana",   letters: "B - A - N - A - N - A",   options: ["banana", "bandana", "banner"] },
-  { word: "orange",   letters: "O - R - A - N - G - E",   options: ["orange", "organ", "oranges"] },
-  { word: "grape",    letters: "G - R - A - P - E",       options: ["grape", "gripe", "grapes"] },
-  { word: "lemon",    letters: "L - E - M - O - N",       options: ["lemon", "melon", "lemur"] },
-  { word: "peach",    letters: "P - E - A - C - H",       options: ["peach", "peace", "beach"] },
-  { word: "cherry",   letters: "C - H - E - R - R - Y",   options: ["cherry", "cheery", "cherries"] },
-  { word: "melon",    letters: "M - E - L - O - N",       options: ["melon", "lemon", "felon"] },
-  { word: "strawberry", letters: "S - T - R - A - W - B - E - R - R - Y", options: ["strawberry", "blueberry", "raspberry"] },
-  { word: "pineapple", letters: "P - I - N - E - A - P - P - L - E", options: ["pineapple", "apple", "pinecone"] },
-  { word: "tomato",   letters: "T - O - M - A - T - O",   options: ["tomato", "potato", "tornado"] },
-  { word: "carrot",   letters: "C - A - R - R - O - T",   options: ["carrot", "parrot", "carriage"] },
-  { word: "lettuce",  letters: "L - E - T - T - U - C - E", options: ["lettuce", "letter", "lettuce leaf"] },
-  { word: "onion",    letters: "O - N - I - O - N",       options: ["onion", "union", "opinion"] },
-  { word: "cucumber", letters: "C - U - C - U - M - B - E - R", options: ["cucumber", "cucumbers", "cumber"] }
+  // --- BÁSICAS (1-9) ---
+  { word: "apple",      letters: "A - P - P - L - E",                       options: ["apple", "carrot", "ape", "maple"] },
+  { word: "banana",     letters: "B - A - N - A - N - A",                   options: ["banana", "bandana", "banner", "cabana"] },
+  { word: "orange",     letters: "O - R - A - N - G - E",                   options: ["orange", "organ", "oranges", "orage"] },
+  { word: "grape",      letters: "G - R - A - P - E",                       options: ["grape", "gripe", "grapes", "graph"] },
+  { word: "lemon",      letters: "L - E - M - O - N",                       options: ["lemon", "melon", "lemur", "lesson"] },
+  { word: "peach",      letters: "P - E - A - C - H",                       options: ["peach", "peace", "beach", "patch"] },
+  { word: "cherry",     letters: "C - H - E - R - R - Y",                   options: ["cherry", "cheery", "cherries", "chart"] },
+  { word: "melon",      letters: "M - E - L - O - N",                       options: ["melon", "lemon", "felon", "salon"] },
+  { word: "tomato",     letters: "T - O - M - A - T - O",                   options: ["tomato", "potato", "tornado", "tomatoe"] },
+
+  // --- VARIADAS (10-18) ---
+  { word: "father",     letters: "F - A - T - H - E - R",                   options: ["father", "farther", "feather", "fatter"] },
+  { word: "fridge",     letters: "F - R - I - D - G - E",                   options: ["fridge", "bridge", "fringe", "fried"] },
+  { word: "mouse",      letters: "M - O - U - S - E",                       options: ["mouse", "moose", "mousse", "mouth"] },
+  { word: "chair",      letters: "C - H - A - I - R",                       options: ["chair", "chain", "char", "cheer"] },
+  { word: "school",     letters: "S - C - H - O - O - L",                   options: ["school", "scholar", "scooter", "stool"] },
+  { word: "window",     letters: "W - I - N - D - O - W",                   options: ["window", "widow", "winner", "wind"] },
+  { word: "doctor",     letters: "D - O - C - T - O - R",                   options: ["doctor", "daughter", "dector", "docter"] },
+  { word: "flower",     letters: "F - L - O - W - E - R",                   options: ["flower", "flour", "floor", "follower"] },
+  { word: "garden",     letters: "G - A - R - D - E - N",                   options: ["garden", "guardian", "gardenia", "guard"] },
+
+  // --- DIFÍCILES (19-20) ---
+  { word: "elephant",   letters: "E - L - E - P - H - A - N - T",           options: ["elephant", "elegant", "element", "eleven"] },
+  { word: "strawberry", letters: "S - T - R - A - W - B - E - R - R - Y",   options: ["strawberry", "blueberry", "raspberry", "blackberry"] }
 ];
 
 // ================== STATE ==================
 let currentQuestion = 0;
 let correctCount = 0;
 let wrongCount = 0;
-let timeLeft = 480; // 8 minutes
+let timeLeft = 900; // 15 minutos (900 segundos)
 let timerInterval = null;
 let locked = false;
 
@@ -240,13 +251,11 @@ function speak(text, rate = 0.85) {
 }
 
 function speakAlphabet() {
-  // Leer el alfabeto con pausas
   const letters = "A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z";
   speak(letters, 0.8);
 }
 
 function speakWord(letters) {
-  // Convertir "A - P - P - L - E" en "A. P. P. L. E." para mejor TTS
   const spoken = letters.replace(/\s*-\s*/g, ", ");
   speak(spoken, 0.75);
 }
@@ -296,7 +305,6 @@ function loadQuestion() {
   const q = QUESTIONS[currentQuestion];
   document.getElementById('q-current').textContent = currentQuestion + 1;
 
-  // Mezclar opciones
   const options = shuffleArray(q.options);
   const container = document.getElementById('options');
   container.innerHTML = '';
@@ -309,7 +317,6 @@ function loadQuestion() {
     container.appendChild(btn);
   });
 
-  // Auto-reproducir el audio después de un pequeño delay
   setTimeout(() => speakWord(q.letters), 400);
 }
 
@@ -329,7 +336,6 @@ function checkAnswer(btn, selected, correct) {
     btn.classList.add('wrong');
     wrongCount++;
     document.getElementById('score-wrong').textContent = wrongCount;
-    // Marcar la correcta
     allButtons.forEach(b => {
       if (b.textContent === correct) b.classList.add('correct');
     });
@@ -352,7 +358,7 @@ function endGame() {
   document.getElementById('final-screen').classList.remove('hidden');
   document.getElementById('final-correct').textContent = correctCount;
   document.getElementById('final-wrong').textContent = wrongCount;
-  const used = 480 - timeLeft;
+  const used = 900 - timeLeft; // 900 = 15 minutos
   const m = Math.floor(used / 60);
   const s = used % 60;
   document.getElementById('final-time').textContent = `${m}m ${s}s`;
@@ -368,7 +374,6 @@ document.getElementById('btn-play').addEventListener('click', () => {
   }
 });
 
-// Detener audio al salir
 window.addEventListener('beforeunload', () => window.speechSynthesis.cancel());
 </script>
 
