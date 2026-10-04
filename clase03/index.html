@@ -45,16 +45,9 @@
     text-align: center;
   }
 
-  h1 {
-    font-size: 1.9rem;
-    margin-bottom: 10px;
-  }
+  h1 { font-size: 1.9rem; margin-bottom: 10px; }
 
-  .subtitle {
-    color: #bdc3c7;
-    font-size: 1rem;
-    margin-bottom: 25px;
-  }
+  .subtitle { color: #bdc3c7; font-size: 1rem; margin-bottom: 25px; }
 
   .score-bar {
     background: rgba(255, 255, 255, 0.15);
@@ -74,8 +67,8 @@
     color: #ffffff;
     border: none;
     border-radius: 50px;
-    padding: 14px 30px;
-    font-size: 1.1rem;
+    padding: 16px 40px;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s;
@@ -95,6 +88,21 @@
     box-shadow: none;
   }
 
+  .badge {
+    display: inline-block;
+    background: rgba(52, 152, 219, 0.3);
+    color: #85c1e9;
+    font-size: 0.8rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+
+  .badge.audio { background: rgba(155, 89, 182, 0.3); color: #d7bde2; }
+
   .prompt {
     font-size: 1.3rem;
     margin: 20px 0;
@@ -102,8 +110,10 @@
     color: #ecf0f1;
     min-height: 70px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 12px;
   }
 
   .prompt .highlight {
@@ -114,31 +124,9 @@
     color: #f1c40f;
   }
 
-  .prompt .blank {
-    display: inline-block;
-    min-width: 70px;
-    border-bottom: 3px solid #3498db;
-    margin: 0 6px;
-    color: #3498db;
-    font-weight: bold;
-  }
-
-  .badge {
-    display: inline-block;
-    background: rgba(52, 152, 219, 0.3);
-    color: #85c1e9;
-    font-size: 0.75rem;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: bold;
-  }
-
-  .badge.audio {
-    background: rgba(155, 89, 182, 0.3);
-    color: #d7bde2;
+  .prompt .instruction {
+    font-size: 1rem;
+    color: #bdc3c7;
   }
 
   .options {
@@ -181,12 +169,7 @@
     color: #922b21;
   }
 
-  .progress {
-    margin-top: 20px;
-    color: #bdc3c7;
-    font-size: 0.95rem;
-  }
-
+  .progress { margin-top: 20px; color: #bdc3c7; font-size: 0.95rem; }
   .hidden { display: none; }
 
   .final-screen h2 { font-size: 2rem; margin-bottom: 15px; }
@@ -196,7 +179,7 @@
     .card { padding: 25px 18px; }
     h1 { font-size: 1.4rem; }
     .option { font-size: 0.95rem; padding: 12px 10px; }
-    .btn-audio { font-size: 1rem; padding: 12px 22px; }
+    .btn-audio { font-size: 1rem; padding: 14px 28px; }
     .options { grid-template-columns: 1fr; }
     .prompt { font-size: 1.1rem; }
   }
@@ -211,8 +194,8 @@
   <div id="intro-screen">
     <h1>Class 3: Pronouns</h1>
     <p class="subtitle">
-      Part A — Read a sentence and choose the pronoun that replaces the highlighted noun.<br>
-      Part B — Listen to a sentence with a blank and choose the correct pronoun.
+      📖 <strong>Part A (15):</strong> Read a sentence and choose the pronoun that replaces the highlighted noun.<br>
+      🎧 <strong>Part B (15):</strong> Listen to a sentence and choose the pronoun you hear.
     </p>
     <p class="subtitle" style="color:#f1c40f; font-weight:bold;">30 questions · No time limit</p>
     <button class="btn-audio" id="btn-start" style="background:#27ae60;">▶ Start Game</button>
@@ -248,9 +231,12 @@
 
 <script>
 // ================== DATA ==================
-// 30 preguntas:
-// - 15 de tipo "replace" (Propuesta A): se muestra oración con sustantivo resaltado
-// - 15 de tipo "audio"   (Propuesta B): se escucha oración con blank
+// PART A: Replace the Noun (15)
+// Se muestra oración con sustantivo resaltado, se elige el pronombre que lo reemplaza.
+// PART B: Audio Context (15)
+// El audio dice la oración COMPLETA con el pronombre correcto ya incluido.
+// El estudiante debe identificar qué pronombre escuchó.
+// ⚠️ CLAVE: NO usar "___" en el audio, porque el TTS lee "underscore".
 
 const QUESTIONS = [
   // ---------- PART A: REPLACE THE NOUN (15) ----------
@@ -271,25 +257,26 @@ const QUESTIONS = [
   { type: "replace", sentence: "Sofia and I love pizza.", highlight: "Sofia and I", correct: "We", options: ["We", "They", "You", "She"] },
 
   // ---------- PART B: AUDIO CONTEXT (15) ----------
-  { type: "audio", audio: "___ am a student at this school.", correct: "I", options: ["I", "You", "He", "They"] },
-  { type: "audio", audio: "___ is my best friend. He is very kind.", correct: "He", options: ["He", "She", "It", "We"] },
-  { type: "audio", audio: "___ are going to the party tonight.", correct: "We", options: ["We", "I", "She", "It"] },
-  { type: "audio", audio: "___ is raining outside. Take an umbrella.", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "___ are my parents. They love me very much.", correct: "They", options: ["They", "He", "She", "It"] },
-  { type: "audio", audio: "___ is my sister. She is ten years old.", correct: "She", options: ["She", "He", "It", "We"] },
-  { type: "audio", audio: "___ are my best friends. We play together every day.", correct: "They", options: ["They", "We", "You", "It"] },
-  { type: "audio", audio: "___ is my new phone. It was very expensive.", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "___ am from Mexico. I live in Guadalajara.", correct: "I", options: ["I", "You", "He", "They"] },
-  { type: "audio", audio: "___ are a great student. You always do your homework.", correct: "You", options: ["You", "I", "We", "They"] },
-  { type: "audio", audio: "___ is my father. He works in an office.", correct: "He", options: ["He", "She", "It", "We"] },
-  { type: "audio", audio: "___ are very happy today. We passed the exam.", correct: "We", options: ["We", "They", "You", "It"] },
-  { type: "audio", audio: "___ is cold in winter. It snows a lot.", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "___ are my neighbors. They are very friendly.", correct: "They", options: ["They", "We", "You", "He"] },
-  { type: "audio", audio: "___ is my mother. She is a teacher.", correct: "She", options: ["She", "He", "It", "We"] }
+  // El audio dice la oración COMPLETA. El estudiante identifica el pronombre.
+  { type: "audio", audio: "He is my best friend. He is very kind.", correct: "He", options: ["He", "She", "It", "We"] },
+  { type: "audio", audio: "We are going to the party tonight.", correct: "We", options: ["We", "I", "She", "It"] },
+  { type: "audio", audio: "It is raining outside. Take an umbrella.", correct: "It", options: ["It", "He", "She", "They"] },
+  { type: "audio", audio: "They are my parents. They love me very much.", correct: "They", options: ["They", "He", "She", "It"] },
+  { type: "audio", audio: "She is my sister. She is ten years old.", correct: "She", options: ["She", "He", "It", "We"] },
+  { type: "audio", audio: "They are my best friends. We play together every day.", correct: "They", options: ["They", "We", "You", "It"] },
+  { type: "audio", audio: "It is my new phone. It was very expensive.", correct: "It", options: ["It", "He", "She", "They"] },
+  { type: "audio", audio: "I am from Mexico. I live in Guadalajara.", correct: "I", options: ["I", "You", "He", "They"] },
+  { type: "audio", audio: "You are a great student. You always do your homework.", correct: "You", options: ["You", "I", "We", "They"] },
+  { type: "audio", audio: "He is my father. He works in an office.", correct: "He", options: ["He", "She", "It", "We"] },
+  { type: "audio", audio: "We are very happy today. We passed the exam.", correct: "We", options: ["We", "They", "You", "It"] },
+  { type: "audio", audio: "It is cold in winter. It snows a lot.", correct: "It", options: ["It", "He", "She", "They"] },
+  { type: "audio", audio: "They are my neighbors. They are very friendly.", correct: "They", options: ["They", "We", "You", "He"] },
+  { type: "audio", audio: "She is my mother. She is a teacher.", correct: "She", options: ["She", "He", "It", "We"] },
+  { type: "audio", audio: "We are in the same class. We study English together.", correct: "We", options: ["We", "They", "You", "I"] }
 ];
 
 // ================== STATE ==================
-let questions = [];         // será mezclado al inicio
+let questions = [];
 let currentQuestion = 0;
 let correctCount = 0;
 let wrongCount = 0;
@@ -316,7 +303,6 @@ function shuffleArray(arr) {
 
 // ================== GAME FLOW ==================
 function startGame() {
-  // Mezclar las 30 preguntas para que A y B se intercalen
   questions = shuffleArray(QUESTIONS);
 
   document.getElementById('intro-screen').classList.add('hidden');
@@ -329,36 +315,30 @@ function loadQuestion() {
   locked = false;
   const q = questions[currentQuestion];
 
-  // Actualizar contadores
   document.getElementById('q-current').textContent = currentQuestion + 1;
   document.getElementById('q-counter').textContent = `${currentQuestion + 1} / ${questions.length}`;
 
-  // Badge según tipo
   const badgeContainer = document.getElementById('badge-container');
   if (q.type === "replace") {
     badgeContainer.innerHTML = '<span class="badge">📖 Replace the Noun</span>';
   } else {
-    badgeContainer.innerHTML = '<span class="badge audio">🎧 Listen & Choose</span>';
+    badgeContainer.innerHTML = '<span class="badge audio">🎧 Listen & Identify</span>';
   }
 
-  // Prompt
   const promptEl = document.getElementById('prompt');
   const playBtn = document.getElementById('btn-play');
 
   if (q.type === "replace") {
-    // Mostrar oración con el sustantivo resaltado
     const parts = q.sentence.split(q.highlight);
-    promptEl.innerHTML = `${parts[0]}<span class="highlight">${q.highlight}</span>${parts[1] || ''}`;
+    promptEl.innerHTML = `<span class="instruction">Choose the pronoun that replaces the highlighted noun:</span>${parts[0]}<span class="highlight">${q.highlight}</span>${parts[1] || ''}`;
     playBtn.classList.add('hidden');
   } else {
-    // Mostrar solo el blank (o instrucción) y botón de audio
-    promptEl.innerHTML = `Listen carefully and choose the correct pronoun.<br><span class="blank">?</span>`;
+    promptEl.innerHTML = `<span class="instruction">Listen carefully and choose the pronoun you hear.</span>`;
     playBtn.classList.remove('hidden');
-    // Reproducir audio automáticamente tras 400ms
+    // Reproducir audio automáticamente
     setTimeout(() => speak(q.audio, 0.85), 400);
   }
 
-  // Opciones aleatorias
   const options = shuffleArray(q.options);
   const container = document.getElementById('options');
   container.innerHTML = '';
@@ -405,18 +385,18 @@ function nextQuestion() {
 }
 
 function endGame() {
+  window.speechSynthesis.cancel();
   document.getElementById('game-screen').classList.add('hidden');
   document.getElementById('final-screen').classList.remove('hidden');
   document.getElementById('final-correct').textContent = correctCount;
   document.getElementById('final-wrong').textContent = wrongCount;
-  const total = questions.length;
-  const percent = Math.round((correctCount / total) * 100);
+  const percent = Math.round((correctCount / questions.length) * 100);
   document.getElementById('final-percent').textContent = percent;
-  window.speechSynthesis.cancel();
 }
 
 // ================== EVENTS ==================
 document.getElementById('btn-start').addEventListener('click', startGame);
+
 document.getElementById('btn-play').addEventListener('click', () => {
   const q = questions[currentQuestion];
   if (!locked && q && q.type === "audio") {
