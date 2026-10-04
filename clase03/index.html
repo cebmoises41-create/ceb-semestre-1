@@ -108,7 +108,7 @@
     margin: 20px 0;
     line-height: 1.6;
     color: #ecf0f1;
-    min-height: 70px;
+    min-height: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,7 +195,7 @@
     <h1>Class 3: Pronouns</h1>
     <p class="subtitle">
       📖 <strong>Part A (15):</strong> Read a sentence and choose the pronoun that replaces the highlighted noun.<br>
-      🎧 <strong>Part B (15):</strong> Listen to a sentence and choose the pronoun you hear.
+      🎧 <strong>Part B (15):</strong> Listen to the incomplete sentence and choose the missing pronoun.
     </p>
     <p class="subtitle" style="color:#f1c40f; font-weight:bold;">30 questions · No time limit</p>
     <button class="btn-audio" id="btn-start" style="background:#27ae60;">▶ Start Game</button>
@@ -232,11 +232,11 @@
 <script>
 // ================== DATA ==================
 // PART A: Replace the Noun (15)
-// Se muestra oración con sustantivo resaltado, se elige el pronombre que lo reemplaza.
 // PART B: Audio Context (15)
-// El audio dice la oración COMPLETA con el pronombre correcto ya incluido.
-// El estudiante debe identificar qué pronombre escuchó.
-// ⚠️ CLAVE: NO usar "___" en el audio, porque el TTS lee "underscore".
+// El audio dice SOLO la parte incompleta de la oración (sin el pronombre).
+// Ej: "is blue" → el estudiante elige "It" (It is blue).
+// Ej: "are in the school" → el estudiante elige "We" (We are in the school).
+// ⚠️ El audio NO dice "underscore" ni blanks. Solo la frase incompleta.
 
 const QUESTIONS = [
   // ---------- PART A: REPLACE THE NOUN (15) ----------
@@ -257,22 +257,23 @@ const QUESTIONS = [
   { type: "replace", sentence: "Sofia and I love pizza.", highlight: "Sofia and I", correct: "We", options: ["We", "They", "You", "She"] },
 
   // ---------- PART B: AUDIO CONTEXT (15) ----------
-  // El audio dice la oración COMPLETA. El estudiante identifica el pronombre.
-  { type: "audio", audio: "He is my best friend. He is very kind.", correct: "He", options: ["He", "She", "It", "We"] },
-  { type: "audio", audio: "We are going to the party tonight.", correct: "We", options: ["We", "I", "She", "It"] },
-  { type: "audio", audio: "It is raining outside. Take an umbrella.", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "They are my parents. They love me very much.", correct: "They", options: ["They", "He", "She", "It"] },
-  { type: "audio", audio: "She is my sister. She is ten years old.", correct: "She", options: ["She", "He", "It", "We"] },
-  { type: "audio", audio: "They are my best friends. We play together every day.", correct: "They", options: ["They", "We", "You", "It"] },
-  { type: "audio", audio: "It is my new phone. It was very expensive.", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "I am from Mexico. I live in Guadalajara.", correct: "I", options: ["I", "You", "He", "They"] },
-  { type: "audio", audio: "You are a great student. You always do your homework.", correct: "You", options: ["You", "I", "We", "They"] },
-  { type: "audio", audio: "He is my father. He works in an office.", correct: "He", options: ["He", "She", "It", "We"] },
-  { type: "audio", audio: "We are very happy today. We passed the exam.", correct: "We", options: ["We", "They", "You", "It"] },
-  { type: "audio", audio: "It is cold in winter. It snows a lot.", correct: "It", options: ["It", "He", "She", "They"] },
-  { type: "audio", audio: "They are my neighbors. They are very friendly.", correct: "They", options: ["They", "We", "You", "He"] },
-  { type: "audio", audio: "She is my mother. She is a teacher.", correct: "She", options: ["She", "He", "It", "We"] },
-  { type: "audio", audio: "We are in the same class. We study English together.", correct: "We", options: ["We", "They", "You", "I"] }
+  // Audio = solo la frase incompleta (sin pronombre)
+  // El estudiante elige el pronombre que falta al inicio.
+  { type: "audio", audio: "is blue", correct: "It", options: ["It", "He", "She", "They"] },
+  { type: "audio", audio: "are in the school", correct: "We", options: ["We", "He", "She", "It"] },
+  { type: "audio", audio: "am a student", correct: "I", options: ["I", "You", "He", "She"] },
+  { type: "audio", audio: "is my father", correct: "He", options: ["He", "She", "It", "We"] },
+  { type: "audio", audio: "are my friends", correct: "They", options: ["They", "We", "You", "It"] },
+  { type: "audio", audio: "is my mother", correct: "She", options: ["She", "He", "It", "We"] },
+  { type: "audio", audio: "are happy today", correct: "We", options: ["We", "They", "You", "I"] },
+  { type: "audio", audio: "is raining outside", correct: "It", options: ["It", "He", "She", "They"] },
+  { type: "audio", audio: "are very tall", correct: "You", options: ["You", "I", "We", "They"] },
+  { type: "audio", audio: "is my best friend", correct: "He", options: ["He", "She", "It", "We"] },
+  { type: "audio", audio: "are classmates", correct: "We", options: ["We", "They", "You", "I"] },
+  { type: "audio", audio: "is my sister", correct: "She", options: ["She", "He", "It", "They"] },
+  { type: "audio", audio: "are my parents", correct: "They", options: ["They", "We", "You", "He"] },
+  { type: "audio", audio: "am from Mexico", correct: "I", options: ["I", "You", "He", "They"] },
+  { type: "audio", audio: "is very cold today", correct: "It", options: ["It", "He", "She", "We"] }
 ];
 
 // ================== STATE ==================
@@ -322,7 +323,7 @@ function loadQuestion() {
   if (q.type === "replace") {
     badgeContainer.innerHTML = '<span class="badge">📖 Replace the Noun</span>';
   } else {
-    badgeContainer.innerHTML = '<span class="badge audio">🎧 Listen & Identify</span>';
+    badgeContainer.innerHTML = '<span class="badge audio">🎧 Listen & Complete</span>';
   }
 
   const promptEl = document.getElementById('prompt');
@@ -333,7 +334,7 @@ function loadQuestion() {
     promptEl.innerHTML = `<span class="instruction">Choose the pronoun that replaces the highlighted noun:</span>${parts[0]}<span class="highlight">${q.highlight}</span>${parts[1] || ''}`;
     playBtn.classList.add('hidden');
   } else {
-    promptEl.innerHTML = `<span class="instruction">Listen carefully and choose the pronoun you hear.</span>`;
+    promptEl.innerHTML = `<span class="instruction">Listen to the incomplete sentence and choose the missing pronoun.</span>`;
     playBtn.classList.remove('hidden');
     // Reproducir audio automáticamente
     setTimeout(() => speak(q.audio, 0.85), 400);
