@@ -95,7 +95,7 @@
   }
 
   .prompt {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin: 20px 0;
     line-height: 1.7;
     color: #ecf0f1;
@@ -185,8 +185,7 @@
   <div id="intro-screen">
     <h1>Class 3: Pronouns</h1>
     <p class="subtitle">
-      Read each sentence and choose the pronoun that replaces the highlighted noun.<br>
-      <strong>Vocabulary:</strong> jobs · public places · family
+      Read each sentence and choose the pronoun that replaces the <strong>person or thing</strong> mentioned.
     </p>
     <p class="subtitle" style="color:#f1c40f; font-weight:bold;">30 questions · No time limit</p>
     <button class="btn-audio" id="btn-start" style="background:#27ae60;">▶ Start Game</button>
@@ -200,7 +199,7 @@
       <span>❌ <span id="score-wrong">0</span></span>
     </div>
 
-    <div id="badge-container"><span class="badge">📖 Replace the Noun</span></div>
+    <div id="badge-container"><span class="badge">📖 Replace with a Pronoun</span></div>
     <div class="prompt" id="prompt"></div>
 
     <div class="options" id="options"></div>
@@ -220,46 +219,46 @@
 
 <script>
 // ================== DATA ==================
-// 30 oraciones · Replace the Noun
-// Vocabulario: profesiones, lugares públicos, familia
-// El estudiante lee la oración con el sustantivo resaltado y elige el pronombre.
+// 30 oraciones simples. El estudiante lee y elige el pronombre
+// que reemplaza al sujeto (nombre propio, grupo o lugar).
+// Vocabulario: profesiones, lugares públicos, familia.
 
 const QUESTIONS = [
   // ---------- PROFESIONES (10) ----------
-  { sentence: "The doctor is very busy today.",         highlight: "The doctor",       correct: "He",   options: ["He", "She", "It", "They"] },
-  { sentence: "The teacher explained the lesson clearly.", highlight: "The teacher",    correct: "She",  options: ["She", "He", "It", "They"] },
-  { sentence: "The engineer designed a new bridge.",     highlight: "The engineer",     correct: "He",   options: ["He", "She", "It", "We"] },
-  { sentence: "The nurse helped the patient.",           highlight: "The nurse",        correct: "She",  options: ["She", "He", "It", "You"] },
-  { sentence: "The chef prepared a delicious meal.",     highlight: "The chef",         correct: "He",   options: ["He", "She", "It", "They"] },
-  { sentence: "The police officer stopped the car.",     highlight: "The police officer", correct: "He", options: ["He", "She", "It", "We"] },
-  { sentence: "The lawyer won the case.",                highlight: "The lawyer",       correct: "She",  options: ["She", "He", "It", "You"] },
-  { sentence: "The pilot flew the plane safely.",        highlight: "The pilot",        correct: "He",   options: ["He", "She", "It", "They"] },
-  { sentence: "The firefighter rescued the family.",     highlight: "The firefighter",  correct: "He",   options: ["He", "She", "It", "We"] },
-  { sentence: "The dentist checked my teeth.",           highlight: "The dentist",      correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "John is a dentist.",              highlight: "John",              correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "Mary is a teacher.",              highlight: "Mary",              correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "Peter is a doctor.",              highlight: "Peter",             correct: "He",   options: ["He", "She", "It", "We"] },
+  { sentence: "Anna is a nurse.",                highlight: "Anna",              correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "Luis is a chef.",                 highlight: "Luis",              correct: "He",   options: ["He", "She", "It", "You"] },
+  { sentence: "Sofia is a lawyer.",              highlight: "Sofia",             correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "Carlos is a pilot.",              highlight: "Carlos",            correct: "He",   options: ["He", "She", "It", "We"] },
+  { sentence: "Laura is a dentist.",             highlight: "Laura",             correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "David is a police officer.",      highlight: "David",             correct: "He",   options: ["He", "She", "It", "You"] },
+  { sentence: "Elena is a firefighter.",         highlight: "Elena",             correct: "She",  options: ["She", "He", "It", "They"] },
 
   // ---------- LUGARES PÚBLICOS (10) ----------
-  { sentence: "The hospital is near my house.",          highlight: "The hospital",     correct: "It",   options: ["It", "He", "She", "They"] },
-  { sentence: "The school opens at seven in the morning.", highlight: "The school",     correct: "It",   options: ["It", "He", "She", "We"] },
-  { sentence: "The park is full of children today.",     highlight: "The park",         correct: "It",   options: ["It", "He", "She", "They"] },
-  { sentence: "The library has many interesting books.", highlight: "The library",      correct: "It",   options: ["It", "He", "She", "You"] },
-  { sentence: "The restaurant serves Italian food.",     highlight: "The restaurant",   correct: "It",   options: ["It", "He", "She", "They"] },
-  { sentence: "The museum is open on Sundays.",          highlight: "The museum",       correct: "It",   options: ["It", "He", "She", "We"] },
-  { sentence: "The supermarket closes at ten.",          highlight: "The supermarket",  correct: "It",   options: ["It", "He", "She", "They"] },
-  { sentence: "The airport is very far from here.",      highlight: "The airport",      correct: "It",   options: ["It", "He", "She", "You"] },
-  { sentence: "The cinema shows new movies every week.", highlight: "The cinema",       correct: "It",   options: ["It", "He", "She", "They"] },
-  { sentence: "The bank opens at nine in the morning.",  highlight: "The bank",         correct: "It",   options: ["It", "He", "She", "We"] },
+  { sentence: "The hospital is very big.",       highlight: "The hospital",      correct: "It",   options: ["It", "He", "She", "They"] },
+  { sentence: "Sara is in the park.",            highlight: "Sara",              correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "The school is near my house.",    highlight: "The school",        correct: "It",   options: ["It", "He", "She", "We"] },
+  { sentence: "The library is open today.",      highlight: "The library",       correct: "It",   options: ["It", "He", "She", "They"] },
+  { sentence: "The restaurant is very clean.",   highlight: "The restaurant",    correct: "It",   options: ["It", "He", "She", "You"] },
+  { sentence: "Tom is in the museum.",           highlight: "Tom",               correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "The supermarket is closed.",      highlight: "The supermarket",   correct: "It",   options: ["It", "He", "She", "We"] },
+  { sentence: "Maria is at the airport.",        highlight: "Maria",             correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "The cinema is next to the bank.", highlight: "The cinema",        correct: "It",   options: ["It", "He", "She", "You"] },
+  { sentence: "The bank is closed on Sundays.",  highlight: "The bank",          correct: "It",   options: ["It", "He", "She", "They"] },
 
   // ---------- FAMILIA (10) ----------
-  { sentence: "My mother cooks dinner every night.",     highlight: "My mother",        correct: "She",  options: ["She", "He", "It", "They"] },
-  { sentence: "My father works in a big company.",       highlight: "My father",        correct: "He",   options: ["He", "She", "It", "We"] },
-  { sentence: "My brother plays soccer on weekends.",    highlight: "My brother",       correct: "He",   options: ["He", "She", "It", "They"] },
-  { sentence: "My sister studies medicine at university.", highlight: "My sister",      correct: "She",  options: ["She", "He", "It", "You"] },
-  { sentence: "My grandparents live in another city.",   highlight: "My grandparents",  correct: "They", options: ["They", "We", "He", "She"] },
-  { sentence: "My uncle is a famous musician.",          highlight: "My uncle",         correct: "He",   options: ["He", "She", "It", "They"] },
-  { sentence: "My aunt works as a nurse.",               highlight: "My aunt",          correct: "She",  options: ["She", "He", "It", "We"] },
-  { sentence: "My cousins visit us every summer.",       highlight: "My cousins",       correct: "They", options: ["They", "We", "He", "She"] },
-  { sentence: "My baby brother is sleeping now.",        highlight: "My baby brother",  correct: "He",   options: ["He", "She", "It", "They"] },
-  { sentence: "My grandmother makes delicious cakes.",   highlight: "My grandmother",   correct: "She",  options: ["She", "He", "It", "You"] }
+  { sentence: "My mother is a nurse.",           highlight: "My mother",         correct: "She",  options: ["She", "He", "It", "They"] },
+  { sentence: "My father is an engineer.",       highlight: "My father",         correct: "He",   options: ["He", "She", "It", "We"] },
+  { sentence: "Juan and Pedro are brothers.",    highlight: "Juan and Pedro",    correct: "They", options: ["They", "We", "He", "She"] },
+  { sentence: "My sister is a student.",         highlight: "My sister",         correct: "She",  options: ["She", "He", "It", "You"] },
+  { sentence: "My grandparents live in Mexico.", highlight: "My grandparents",   correct: "They", options: ["They", "We", "He", "She"] },
+  { sentence: "My uncle is a musician.",         highlight: "My uncle",          correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "My aunt is a doctor.",            highlight: "My aunt",           correct: "She",  options: ["She", "He", "It", "We"] },
+  { sentence: "Daniel and I are in the school.", highlight: "Daniel and I",      correct: "We",   options: ["We", "They", "You", "He"] },
+  { sentence: "My baby brother is sleeping.",    highlight: "My baby brother",   correct: "He",   options: ["He", "She", "It", "They"] },
+  { sentence: "My grandmother makes cakes.",     highlight: "My grandmother",    correct: "She",  options: ["She", "He", "It", "You"] }
 ];
 
 // ================== STATE ==================
@@ -296,12 +295,10 @@ function loadQuestion() {
   document.getElementById('q-current').textContent = currentQuestion + 1;
   document.getElementById('q-counter').textContent = `${currentQuestion + 1} / ${questions.length}`;
 
-  // Prompt con sustantivo resaltado
   const parts = q.sentence.split(q.highlight);
   const promptEl = document.getElementById('prompt');
-  promptEl.innerHTML = `<span class="instruction">Choose the pronoun that replaces the highlighted noun:</span>${parts[0]}<span class="highlight">${q.highlight}</span>${parts[1] || ''}`;
+  promptEl.innerHTML = `<span class="instruction">Choose the pronoun that replaces the highlighted word:</span>${parts[0]}<span class="highlight">${q.highlight}</span>${parts[1] || ''}`;
 
-  // Opciones aleatorias
   const options = shuffleArray(q.options);
   const container = document.getElementById('options');
   container.innerHTML = '';
