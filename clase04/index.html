@@ -1,350 +1,874 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no" class="notranslate">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 4: My Body</title>
-    
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            
-            /* IMAGEN DE FONDO */
-            background-image: url('https://img.freepik.com/free-vector/gradient-abstract-wavy-background_23-2149129221.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<meta name="robots" content="notranslate">
+<title>Class 4 - Feelings</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* FIRMA DEL AUTOR */
-        .author-box {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #2c3e50;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    position: relative;
+  }
 
-        h1 { color: #ffffff; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .subtitle { color: #ffffff; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+  .author-box {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: #ffffff;
+    color: #2c3e50;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
 
-        /* Panel de puntuación */
-        .scoreboard {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 12px 35px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            display: flex;
-            gap: 40px;
-            font-weight: bold;
-            font-size: 18px;
-        }
+  .card {
+    background: rgba(44, 62, 80, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    padding: 35px 30px;
+    max-width: 820px;
+    width: 100%;
+    text-align: center;
+    margin: 60px auto 20px;
+  }
 
-        .scoreboard .correct { color: #27ae60; }
-        .scoreboard .wrong { color: #c0392b; }
-        
-        .timer {
-            color: #2980b9;
-            min-width: 80px;
-            text-align: center;
-        }
-        .timer.danger {
-            color: #c0392b;
-            animation: pulse 0.5s infinite alternate;
-        }
+  h1 { font-size: 1.9rem; margin-bottom: 10px; }
+  h2 { font-size: 1.5rem; margin-bottom: 12px; color: #f1c40f; }
 
-        @keyframes pulse {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0.6; transform: scale(1.05); }
-        }
+  .subtitle { color: #bdc3c7; font-size: 1rem; margin-bottom: 18px; line-height: 1.6; }
 
-        /* Tarjeta principal (Glassmorphism) */
-        .game-container {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 40px 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
+  .notebook-box {
+    background: rgba(241, 196, 15, 0.12);
+    border: 1px solid rgba(241, 196, 15, 0.4);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin: 18px 0;
+    color: #f7dc6f;
+    font-size: 0.95rem;
+    text-align: left;
+    line-height: 1.7;
+  }
+  .notebook-box strong { color: #f1c40f; }
 
-        .progress-bar {
-            font-size: 14px;
-            color: #ffffff;
-            margin-bottom: 15px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 18px 0;
+  }
+  .vocab-item {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .vocab-item:hover {
+    background: rgba(52,152,219,0.25);
+    border-color: #3498db;
+    transform: translateY(-2px);
+  }
+  .vocab-item .emoji { font-size: 1.3rem; }
+  .vocab-item .en { font-weight: bold; color: #ffffff; }
+  .vocab-item .es { font-size: 0.78rem; color: #bdc3c7; display: block; }
+  .vocab-item .speaker { color: #3498db; font-size: 1rem; }
 
-        /* Palabra a adivinar */
-        .body-word {
-            font-size: 48px;
-            font-weight: bold;
-            color: #ffffff;
-            margin: 10px 0 25px 0;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            letter-spacing: 1px;
-        }
+  .btn {
+    background: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 34px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 8px 5px;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+  }
+  .btn:hover { background: #2980b9; transform: translateY(-2px); }
+  .btn.green { background: #27ae60; box-shadow: 0 4px 12px rgba(39,174,96,0.4); }
+  .btn.green:hover { background: #219150; }
+  .btn.orange { background: #e67e22; box-shadow: 0 4px 12px rgba(230,126,34,0.4); }
+  .btn.orange:hover { background: #ca6f1e; }
+  .btn.small { padding: 10px 20px; font-size: 0.95rem; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        /* Cuadrícula de imágenes (2x2) */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 5px;
-        }
+  .score-bar {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .score-bar span { display: flex; align-items: center; gap: 6px; }
 
-        .option-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid transparent;
-            border-radius: 16px;
-            padding: 30px 20px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px; /* Tamaño del emoji */
-        }
+  .badge {
+    display: inline-block;
+    background: rgba(52, 152, 219, 0.3);
+    color: #85c1e9;
+    font-size: 0.78rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
 
-        .option-btn:hover:not(:disabled) {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            background: #ffffff;
-        }
+  .prompt {
+    font-size: 1.25rem;
+    margin: 18px 0;
+    line-height: 1.7;
+    color: #ecf0f1;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .prompt .instruction { font-size: 0.95rem; color: #bdc3c7; }
+  .prompt .highlight {
+    background: rgba(241, 196, 15, 0.3);
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #f1c40f;
+  }
 
-        /* ESTILOS DE ACIERTO Y ERROR (Sin el nombre de abajo) */
-        .option-btn.correct-answer {
-            border-color: #27ae60 !important;
-            background: #d5f5e3 !important;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(39, 174, 96, 0.5);
-        }
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .option {
+    background: #ffffff;
+    color: #2c3e50;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 15px 18px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .option:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: #3498db;
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+  }
+  .option:disabled { cursor: not-allowed; }
+  .option.correct { background: #d5f5e3; border-color: #27ae60; color: #1e8449; }
+  .option.wrong { background: #fadbd8; border-color: #e74c3c; color: #922b21; }
 
-        .option-btn.wrong-answer {
-            border-color: #c0392b !important;
-            background: #fadbd8 !important;
-        }
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 14px 0;
+    min-height: 50px;
+  }
+  .word-chip {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .word-chip:hover:not(:disabled) { background: #2980b9; transform: translateY(-2px); }
+  .word-chip:disabled { opacity: 0.35; cursor: not-allowed; }
+  .word-chip.used { opacity: 0.3; }
 
-        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+  .answer-line {
+    background: rgba(255,255,255,0.1);
+    border: 2px dashed rgba(255,255,255,0.35);
+    border-radius: 12px;
+    min-height: 56px;
+    padding: 12px;
+    margin: 14px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    color: #bdc3c7;
+    font-style: italic;
+  }
+  .answer-line .placed {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-style: normal;
+  }
+  .answer-line .placed:hover { background: #e74c3c; }
 
-        /* Botón de reinicio */
-        .btn-reset {
-            margin-top: 30px;
-            padding: 12px 35px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background: #2c3e50;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            max-width: 220px;
-        }
+  .input-answer {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+    transition: border 0.2s;
+    font-family: inherit;
+  }
+  .input-answer:focus { border-color: #3498db; background: rgba(255,255,255,0.15); }
+  .input-answer.correct { border-color: #27ae60; background: rgba(39,174,96,0.2); }
+  .input-answer.wrong { border-color: #e74c3c; background: rgba(231,76,60,0.2); }
 
-        .btn-reset:hover { background: #1a252f; }
+  .progress { margin-top: 16px; color: #bdc3c7; font-size: 0.9rem; }
+  .hidden { display: none !important; }
 
-        .celebration { display: none; color: #d5f5e3; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-        .game-over { display: none; color: #fadbd8; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+  .final-screen h2 { font-size: 2rem; margin-bottom: 15px; color: #f1c40f; }
+  .final-screen p { font-size: 1.15rem; margin: 8px 0; color: #ecf0f1; }
 
-        @media (max-width: 500px) {
-            .game-container { padding: 20px; }
-            .body-word { font-size: 36px; }
-            .option-btn { font-size: 40px; padding: 20px; }
-        }
-    </style>
+  .section-intro {
+    background: rgba(52,152,219,0.15);
+    border-left: 4px solid #3498db;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 18px 0;
+    text-align: left;
+    line-height: 1.7;
+    font-size: 0.98rem;
+  }
+  .section-intro h3 { color: #85c1e9; margin-bottom: 6px; font-size: 1.05rem; }
+
+  .audio-big {
+    background: #9b59b6;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    font-size: 2.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 6px 20px rgba(155,89,182,0.5);
+    margin: 10px auto;
+    display: block;
+  }
+  .audio-big:hover { background: #8e44ad; transform: scale(1.06); }
+  .audio-big:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .feedback {
+    margin-top: 14px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    min-height: 26px;
+  }
+  .feedback.ok { color: #2ecc71; }
+  .feedback.bad { color: #e74c3c; }
+
+  @media (max-width: 520px) {
+    .card { padding: 22px 16px; margin-top: 70px; }
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.2rem; }
+    .option { font-size: 0.95rem; padding: 12px 10px; }
+    .options { grid-template-columns: 1fr; }
+    .prompt { font-size: 1.05rem; }
+    .btn { font-size: 1rem; padding: 12px 24px; }
+    .author-box { font-size: 0.75rem; padding: 6px 12px; top: 12px; right: 12px; }
+    .audio-big { width: 75px; height: 75px; font-size: 2rem; }
+  }
+</style>
 </head>
-<body>
+<body translate="no" class="notranslate">
 
-    <!-- FIRMA DEL AUTOR -->
-    <div class="author-box">FPB with AI</div>
+<div class="author-box" translate="no">FPB with AI</div>
 
-    <h1>Class 4: My Body</h1>
-    <p class="subtitle">Select the picture that matches the word.</p>
+<div class="card" translate="no">
 
-    <div class="scoreboard">
-        <span class="timer" id="timer-display">⏱️ 60s</span>
-        <span>✅ <span id="correct-count" class="correct">0</span></span>
-        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+  <!-- ================= PANTALLA DE INTRODUCCIÓN ================= -->
+  <div id="intro-screen">
+    <h1>Class 4: Feelings 😊😢😡</h1>
+    <p class="subtitle">
+      Hoy aprenderemos a expresar <strong>cómo nos sentimos</strong> en inglés.
+    </p>
+
+    <div class="notebook-box" translate="no">
+      📓 <strong>Antes de empezar:</strong><br>
+      • Escribe en tu cuaderno con <strong>tinta azul</strong>.<br>
+      • Anota la <strong>fecha</strong> y tu <strong>nombre</strong>.<br>
+      • Copia cada ejercicio y tu respuesta.<br>
+      • Puedes repetir el audio las veces que necesites.
     </div>
 
-    <div class="game-container">
-        <div class="progress-bar" id="progress-text">Part 1 of 10</div>
-        
-        <div class="body-word" id="body-word">EAR</div>
-
-        <div class="options-grid" id="options-container">
-            <!-- Aquí se generarán 4 botones con solo el emoji -->
-        </div>
-
-        <div id="celebration-msg" class="celebration">💪 Amazing! You know your body! 💪</div>
-        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
-        
-        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    <div class="section-intro" translate="no">
+      <h3>📖 What are feelings?</h3>
+      <p>
+        <strong>Feelings</strong> (sentimientos) son las emociones que sentimos:
+        felicidad, tristeza, enojo, miedo, cansancio, etc.
+        En inglés usamos el verbo <strong>to be</strong> + la emoción:
+      </p>
+      <p style="margin-top:8px;">
+        <em>I am happy.</em> → Yo estoy feliz.<br>
+        <em>She is sad.</em> → Ella está triste.<br>
+        <em>They are tired.</em> → Ellos están cansados.
+      </p>
     </div>
 
-    <script>
-        // Base de datos (SIN el nombre del label, solo el emoji y la palabra clave)
-        const bodyData = [
-            { id: "eye", word: "EYE", icon: "👁️" },
-            { id: "ear", word: "EAR", icon: "👂" },
-            { id: "nose", word: "NOSE", icon: "👃" },
-            { id: "mouth", word: "MOUTH", icon: "👄" },
-            { id: "hand", word: "HAND", icon: "✋" },
-            { id: "foot", word: "FOOT", icon: "🦶" },
-            { id: "arm", word: "ARM", icon: "💪" },
-            { id: "leg", word: "LEG", icon: "🦵" },
-            { id: "head", word: "HEAD", icon: "🧠" },
-            { id: "heart", word: "HEART", icon: "❤️" }
-        ];
+    <h2>🔊 Practice Pronunciation</h2>
+    <p class="subtitle">Toca cada palabra para escuchar cómo se pronuncia.</p>
 
-        let correctCount = 0, wrongCount = 0, currentIndex = 0;
-        let timeLeft = 60, timerInterval = null;
-        let isGameActive = false, isAnswered = false;
+    <div class="vocab-grid" id="vocab-grid"></div>
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+    <div class="section-intro" translate="no">
+      <h3>🎮 How the game works</h3>
+      <p>
+        <strong>Part A:</strong> Escucha una palabra y elige la emoción. 🎧<br>
+        <strong>Part B:</strong> Escucha una oración y elige lo que oíste. 🎧<br>
+        <strong>Part C:</strong> Escucha en español y elige en inglés. 🎧<br>
+        <strong>Part D:</strong> Ordena las palabras y <strong>escribe</strong> la oración. ✍️
+      </p>
+    </div>
 
-        function initGame() {
-            clearInterval(timerInterval);
-            timeLeft = 60; isGameActive = true; correctCount = 0; wrongCount = 0; currentIndex = 0;
-            
-            document.getElementById('correct-count').textContent = 0;
-            document.getElementById('wrong-count').textContent = 0;
-            document.getElementById('celebration-msg').style.display = 'none';
-            document.getElementById('game-over-msg').style.display = 'none';
-            document.getElementById('timer-display').textContent = '⏱️ 60s';
-            document.getElementById('timer-display').classList.remove('danger');
+    <button class="btn green" id="btn-start">▶ Start Game</button>
+  </div>
 
-            shuffleArray(bodyData);
-            loadBodyPart();
-            startTimer();
-        }
+  <!-- ================= PANTALLA DE JUEGO ================= -->
+  <div id="game-screen" class="hidden">
+    <div class="score-bar">
+      <span>📝 <span id="q-counter">1 / 40</span></span>
+      <span>✅ <span id="score-correct">0</span></span>
+      <span>❌ <span id="score-wrong">0</span></span>
+      <span>📚 Part <span id="part-label">A</span></span>
+    </div>
 
-        function loadBodyPart() {
-            if (currentIndex >= bodyData.length) { gameWon(); return; }
+    <div id="badge-container"><span class="badge" id="badge">Part A · Listen & Choose</span></div>
+    <div class="prompt" id="prompt"></div>
+    <div id="dynamic-area"></div>
+    <div class="feedback" id="feedback"></div>
 
-            isAnswered = false;
-            const currentPart = bodyData[currentIndex];
-            
-            document.getElementById('progress-text').textContent = `Part ${currentIndex + 1} of ${bodyData.length}`;
-            document.getElementById('body-word').textContent = currentPart.word; // Solo la palabra arriba
+    <p class="progress">Question <span id="q-current">1</span> of <span id="q-total">40</span></p>
+  </div>
 
-            // Generar 4 opciones visuales (Solo el emoji gigante, sin texto)
-            let options = [currentPart];
-            let others = bodyData.filter(b => b.id !== currentPart.id);
-            shuffleArray(others);
-            for(let i=0; i<3; i++) { options.push(others[i]); }
-            shuffleArray(options);
+  <!-- ================= PANTALLA FINAL ================= -->
+  <div id="final-screen" class="hidden final-screen">
+    <h2>🎉 Great job!</h2>
+    <p>✅ Correct: <span id="final-correct">0</span></p>
+    <p>❌ Wrong: <span id="final-wrong">0</span></p>
+    <p>📊 Score: <span id="final-percent">0</span>%</p>
+    <p style="margin-top:16px; color:#f1c40f;">
+      ✍️ Recuerda copiar tus respuestas en el cuaderno con tinta azul.
+    </p>
+    <button class="btn green" onclick="location.reload()" style="margin-top:20px;">🔁 Play Again</button>
+  </div>
 
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            
-            options.forEach(part => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerHTML = `${part.icon}`; // SOLO EL EMOJI, sin texto extra
-                btn.dataset.correct = (part.id === currentPart.id);
+</div>
 
-                btn.addEventListener('click', function() {
-                    if (!isGameActive || isAnswered) return;
-                    isAnswered = true;
-                    clearInterval(timerInterval);
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+<script>
+// =====================================================================
+//  CLASS 4 - FEELINGS
+//  40 ejercicios en 4 partes (10 cada una)
+//  Sin límite de tiempo · Respuestas aleatorias · Audio con Web Speech
+// =====================================================================
 
-                    if (this.dataset.correct === 'true') {
-                        this.classList.add('correct-answer');
-                        correctCount++;
-                        document.getElementById('correct-count').textContent = correctCount;
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= bodyData.length) gameWon(); 
-                            else { loadBodyPart(); startTimer(); } 
-                        }, 600);
-                    } else {
-                        this.classList.add('wrong-answer');
-                        wrongCount++;
-                        document.getElementById('wrong-count').textContent = wrongCount;
-                        // Mostrar la correcta
-                        document.querySelectorAll('.option-btn').forEach(b => {
-                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                        });
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= bodyData.length) gameWon(); 
-                            else { loadBodyPart(); startTimer(); } 
-                        }, 1000);
-                    }
-                });
-                container.appendChild(btn);
-            });
-        }
+// -------------------- VOCABULARIO --------------------
+const VOCAB = [
+  { en: "Happy",     es: "Feliz",       emoji: "😊" },
+  { en: "Sad",       es: "Triste",      emoji: "😢" },
+  { en: "Angry",     es: "Enojado",     emoji: "😡" },
+  { en: "Tired",     es: "Cansado",     emoji: "😴" },
+  { en: "Scared",    es: "Asustado",    emoji: "😨" },
+  { en: "Hungry",    es: "Hambriento",  emoji: "🍽️" },
+  { en: "Thirsty",   es: "Sediento",    emoji: "💧" },
+  { en: "Excited",   es: "Emocionado",  emoji: "🤩" },
+  { en: "Bored",     es: "Aburrido",    emoji: "😑" },
+  { en: "Surprised", es: "Sorprendido", emoji: "😲" },
+  { en: "Sick",      es: "Enfermo",     emoji: "🤒" },
+  { en: "Fine",      es: "Bien",        emoji: "🙂" }
+];
 
-        function startTimer() {
-            timeLeft = 60;
-            document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
-            document.getElementById('timer-display').classList.remove('danger');
+// -------------------- PARTE A: audio palabra → emoción --------------------
+// Se reproduce una palabra en inglés y el estudiante elige la emoción.
+const PART_A = [
+  { audio: "Happy",     correct: "Happy",     options: ["Happy", "Sad", "Angry", "Tired"] },
+  { audio: "Sad",       correct: "Sad",       options: ["Sad", "Happy", "Excited", "Bored"] },
+  { audio: "Angry",     correct: "Angry",     options: ["Angry", "Scared", "Fine", "Hungry"] },
+  { audio: "Tired",     correct: "Tired",     options: ["Tired", "Excited", "Happy", "Thirsty"] },
+  { audio: "Scared",    correct: "Scared",    options: ["Scared", "Surprised", "Sad", "Fine"] },
+  { audio: "Hungry",    correct: "Hungry",    options: ["Hungry", "Thirsty", "Bored", "Angry"] },
+  { audio: "Thirsty",   correct: "Thirsty",   options: ["Thirsty", "Hungry", "Sick", "Happy"] },
+  { audio: "Excited",   correct: "Excited",   options: ["Excited", "Bored", "Tired", "Sad"] },
+  { audio: "Bored",     correct: "Bored",     options: ["Bored", "Surprised", "Excited", "Scared"] },
+  { audio: "Surprised", correct: "Surprised", options: ["Surprised", "Sick", "Angry", "Fine"] }
+];
 
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
-                if (timeLeft <= 10) document.getElementById('timer-display').classList.add('danger');
+// -------------------- PARTE B: audio oración → elegir lo que oyen --------------------
+// Se reproduce una oración simple. El estudiante elige la opción correcta.
+const PART_B = [
+  { audio: "She is happy.",        correct: "She is happy.",        options: ["She is happy.", "He is happy.", "She is sad.", "They are happy."] },
+  { audio: "He is sad.",           correct: "He is sad.",           options: ["He is sad.", "She is sad.", "He is tired.", "We are sad."] },
+  { audio: "I am hungry.",         correct: "I am hungry.",         options: ["I am hungry.", "I am thirsty.", "You are hungry.", "I am angry."] },
+  { audio: "They are excited.",    correct: "They are excited.",    options: ["They are excited.", "We are excited.", "They are bored.", "She is excited."] },
+  { audio: "We are tired.",        correct: "We are tired.",        options: ["We are tired.", "They are tired.", "We are scared.", "I am tired."] },
+  { audio: "He is angry.",         correct: "He is angry.",         options: ["He is angry.", "She is angry.", "He is hungry.", "It is angry."] },
+  { audio: "She is thirsty.",      correct: "She is thirsty.",      options: ["She is thirsty.", "He is thirsty.", "She is sick.", "They are thirsty."] },
+  { audio: "I am scared.",         correct: "I am scared.",         options: ["I am scared.", "I am surprised.", "You are scared.", "I am sad."] },
+  { audio: "They are bored.",      correct: "They are bored.",      options: ["They are bored.", "We are bored.", "They are tired.", "He is bored."] },
+  { audio: "She is surprised.",    correct: "She is surprised.",    options: ["She is surprised.", "He is surprised.", "She is scared.", "We are surprised."] }
+];
 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    if (isAnswered) return;
-                    isGameActive = false;
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-                    
-                    // Mostrar respuesta correcta si se acabó el tiempo
-                    document.querySelectorAll('.option-btn').forEach(b => {
-                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                    });
-                    wrongCount++;
-                    document.getElementById('wrong-count').textContent = wrongCount;
+// -------------------- PARTE C: audio español → elegir inglés --------------------
+// Mezcla positivo y negativo. El estudiante escucha en español y elige inglés.
+const PART_C = [
+  { audio: "Ella está feliz.",        correct: "She is happy.",      options: ["She is happy.", "She is sad.", "He is happy.", "She is angry."] },
+  { audio: "Él está triste.",         correct: "He is sad.",         options: ["He is sad.", "He is happy.", "She is sad.", "He is tired."] },
+  { audio: "Yo estoy enojado.",       correct: "I am angry.",        options: ["I am angry.", "I am happy.", "You are angry.", "I am scared."] },
+  { audio: "Ellos están cansados.",   correct: "They are tired.",    options: ["They are tired.", "They are excited.", "We are tired.", "They are bored."] },
+  { audio: "Ella está asustada.",     correct: "She is scared.",     options: ["She is scared.", "She is surprised.", "He is scared.", "She is sick."] },
+  { audio: "Nosotros tenemos hambre.",correct: "We are hungry.",     options: ["We are hungry.", "We are thirsty.", "They are hungry.", "We are fine."] },
+  { audio: "Él tiene sed.",           correct: "He is thirsty.",     options: ["He is thirsty.", "He is hungry.", "She is thirsty.", "He is sick."] },
+  { audio: "Yo estoy emocionado.",    correct: "I am excited.",      options: ["I am excited.", "I am bored.", "You are excited.", "I am tired."] },
+  { audio: "Ella está aburrida.",     correct: "She is bored.",      options: ["She is bored.", "She is excited.", "He is bored.", "She is tired."] },
+  { audio: "Ellos están sorprendidos.",correct: "They are surprised.",options: ["They are surprised.", "They are scared.", "We are surprised.", "They are happy."] }
+];
 
-                    setTimeout(() => {
-                        currentIndex++;
-                        isGameActive = true;
-                        if (currentIndex >= bodyData.length) gameWon();
-                        else { loadBodyPart(); startTimer(); }
-                    }, 1500);
-                }
-            }, 1000);
-        }
+// -------------------- PARTE D: ordenar y escribir --------------------
+// Se dan palabras desordenadas y el estudiante ESCRIBE la oración.
+const PART_D = [
+  { words: ["is", "She", "happy"],          correct: "She is happy." },
+  { words: ["is", "He", "sad"],             correct: "He is sad." },
+  { words: ["am", "I", "angry"],            correct: "I am angry." },
+  { words: ["are", "They", "tired"],        correct: "They are tired." },
+  { words: ["is", "She", "scared"],         correct: "She is scared." },
+  { words: ["are", "We", "hungry"],         correct: "We are hungry." },
+  { words: ["is", "He", "thirsty"],         correct: "He is thirsty." },
+  { words: ["am", "I", "excited"],          correct: "I am excited." },
+  { words: ["is", "She", "bored"],          correct: "She is bored." },
+  { words: ["are", "They", "surprised"],    correct: "They are surprised." }
+];
 
-        function gameWon() {
-            isGameActive = false; clearInterval(timerInterval);
-            document.getElementById('celebration-msg').style.display = 'block';
-        }
+// =====================================================================
+//  UTILIDADES
+// =====================================================================
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
-        window.onload = initGame;
-    </script>
+// Normaliza texto para comparar respuestas escritas
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(/[.,!?;:]/g, '');
+}
+
+// =====================================================================
+//  AUDIO (Web Speech API)
+// =====================================================================
+let currentUtterance = null;
+
+function speak(text, lang = 'en-US', rate = 0.85) {
+  if (!('speechSynthesis' in window)) {
+    alert('Tu navegador no soporta audio. Intenta con Chrome o Edge.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = rate;
+  u.pitch = 1;
+  u.volume = 1;
+  // Intentar elegir una voz del idioma pedido
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase()));
+  if (voice) u.voice = voice;
+  currentUtterance = u;
+  window.speechSynthesis.speak(u);
+}
+
+// Precargar voces (algunos navegadores las cargan async)
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {};
+  window.speechSynthesis.getVoices();
+}
+
+// =====================================================================
+//  ESTADO DEL JUEGO
+// =====================================================================
+let questions = [];        // lista completa mezclada de las 4 partes
+let currentIndex = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let locked = false;
+
+// =====================================================================
+//  CONSTRUIR LISTA DE PREGUNTAS
+// =====================================================================
+function buildQuestions() {
+  const list = [];
+
+  // PARTE A
+  shuffleArray(PART_A).forEach(q => {
+    list.push({
+      part: 'A',
+      badge: 'Part A · Listen & Choose the Emotion',
+      instruction: '🎧 Escucha la palabra y elige la emoción correcta:',
+      type: 'audio-options',
+      audio: q.audio,
+      audioLang: 'en-US',
+      correct: q.correct,
+      options: q.options
+    });
+  });
+
+  // PARTE B
+  shuffleArray(PART_B).forEach(q => {
+    list.push({
+      part: 'B',
+      badge: 'Part B · Listen & Choose the Sentence',
+      instruction: '🎧 Escucha la oración y elige lo que escuchaste:',
+      type: 'audio-options',
+      audio: q.audio,
+      audioLang: 'en-US',
+      correct: q.correct,
+      options: q.options
+    });
+  });
+
+  // PARTE C
+  shuffleArray(PART_C).forEach(q => {
+    list.push({
+      part: 'C',
+      badge: 'Part C · Listen in Spanish → Choose in English',
+      instruction: '🎧 Escucha en español y elige la traducción correcta en inglés:',
+      type: 'audio-options',
+      audio: q.audio,
+      audioLang: 'es-ES',
+      correct: q.correct,
+      options: q.options
+    });
+  });
+
+  // PARTE D
+  shuffleArray(PART_D).forEach(q => {
+    list.push({
+      part: 'D',
+      badge: 'Part D · Order & Write the Sentence',
+      instruction: '✍️ Ordena las palabras y ESCRIBE la oración completa en inglés:',
+      type: 'write-sentence',
+      words: shuffleArray(q.words),
+      correct: q.correct
+    });
+  });
+
+  return list;
+}
+
+// =====================================================================
+//  INICIO
+// =====================================================================
+function startGame() {
+  questions = buildQuestions();
+  currentIndex = 0;
+  correctCount = 0;
+  wrongCount = 0;
+
+  document.getElementById('intro-screen').classList.add('hidden');
+  document.getElementById('game-screen').classList.remove('hidden');
+  document.getElementById('q-total').textContent = questions.length;
+  loadQuestion();
+}
+
+// =====================================================================
+//  CARGAR PREGUNTA
+// =====================================================================
+function loadQuestion() {
+  locked = false;
+  const q = questions[currentIndex];
+
+  document.getElementById('q-current').textContent = currentIndex + 1;
+  document.getElementById('q-counter').textContent = `${currentIndex + 1} / ${questions.length}`;
+  document.getElementById('part-label').textContent = q.part;
+  document.getElementById('badge').textContent = q.badge;
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+
+  const promptEl = document.getElementById('prompt');
+  const dynamicArea = document.getElementById('dynamic-area');
+  promptEl.innerHTML = `<span class="instruction">${q.instruction}</span>`;
+  dynamicArea.innerHTML = '';
+
+  if (q.type === 'audio-options') {
+    renderAudioOptions(q, promptEl, dynamicArea);
+  } else if (q.type === 'write-sentence') {
+    renderWriteSentence(q, promptEl, dynamicArea);
+  }
+}
+
+// =====================================================================
+//  RENDER: AUDIO + OPCIONES (Partes A, B, C)
+// =====================================================================
+function renderAudioOptions(q, promptEl, dynamicArea) {
+  // Botón grande de audio
+  const audioBtn = document.createElement('button');
+  audioBtn.className = 'audio-big';
+  audioBtn.innerHTML = '🔊';
+  audioBtn.title = 'Reproducir audio';
+  audioBtn.addEventListener('click', () => speak(q.audio, q.audioLang, 0.8));
+  promptEl.appendChild(audioBtn);
+
+  const hint = document.createElement('div');
+  hint.className = 'instruction';
+  hint.style.marginTop = '6px';
+  hint.textContent = q.part === 'C'
+    ? 'Toca el botón para escuchar en español.'
+    : 'Toca el botón para escuchar.';
+  promptEl.appendChild(hint);
+
+  // Reproducir automáticamente
+  setTimeout(() => speak(q.audio, q.audioLang, 0.8), 350);
+
+  // Opciones
+  const optionsWrap = document.createElement('div');
+  optionsWrap.className = 'options';
+  const opts = shuffleArray(q.options);
+
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => checkOptionsAnswer(btn, opt, q.correct, optionsWrap));
+    optionsWrap.appendChild(btn);
+  });
+
+  dynamicArea.appendChild(optionsWrap);
+}
+
+function checkOptionsAnswer(btn, selected, correct, wrap) {
+  if (locked) return;
+  locked = true;
+
+  const allButtons = wrap.querySelectorAll('.option');
+  allButtons.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('feedback');
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    correctCount++;
+    document.getElementById('score-correct').textContent = correctCount;
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback ok';
+    setTimeout(nextQuestion, 1000);
+  } else {
+    btn.classList.add('wrong');
+    wrongCount++;
+    document.getElementById('score-wrong').textContent = wrongCount;
+    allButtons.forEach(b => {
+      if (b.textContent === correct) b.classList.add('correct');
+    });
+    fb.textContent = `❌ Correct answer: ${correct}`;
+    fb.className = 'feedback bad';
+    setTimeout(nextQuestion, 1800);
+  }
+}
+
+// =====================================================================
+//  RENDER: ORDENAR Y ESCRIBIR (Parte D)
+// =====================================================================
+function renderWriteSentence(q, promptEl, dynamicArea) {
+  // Mostrar palabras desordenadas como pista
+  const wordBank = document.createElement('div');
+  wordBank.className = 'word-bank';
+  q.words.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.style.cursor = 'default';
+    chip.textContent = w;
+    wordBank.appendChild(chip);
+  });
+  dynamicArea.appendChild(wordBank);
+
+  // Instrucción específica
+  const hint = document.createElement('div');
+  hint.className = 'instruction';
+  hint.style.marginTop = '4px';
+  hint.innerHTML = '✍️ Escribe la oración completa en el cuaderno y aquí. No olvides el punto final.';
+  dynamicArea.appendChild(hint);
+
+  // Input de respuesta
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'input-answer';
+  input.placeholder = 'Escribe la oración aquí...';
+  input.autocomplete = 'off';
+  input.autocorrect = 'off';
+  input.autocapitalize = 'off';
+  input.spellcheck = false;
+  input.translate = 'no';
+  input.lang = 'en';
+  dynamicArea.appendChild(input);
+
+  // Botón de comprobar
+  const checkBtn = document.createElement('button');
+  checkBtn.className = 'btn orange';
+  checkBtn.style.marginTop = '14px';
+  checkBtn.textContent = '✔ Check Answer';
+  dynamicArea.appendChild(checkBtn);
+
+  // Botón de audio (opcional, reproduce la oración correcta si la escriben bien)
+  const audioHintBtn = document.createElement('button');
+  audioHintBtn.className = 'btn small';
+  audioHintBtn.style.marginTop = '14px';
+  audioHintBtn.style.marginLeft = '8px';
+  audioHintBtn.style.background = '#9b59b6';
+  audioHintBtn.textContent = '🔊 Escuchar pista';
+  audioHintBtn.addEventListener('click', () => speak(q.correct, 'en-US', 0.8));
+  dynamicArea.appendChild(audioHintBtn);
+
+  // Evento comprobar
+  function check() {
+    if (locked) return;
+    const userAnswer = input.value;
+    if (!userAnswer.trim()) {
+      input.focus();
+      return;
+    }
+    locked = true;
+    checkBtn.disabled = true;
+    audioHintBtn.disabled = true;
+    input.disabled = true;
+
+    const fb = document.getElementById('feedback');
+    const isCorrect = normalize(userAnswer) === normalize(q.correct);
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correctCount++;
+      document.getElementById('score-correct').textContent = correctCount;
+      fb.textContent = '✅ Excellent! Well written.';
+      fb.className = 'feedback ok';
+      speak(q.correct, 'en-US', 0.85);
+      setTimeout(nextQuestion, 1600);
+    } else {
+      input.classList.add('wrong');
+      wrongCount++;
+      document.getElementById('score-wrong').textContent = wrongCount;
+      fb.innerHTML = `❌ Correct: <span style="color:#f1c40f;">${q.correct}</span>`;
+      fb.className = 'feedback bad';
+      speak(q.correct, 'en-US', 0.85);
+      setTimeout(nextQuestion, 2600);
+    }
+  }
+
+  checkBtn.addEventListener('click', check);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') check();
+  });
+  setTimeout(() => input.focus(), 300);
+}
+
+// =====================================================================
+//  SIGUIENTE PREGUNTA
+// =====================================================================
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= questions.length) {
+    endGame();
+  } else {
+    loadQuestion();
+  }
+}
+
+// =====================================================================
+//  FIN DEL JUEGO
+// =====================================================================
+function endGame() {
+  document.getElementById('game-screen').classList.add('hidden');
+  document.getElementById('final-screen').classList.remove('hidden');
+  document.getElementById('final-correct').textContent = correctCount;
+  document.getElementById('final-wrong').textContent = wrongCount;
+  const percent = Math.round((correctCount / questions.length) * 100);
+  document.getElementById('final-percent').textContent = percent;
+}
+
+// =====================================================================
+//  VOCABULARIO INTERACTIVO (pantalla de inicio)
+// =====================================================================
+function renderVocab() {
+  const grid = document.getElementById('vocab-grid');
+  VOCAB.forEach(v => {
+    const item = document.createElement('div');
+    item.className = 'vocab-item';
+    item.translate = 'no';
+    item.innerHTML = `
+      <span class="emoji">${v.emoji}</span>
+      <span style="flex:1; text-align:left;">
+        <span class="en">${v.en}</span>
+        <span class="es">${v.es}</span>
+      </span>
+      <span class="speaker">🔊</span>
+    `;
+    item.addEventListener('click', () => speak(v.en, 'en-US', 0.8));
+    grid.appendChild(item);
+  });
+}
+
+// =====================================================================
+//  EVENTOS
+// =====================================================================
+document.getElementById('btn-start').addEventListener('click', startGame);
+renderVocab();
+
+// Forzar prevención de traducción en navegadores que la ignoran
+document.documentElement.setAttribute('translate', 'no');
+document.documentElement.classList.add('notranslate');
+document.body.setAttribute('translate', 'no');
+document.body.classList.add('notranslate');
+</script>
+
 </body>
 </html>
