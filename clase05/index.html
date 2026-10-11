@@ -1,444 +1,844 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no" class="notranslate">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 5: Family Tree Challenge</title>
-    
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            
-            /* IMAGEN DE FONDO (La de la boda que se ve en tu captura) */
-            background-image: url('https://img.freepik.com/free-vector/floral-wedding-invitation-background_23-2148985953.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<meta name="robots" content="notranslate">
+<title>Class 5 - Possessive Adjectives & Review</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* FIRMA DEL AUTOR */
-        .author-box {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #2c3e50;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    position: relative;
+  }
 
-        /* Títulos */
-        h1 { 
-            color: #ffffff; 
-            margin-bottom: 5px; 
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5); 
-        }
-        .subtitle { 
-            color: #ffffff; 
-            margin-bottom: 20px; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
-        }
+  .author-box {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: #ffffff;
+    color: #2c3e50;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
 
-        /* Panel de puntuación */
-        .scoreboard {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 12px 35px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            display: flex;
-            gap: 40px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #2c3e50; /* Texto oscuro */
-        }
+  .card {
+    background: rgba(44, 62, 80, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    padding: 35px 30px;
+    max-width: 820px;
+    width: 100%;
+    text-align: center;
+    margin: 60px auto 20px;
+  }
 
-        .scoreboard .correct { color: #27ae60; }
-        .scoreboard .wrong { color: #c0392b; }
-        
-        .timer {
-            color: #2980b9;
-            min-width: 80px;
-            text-align: center;
-        }
-        .timer.danger {
-            color: #c0392b;
-            animation: pulse 0.5s infinite alternate;
-        }
+  h1 { font-size: 1.9rem; margin-bottom: 10px; }
+  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #f1c40f; }
 
-        @keyframes pulse {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0.6; transform: scale(1.05); }
-        }
+  .subtitle { color: #bdc3c7; font-size: 1rem; margin-bottom: 18px; line-height: 1.6; }
 
-        /* Tarjeta principal (FONDO OSCURO para buen contraste) */
-        .game-container {
-            background: rgba(44, 62, 80, 0.85); /* Azul grisáceo oscuro y elegante */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            max-width: 650px;
-            width: 100%;
-            text-align: center;
-        }
+  .notebook-box {
+    background: rgba(241, 196, 15, 0.12);
+    border: 1px solid rgba(241, 196, 15, 0.4);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin: 18px 0;
+    color: #f7dc6f;
+    font-size: 0.95rem;
+    text-align: left;
+    line-height: 1.7;
+  }
+  .notebook-box strong { color: #f1c40f; }
 
-        .progress-bar {
-            font-size: 14px;
-            color: #bdc3c7; /* Gris claro sobre fondo oscuro */
-            margin-bottom: 15px;
-        }
+  .section-intro {
+    background: rgba(52,152,219,0.15);
+    border-left: 4px solid #3498db;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 18px 0;
+    text-align: left;
+    line-height: 1.7;
+    font-size: 0.98rem;
+  }
+  .section-intro h3 { color: #85c1e9; margin-bottom: 6px; font-size: 1.05rem; }
 
-        /* Árbol genealógico visual (Colores renovados) */
-        .family-tree-box {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+  table.poss {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.95rem;
+  }
+  table.poss th, table.poss td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    text-align: left;
+  }
+  table.poss th { color: #85c1e9; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+  table.poss td { color: #ecf0f1; }
+  table.poss td strong { color: #f1c40f; }
 
-        .tree-member {
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #2c3e50; /* Texto oscuro */
-            min-width: 60px;
-            text-align: center;
-        }
+  .btn {
+    background: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 34px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 8px 5px;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+  }
+  .btn:hover { background: #2980b9; transform: translateY(-2px); }
+  .btn.green { background: #27ae60; box-shadow: 0 4px 12px rgba(39,174,96,0.4); }
+  .btn.green:hover { background: #219150; }
+  .btn.orange { background: #e67e22; box-shadow: 0 4px 12px rgba(230,126,34,0.4); }
+  .btn.orange:hover { background: #ca6f1e; }
+  .btn.small { padding: 10px 20px; font-size: 0.95rem; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        .tree-member.main {
-            background: #2ecc71;
-            color: #fff;
-        }
+  .score-bar {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .score-bar span { display: flex; align-items: center; gap: 6px; }
 
-        .tree-member.main-blue {
-            background: #3498db;
-            color: #fff;
-        }
+  .badge {
+    display: inline-block;
+    background: rgba(52, 152, 219, 0.3);
+    color: #85c1e9;
+    font-size: 0.78rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
 
-        .tree-member.unknown {
-            background: #ffeaa7;
-            border: 2px dashed #e74c3c;
-            animation: blink 1s infinite;
-            color: #2c3e50;
-        }
+  .prompt {
+    font-size: 1.25rem;
+    margin: 18px 0;
+    line-height: 1.7;
+    color: #ecf0f1;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .prompt .instruction { font-size: 0.95rem; color: #bdc3c7; }
+  .prompt .highlight {
+    background: rgba(241, 196, 15, 0.3);
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #f1c40f;
+  }
+  .prompt .blank {
+    display: inline-block;
+    min-width: 70px;
+    border-bottom: 2px solid #f1c40f;
+    color: #f1c40f;
+    font-weight: bold;
+  }
 
-        @keyframes blink {
-            0% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
-            100% { opacity: 0.7; transform: scale(1); }
-        }
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .option {
+    background: #ffffff;
+    color: #2c3e50;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 15px 18px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .option:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: #3498db;
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+  }
+  .option:disabled { cursor: not-allowed; }
+  .option.correct { background: #d5f5e3; border-color: #27ae60; color: #1e8449; }
+  .option.wrong { background: #fadbd8; border-color: #e74c3c; color: #922b21; }
 
-        /* Pregunta (Color oscuro sobre fondo blanco dentro de tarjeta) */
-        .question-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+  .input-answer {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+    transition: border 0.2s;
+    font-family: inherit;
+    margin-top: 8px;
+  }
+  .input-answer:focus { border-color: #3498db; background: rgba(255,255,255,0.15); }
+  .input-answer.correct { border-color: #27ae60; background: rgba(39,174,96,0.2); }
+  .input-answer.wrong { border-color: #e74c3c; background: rgba(231,76,60,0.2); }
 
-        .question-text {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c3e50; /* Texto oscuro */
-            margin: 0;
-            line-height: 1.5;
-        }
+  .progress { margin-top: 16px; color: #bdc3c7; font-size: 0.9rem; }
+  .hidden { display: none !important; }
 
-        .question-text .highlight {
-            color: #e67e22;
-            text-decoration: underline;
-            text-decoration-style: wavy;
-        }
+  .final-screen h2 { font-size: 2rem; margin-bottom: 15px; color: #f1c40f; }
+  .final-screen p { font-size: 1.15rem; margin: 8px 0; color: #ecf0f1; }
 
-        /* Botones de opciones */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 5px;
-        }
+  .audio-big {
+    background: #9b59b6;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 6px 20px rgba(155,89,182,0.5);
+    margin: 10px auto;
+    display: block;
+  }
+  .audio-big:hover { background: #8e44ad; transform: scale(1.06); }
 
-        .option-btn {
-            background: #ffffff;
-            border: 2px solid #ecf0f1;
-            border-radius: 12px;
-            padding: 18px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50; /* Texto oscuro */
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+  .feedback {
+    margin-top: 14px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    min-height: 26px;
+  }
+  .feedback.ok { color: #2ecc71; }
+  .feedback.bad { color: #e74c3c; }
 
-        .option-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            border-color: #3498db;
-        }
-
-        .option-btn.correct-answer {
-            border-color: #27ae60 !important;
-            background: #d5f5e3 !important;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
-        }
-
-        .option-btn.wrong-answer {
-            border-color: #c0392b !important;
-            background: #fadbd8 !important;
-        }
-
-        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-
-        /* Botón de reinicio */
-        .btn-reset {
-            margin-top: 25px;
-            padding: 12px 35px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background: #2c3e50;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            max-width: 220px;
-        }
-
-        .btn-reset:hover { background: #1a252f; }
-
-        .celebration { display: none; color: #2ecc71; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-        .game-over { display: none; color: #e74c3c; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-
-        @media (max-width: 500px) {
-            .game-container { padding: 20px; }
-            .options-grid { grid-template-columns: 1fr; }
-            .question-text { font-size: 18px; }
-            .scoreboard { gap: 15px; font-size: 15px; padding: 10px 20px; }
-        }
-    </style>
+  @media (max-width: 520px) {
+    .card { padding: 22px 16px; margin-top: 70px; }
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.2rem; }
+    .option { font-size: 0.95rem; padding: 12px 10px; }
+    .options { grid-template-columns: 1fr; }
+    .prompt { font-size: 1.05rem; }
+    .btn { font-size: 1rem; padding: 12px 24px; }
+    .author-box { font-size: 0.75rem; padding: 6px 12px; top: 12px; right: 12px; }
+  }
+</style>
 </head>
-<body>
+<body translate="no" class="notranslate">
 
-    <!-- FIRMA DEL AUTOR -->
-    <div class="author-box">FPB with AI</div>
+<div class="author-box" translate="no">FPB with AI</div>
 
-    <h1>Class 5: Family Tree</h1>
-    <p class="subtitle">Read the clue. Who is the missing family member?</p>
+<div class="card" translate="no">
 
-    <div class="scoreboard">
-        <span class="timer" id="timer-display">⏱️ 60s</span>
-        <span>✅ <span id="correct-count" class="correct">0</span></span>
-        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+  <!-- ================= PANTALLA DE INTRODUCCIÓN ================= -->
+  <div id="intro-screen">
+    <h1>Class 5: Possessive Adjectives 🔤</h1>
+    <p class="subtitle">
+      Aprende a usar <strong>my, your, his, her, its, our, their</strong> y repasa el
+      <strong>verb to be</strong> con emociones, trabajos y lugares.
+    </p>
+
+    <div class="notebook-box" translate="no">
+      📓 <strong>Antes de empezar:</strong><br>
+      • Escribe en tu cuaderno con <strong>tinta azul</strong>.<br>
+      • Anota la <strong>fecha</strong> y tu <strong>nombre</strong>.<br>
+      • Copia cada ejercicio y tu respuesta.<br>
+      • Escribe la oración completa, no solo la palabra.
     </div>
 
-    <div class="game-container">
-        <div class="progress-bar" id="progress-text">Question 1 of 10</div>
-
-        <!-- Árbol Genealógico Visual -->
-        <div class="family-tree-box" id="tree-box">
-            <div class="tree-member">👴 Grandfather</div>
-            <div class="tree-member">👵 Grandmother</div>
-            <div class="tree-member main">👨 Dad</div>
-            <div class="tree-member main">👩 Mom</div>
-            <div class="tree-member main-blue">🧑 Me</div>
-            <div class="tree-member unknown" id="unknown-member">❓ ???</div>
-        </div>
-        
-        <!-- La pregunta ahora tiene fondo blanco para leerse bien -->
-        <div class="question-card">
-            <div class="question-text" id="question-text">
-                My mom's brother is my <span class="highlight">__________</span>.
-            </div>
-        </div>
-
-        <div class="options-grid" id="options-container">
-            <!-- Botones generados -->
-        </div>
-
-        <div id="celebration-msg" class="celebration">👨‍👩‍👧‍👦 Amazing! You know the family tree! 👨‍👩‍👧‍👦</div>
-        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
-        
-        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    <div class="section-intro" translate="no">
+      <h3>📖 What are Possessive Adjectives?</h3>
+      <p>
+        Los <strong>possessive adjectives</strong> (adjetivos posesivos) indican a quién pertenece algo.
+        En inglés <strong>nunca cambian</strong> según el objeto: siempre son iguales.
+      </p>
+      <table class="poss">
+        <tr><th>Subject</th><th>Possessive</th><th>Español</th><th>Example</th></tr>
+        <tr><td>I</td><td><strong>My</strong></td><td>Mi</td><td>My book is new.</td></tr>
+        <tr><td>You</td><td><strong>Your</strong></td><td>Tu / Su</td><td>Your dog is big.</td></tr>
+        <tr><td>He</td><td><strong>His</strong></td><td>Su (de él)</td><td>His car is red.</td></tr>
+        <tr><td>She</td><td><strong>Her</strong></td><td>Su (de ella)</td><td>Her name is Ana.</td></tr>
+        <tr><td>It</td><td><strong>Its</strong></td><td>Su (de cosa/animal)</td><td>Its tail is long.</td></tr>
+        <tr><td>We</td><td><strong>Our</strong></td><td>Nuestro</td><td>Our house is small.</td></tr>
+        <tr><td>They</td><td><strong>Their</strong></td><td>Su (de ellos)</td><td>Their school is big.</td></tr>
+      </table>
+      <p style="margin-top:8px; color:#f7dc6f;">
+        ⚠️ <strong>Ojo:</strong> <em>his</em> = de él · <em>her</em> = de ella · <em>their</em> = de ellos.
+      </p>
     </div>
 
-    <script>
-        // Base de datos de relaciones familiares
-        const familyData = [
-            { relation: "Uncle", clue: "My mom's brother is my __________.", pos: "Mom's brother" },
-            { relation: "Aunt", clue: "My dad's sister is my __________.", pos: "Dad's sister" },
-            { relation: "Cousin", clue: "My uncle's son is my __________.", pos: "Uncle's son" },
-            { relation: "Grandmother", clue: "My mom's mother is my __________.", pos: "Mom's mother" },
-            { relation: "Grandfather", clue: "My dad's father is my __________.", pos: "Dad's father" },
-            { relation: "Sister", clue: "My parents' daughter is my __________.", pos: "Parents' daughter" },
-            { relation: "Brother", clue: "My parents' son is my __________.", pos: "Parents' son" },
-            { relation: "Nephew", clue: "My sister's son is my __________.", pos: "Sister's son" },
-            { relation: "Niece", clue: "My brother's daughter is my __________.", pos: "Brother's daughter" },
-            { relation: "Wife", clue: "My dad's wife is my __________.", pos: "Dad's wife" }
-        ];
+    <div class="section-intro" translate="no">
+      <h3>🎮 How the game works</h3>
+      <p>
+        <strong>Part A:</strong> Elige el possessive adjective correcto. 🔤<br>
+        <strong>Part B:</strong> Completa la oración con el possessive adjective. ✍️<br>
+        <strong>Part C:</strong> Repaso mixto: <em>verb to be</em> + emociones, trabajos y lugares. ✅<br>
+        <strong>Part D:</strong> Ordena las palabras y <strong>escribe</strong> la oración. ✍️
+      </p>
+    </div>
 
-        let correctCount = 0, wrongCount = 0, currentIndex = 0;
-        let timeLeft = 60, timerInterval = null;
-        let isGameActive = false, isAnswered = false;
+    <button class="btn green" id="btn-start">▶ Start Game</button>
+  </div>
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+  <!-- ================= PANTALLA DE JUEGO ================= -->
+  <div id="game-screen" class="hidden">
+    <div class="score-bar">
+      <span>📝 <span id="q-counter">1 / 40</span></span>
+      <span>✅ <span id="score-correct">0</span></span>
+      <span>❌ <span id="score-wrong">0</span></span>
+      <span>📚 Part <span id="part-label">A</span></span>
+    </div>
 
-        function initGame() {
-            clearInterval(timerInterval);
-            timeLeft = 60; isGameActive = true; correctCount = 0; wrongCount = 0; currentIndex = 0;
-            
-            document.getElementById('correct-count').textContent = 0;
-            document.getElementById('wrong-count').textContent = 0;
-            document.getElementById('celebration-msg').style.display = 'none';
-            document.getElementById('game-over-msg').style.display = 'none';
-            document.getElementById('timer-display').textContent = '⏱️ 60s';
-            document.getElementById('timer-display').classList.remove('danger');
+    <div id="badge-container"><span class="badge" id="badge">Part A · Possessive Adjectives</span></div>
+    <div class="prompt" id="prompt"></div>
+    <div id="dynamic-area"></div>
+    <div class="feedback" id="feedback"></div>
 
-            shuffleArray(familyData);
-            loadQuestion();
-            startTimer();
-        }
+    <p class="progress">Question <span id="q-current">1</span> of <span id="q-total">40</span></p>
+  </div>
 
-        function loadQuestion() {
-            if (currentIndex >= familyData.length) { gameWon(); return; }
+  <!-- ================= PANTALLA FINAL ================= -->
+  <div id="final-screen" class="hidden final-screen">
+    <h2>🎉 Great job!</h2>
+    <p>✅ Correct: <span id="final-correct">0</span></p>
+    <p>❌ Wrong: <span id="final-wrong">0</span></p>
+    <p>📊 Score: <span id="final-percent">0</span>%</p>
+    <p style="margin-top:16px; color:#f1c40f;">
+      ✍️ Recuerda copiar tus respuestas en el cuaderno con tinta azul.
+    </p>
+    <button class="btn green" onclick="location.reload()" style="margin-top:20px;">🔁 Play Again</button>
+  </div>
 
-            isAnswered = false;
-            const current = familyData[currentIndex];
-            
-            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${familyData.length}`;
-            document.getElementById('question-text').innerHTML = current.clue.replace('__________', '<span class="highlight">__________</span>');
-            
-            // Actualizar el nombre en el árbol visual
-            document.getElementById('unknown-member').textContent = `❓ ${current.pos}`;
-            document.getElementById('unknown-member').style.borderColor = '#e74c3c';
-            document.getElementById('unknown-member').style.animation = 'blink 1s infinite';
-            document.getElementById('unknown-member').style.background = '#ffeaa7';
+</div>
 
-            // Generar 4 opciones
-            let options = [current.relation];
-            let others = familyData.filter(f => f.relation !== current.relation);
-            shuffleArray(others);
-            for(let i=0; i<3; i++) { options.push(others[i].relation); }
-            shuffleArray(options);
+<script>
+// =====================================================================
+//  CLASS 5 - POSSESSIVE ADJECTIVES + REVIEW (To be / Emotions / Jobs / Places)
+//  40 ejercicios en 4 partes (10 cada una)
+//  Sin límite de tiempo · Respuestas aleatorias · Audio con Web Speech
+// =====================================================================
 
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = opt;
-                btn.dataset.correct = (opt === current.relation);
+// -------------------- PARTE A: elegir possessive adjective (opciones) --------------------
+const PART_A = [
+  { sentence: "This is ___ book. (I)",              correct: "my",    options: ["my", "your", "his", "her"] },
+  { sentence: "Is this ___ pen? (you)",             correct: "your",  options: ["your", "my", "its", "their"] },
+  { sentence: "John loves ___ dog. (John)",         correct: "his",   options: ["his", "her", "my", "our"] },
+  { sentence: "Mary cleans ___ room. (Mary)",       correct: "her",   options: ["her", "his", "your", "their"] },
+  { sentence: "The cat licks ___ paws. (the cat)",  correct: "its",   options: ["its", "his", "her", "our"] },
+  { sentence: "We love ___ school. (we)",           correct: "our",   options: ["our", "their", "your", "my"] },
+  { sentence: "The kids do ___ homework. (the kids)", correct: "their", options: ["their", "our", "his", "her"] },
+  { sentence: "I ride ___ bike every day. (I)",     correct: "my",    options: ["my", "your", "her", "its"] },
+  { sentence: "She calls ___ mother. (she)",        correct: "her",   options: ["her", "his", "my", "their"] },
+  { sentence: "Tom and Ana paint ___ house. (they)",correct: "their", options: ["their", "our", "your", "his"] }
+];
 
-                btn.addEventListener('click', function() {
-                    if (!isGameActive || isAnswered) return;
-                    isAnswered = true;
-                    clearInterval(timerInterval);
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+// -------------------- PARTE B: completar escribiendo el possessive --------------------
+// El estudiante escribe la palabra (sin opciones) para reforzar spelling.
+const PART_B = [
+  { sentence: "I have a sister. ___ name is Ana.",             correct: "Her" },
+  { sentence: "He has a car. ___ car is red.",                 correct: "His" },
+  { sentence: "We live in a house. ___ house is small.",       correct: "Our" },
+  { sentence: "They have a dog. ___ dog is friendly.",         correct: "Their" },
+  { sentence: "You have a bag. ___ bag is blue.",              correct: "Your" },
+  { sentence: "I have a phone. ___ phone is new.",             correct: "My" },
+  { sentence: "The bird is in ___ nest.",                      correct: "Its" },
+  { sentence: "She loves ___ job.",                            correct: "Her" },
+  { sentence: "My brothers ride ___ bikes.",                   correct: "Their" },
+  { sentence: "We do ___ homework at night.",                  correct: "Our" }
+];
 
-                    if (this.dataset.correct === 'true') {
-                        this.classList.add('correct-answer');
-                        correctCount++;
-                        document.getElementById('correct-count').textContent = correctCount;
-                        
-                        // Actualizar el árbol visual con el acierto
-                        document.getElementById('unknown-member').textContent = `✅ ${current.relation}`;
-                        document.getElementById('unknown-member').style.borderColor = '#27ae60';
-                        document.getElementById('unknown-member').style.background = '#d5f5e3';
-                        document.getElementById('unknown-member').style.animation = 'none';
-                        
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= familyData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 800);
-                    } else {
-                        this.classList.add('wrong-answer');
-                        wrongCount++;
-                        document.getElementById('wrong-count').textContent = wrongCount;
-                        
-                        document.querySelectorAll('.option-btn').forEach(b => {
-                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                        });
+// -------------------- PARTE C: repaso mixto (to be + emotions / jobs / places) --------------------
+const PART_C = [
+  { sentence: "He ___ a firefighter.",              correct: "is",   options: ["is", "are", "am", "be"] },
+  { sentence: "He is ___ the school.",              correct: "at",   options: ["at", "on", "of", "to"] },
+  { sentence: "They ___ tired.",                    correct: "are",  options: ["are", "is", "am", "be"] },
+  { sentence: "She is a ___. She works in a hospital.", correct: "nurse", options: ["nurse", "pilot", "chef", "lawyer"] },
+  { sentence: "I ___ happy today.",                 correct: "am",   options: ["am", "is", "are", "be"] },
+  { sentence: "The hospital ___ very big.",         correct: "is",   options: ["is", "are", "am", "be"] },
+  { sentence: "My mother ___ a teacher.",           correct: "is",   options: ["is", "are", "am", "be"] },
+  { sentence: "We are ___ the park.",               correct: "at",   options: ["at", "on", "in", "of"] },
+  { sentence: "The children ___ excited.",          correct: "are",  options: ["are", "is", "am", "be"] },
+  { sentence: "She is a ___. She flies planes.",    correct: "pilot", options: ["pilot", "nurse", "chef", "dentist"] }
+];
 
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= familyData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 1200);
-                    }
-                });
-                container.appendChild(btn);
-            });
-        }
+// -------------------- PARTE D: ordenar y escribir (mezcla de todo) --------------------
+const PART_D = [
+  { words: ["is", "He", "a", "firefighter"],      correct: "He is a firefighter." },
+  { words: ["is", "He", "at", "the", "school"],   correct: "He is at the school." },
+  { words: ["are", "They", "tired"],              correct: "They are tired." },
+  { words: ["is", "She", "a", "nurse"],           correct: "She is a nurse." },
+  { words: ["am", "I", "happy"],                  correct: "I am happy." },
+  { words: ["is", "The", "hospital", "big"],      correct: "The hospital is big." },
+  { words: ["are", "We", "at", "the", "park"],    correct: "We are at the park." },
+  { words: ["is", "My", "mother", "a", "teacher"],correct: "My mother is a teacher." },
+  { words: ["are", "The", "children", "excited"], correct: "The children are excited." },
+  { words: ["is", "She", "a", "pilot"],           correct: "She is a pilot." }
+];
 
-        function startTimer() {
-            timeLeft = 60;
-            document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
-            document.getElementById('timer-display').classList.remove('danger');
+// =====================================================================
+//  UTILIDADES
+// =====================================================================
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer-display').textContent = `⏱️ ${timeLeft}s`;
-                if (timeLeft <= 10) document.getElementById('timer-display').classList.add('danger');
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(/[.,!?;:]/g, '');
+}
 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    if (isAnswered) return;
-                    isGameActive = false;
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-                    
-                    document.querySelectorAll('.option-btn').forEach(b => {
-                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                    });
-                    wrongCount++;
-                    document.getElementById('wrong-count').textContent = wrongCount;
+// =====================================================================
+//  AUDIO
+// =====================================================================
+function speak(text, lang = 'en-US', rate = 0.85) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = rate;
+  u.pitch = 1;
+  u.volume = 1;
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase()));
+  if (voice) u.voice = voice;
+  window.speechSynthesis.speak(u);
+}
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {};
+  window.speechSynthesis.getVoices();
+}
 
-                    setTimeout(() => {
-                        currentIndex++;
-                        isGameActive = true;
-                        if (currentIndex >= familyData.length) gameWon();
-                        else { loadQuestion(); startTimer(); }
-                    }, 1500);
-                }
-            }, 1000);
-        }
+// =====================================================================
+//  ESTADO
+// =====================================================================
+let questions = [];
+let currentIndex = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let locked = false;
 
-        function gameWon() {
-            isGameActive = false; clearInterval(timerInterval);
-            document.getElementById('celebration-msg').style.display = 'block';
-        }
+// =====================================================================
+//  CONSTRUIR LISTA DE PREGUNTAS
+// =====================================================================
+function buildQuestions() {
+  const list = [];
 
-        window.onload = initGame;
-    </script>
+  // PARTE A
+  shuffleArray(PART_A).forEach(q => {
+    list.push({
+      part: 'A',
+      badge: 'Part A · Choose the Possessive Adjective',
+      instruction: '🔤 Elige el possessive adjective correcto:',
+      type: 'options',
+      sentence: q.sentence,
+      correct: q.correct,
+      options: q.options,
+      speakText: q.sentence.replace(/___/g, q.correct)
+    });
+  });
+
+  // PARTE B
+  shuffleArray(PART_B).forEach(q => {
+    list.push({
+      part: 'B',
+      badge: 'Part B · Write the Possessive Adjective',
+      instruction: '✍️ Escribe el possessive adjective que falta:',
+      type: 'write-word',
+      sentence: q.sentence,
+      correct: q.correct,
+      speakText: q.sentence.replace(/___/g, q.correct)
+    });
+  });
+
+  // PARTE C
+  shuffleArray(PART_C).forEach(q => {
+    list.push({
+      part: 'C',
+      badge: 'Part C · Review: To Be + Emotions / Jobs / Places',
+      instruction: '✅ Elige la opción correcta para completar la oración:',
+      type: 'options',
+      sentence: q.sentence,
+      correct: q.correct,
+      options: q.options,
+      speakText: q.sentence.replace(/___/g, q.correct)
+    });
+  });
+
+  // PARTE D
+  shuffleArray(PART_D).forEach(q => {
+    list.push({
+      part: 'D',
+      badge: 'Part D · Order & Write the Sentence',
+      instruction: '✍️ Ordena las palabras y ESCRIBE la oración completa:',
+      type: 'write-sentence',
+      words: shuffleArray(q.words),
+      correct: q.correct
+    });
+  });
+
+  return list;
+}
+
+// =====================================================================
+//  INICIO
+// =====================================================================
+function startGame() {
+  questions = buildQuestions();
+  currentIndex = 0;
+  correctCount = 0;
+  wrongCount = 0;
+
+  document.getElementById('intro-screen').classList.add('hidden');
+  document.getElementById('game-screen').classList.remove('hidden');
+  document.getElementById('q-total').textContent = questions.length;
+  loadQuestion();
+}
+
+// =====================================================================
+//  CARGAR PREGUNTA
+// =====================================================================
+function loadQuestion() {
+  locked = false;
+  const q = questions[currentIndex];
+
+  document.getElementById('q-current').textContent = currentIndex + 1;
+  document.getElementById('q-counter').textContent = `${currentIndex + 1} / ${questions.length}`;
+  document.getElementById('part-label').textContent = q.part;
+  document.getElementById('badge').textContent = q.badge;
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+
+  const promptEl = document.getElementById('prompt');
+  const dynamicArea = document.getElementById('dynamic-area');
+  promptEl.innerHTML = `<span class="instruction">${q.instruction}</span>`;
+  dynamicArea.innerHTML = '';
+
+  if (q.type === 'options') {
+    renderOptions(q, promptEl, dynamicArea);
+  } else if (q.type === 'write-word') {
+    renderWriteWord(q, promptEl, dynamicArea);
+  } else if (q.type === 'write-sentence') {
+    renderWriteSentence(q, promptEl, dynamicArea);
+  }
+}
+
+// =====================================================================
+//  RENDER: OPCIONES (Partes A y C)
+// =====================================================================
+function renderOptions(q, promptEl, dynamicArea) {
+  // Mostrar la oración con el hueco
+  const sentenceEl = document.createElement('div');
+  const parts = q.sentence.split('___');
+  sentenceEl.innerHTML = `${parts[0]}<span class="blank">?</span>${parts[1] || ''}`;
+  promptEl.appendChild(sentenceEl);
+
+  // Botón de audio (escucha la oración completa correcta)
+  const audioBtn = document.createElement('button');
+  audioBtn.className = 'audio-big';
+  audioBtn.style.width = '60px';
+  audioBtn.style.height = '60px';
+  audioBtn.style.fontSize = '1.5rem';
+  audioBtn.innerHTML = '🔊';
+  audioBtn.title = 'Escuchar la oración completa';
+  audioBtn.addEventListener('click', () => speak(q.speakText, 'en-US', 0.8));
+  promptEl.appendChild(audioBtn);
+
+  // Opciones
+  const optionsWrap = document.createElement('div');
+  optionsWrap.className = 'options';
+  const opts = shuffleArray(q.options);
+
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => checkOptionsAnswer(btn, opt, q.correct, optionsWrap, q.speakText));
+    optionsWrap.appendChild(btn);
+  });
+
+  dynamicArea.appendChild(optionsWrap);
+}
+
+function checkOptionsAnswer(btn, selected, correct, wrap, speakText) {
+  if (locked) return;
+  locked = true;
+
+  const allButtons = wrap.querySelectorAll('.option');
+  allButtons.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('feedback');
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    correctCount++;
+    document.getElementById('score-correct').textContent = correctCount;
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback ok';
+    speak(speakText, 'en-US', 0.85);
+    setTimeout(nextQuestion, 1400);
+  } else {
+    btn.classList.add('wrong');
+    wrongCount++;
+    document.getElementById('score-wrong').textContent = wrongCount;
+    allButtons.forEach(b => {
+      if (b.textContent === correct) b.classList.add('correct');
+    });
+    fb.textContent = `❌ Correct answer: ${correct}`;
+    fb.className = 'feedback bad';
+    speak(speakText, 'en-US', 0.85);
+    setTimeout(nextQuestion, 2200);
+  }
+}
+
+// =====================================================================
+//  RENDER: ESCRIBIR PALABRA (Parte B)
+// =====================================================================
+function renderWriteWord(q, promptEl, dynamicArea) {
+  const sentenceEl = document.createElement('div');
+  const parts = q.sentence.split('___');
+  sentenceEl.innerHTML = `${parts[0]}<span class="blank">?</span>${parts[1] || ''}`;
+  promptEl.appendChild(sentenceEl);
+
+  // Pista: primeras letras
+  const hint = document.createElement('div');
+  hint.className = 'instruction';
+  hint.textContent = `💡 Pista: empieza con "${q.correct.charAt(0)}" (${q.correct.length} letras)`;
+  promptEl.appendChild(hint);
+
+  // Input
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'input-answer';
+  input.placeholder = 'Escribe la palabra aquí...';
+  input.autocomplete = 'off';
+  input.autocorrect = 'off';
+  input.autocapitalize = 'off';
+  input.spellcheck = false;
+  input.translate = 'no';
+  input.lang = 'en';
+  dynamicArea.appendChild(input);
+
+  // Botón comprobar
+  const checkBtn = document.createElement('button');
+  checkBtn.className = 'btn orange';
+  checkBtn.style.marginTop = '14px';
+  checkBtn.textContent = '✔ Check Answer';
+  dynamicArea.appendChild(checkBtn);
+
+  // Botón audio pista
+  const audioHintBtn = document.createElement('button');
+  audioHintBtn.className = 'btn small';
+  audioHintBtn.style.marginTop = '14px';
+  audioHintBtn.style.marginLeft = '8px';
+  audioHintBtn.style.background = '#9b59b6';
+  audioHintBtn.textContent = '🔊 Escuchar';
+  audioHintBtn.addEventListener('click', () => speak(q.speakText, 'en-US', 0.8));
+  dynamicArea.appendChild(audioHintBtn);
+
+  function check() {
+    if (locked) return;
+    const userAnswer = input.value;
+    if (!userAnswer.trim()) { input.focus(); return; }
+    locked = true;
+    checkBtn.disabled = true;
+    audioHintBtn.disabled = true;
+    input.disabled = true;
+
+    const fb = document.getElementById('feedback');
+    const isCorrect = normalize(userAnswer) === normalize(q.correct);
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correctCount++;
+      document.getElementById('score-correct').textContent = correctCount;
+      fb.textContent = '✅ Excellent!';
+      fb.className = 'feedback ok';
+      speak(q.speakText, 'en-US', 0.85);
+      setTimeout(nextQuestion, 1500);
+    } else {
+      input.classList.add('wrong');
+      wrongCount++;
+      document.getElementById('score-wrong').textContent = wrongCount;
+      fb.innerHTML = `❌ Correct: <span style="color:#f1c40f;">${q.correct}</span>`;
+      fb.className = 'feedback bad';
+      speak(q.speakText, 'en-US', 0.85);
+      setTimeout(nextQuestion, 2500);
+    }
+  }
+
+  checkBtn.addEventListener('click', check);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+  setTimeout(() => input.focus(), 300);
+}
+
+// =====================================================================
+//  RENDER: ORDENAR Y ESCRIBIR (Parte D)
+// =====================================================================
+function renderWriteSentence(q, promptEl, dynamicArea) {
+  // Palabras desordenadas como pista
+  const wordBank = document.createElement('div');
+  wordBank.className = 'word-bank';
+  wordBank.style.display = 'flex';
+  wordBank.style.flexWrap = 'wrap';
+  wordBank.style.gap = '8px';
+  wordBank.style.justifyContent = 'center';
+  wordBank.style.margin = '14px 0';
+
+  q.words.forEach(w => {
+    const chip = document.createElement('span');
+    chip.textContent = w;
+    chip.style.background = '#3498db';
+    chip.style.color = '#fff';
+    chip.style.borderRadius = '10px';
+    chip.style.padding = '10px 16px';
+    chip.style.fontSize = '1rem';
+    chip.style.fontWeight = 'bold';
+    wordBank.appendChild(chip);
+  });
+  dynamicArea.appendChild(wordBank);
+
+  // Input
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'input-answer';
+  input.placeholder = 'Escribe la oración completa aquí...';
+  input.autocomplete = 'off';
+  input.autocorrect = 'off';
+  input.autocapitalize = 'off';
+  input.spellcheck = false;
+  input.translate = 'no';
+  input.lang = 'en';
+  dynamicArea.appendChild(input);
+
+  // Botón comprobar
+  const checkBtn = document.createElement('button');
+  checkBtn.className = 'btn orange';
+  checkBtn.style.marginTop = '14px';
+  checkBtn.textContent = '✔ Check Answer';
+  dynamicArea.appendChild(checkBtn);
+
+  // Botón audio pista
+  const audioHintBtn = document.createElement('button');
+  audioHintBtn.className = 'btn small';
+  audioHintBtn.style.marginTop = '14px';
+  audioHintBtn.style.marginLeft = '8px';
+  audioHintBtn.style.background = '#9b59b6';
+  audioHintBtn.textContent = '🔊 Escuchar pista';
+  audioHintBtn.addEventListener('click', () => speak(q.correct, 'en-US', 0.8));
+  dynamicArea.appendChild(audioHintBtn);
+
+  function check() {
+    if (locked) return;
+    const userAnswer = input.value;
+    if (!userAnswer.trim()) { input.focus(); return; }
+    locked = true;
+    checkBtn.disabled = true;
+    audioHintBtn.disabled = true;
+    input.disabled = true;
+
+    const fb = document.getElementById('feedback');
+    const isCorrect = normalize(userAnswer) === normalize(q.correct);
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correctCount++;
+      document.getElementById('score-correct').textContent = correctCount;
+      fb.textContent = '✅ Excellent! Well written.';
+      fb.className = 'feedback ok';
+      speak(q.correct, 'en-US', 0.85);
+      setTimeout(nextQuestion, 1600);
+    } else {
+      input.classList.add('wrong');
+      wrongCount++;
+      document.getElementById('score-wrong').textContent = wrongCount;
+      fb.innerHTML = `❌ Correct: <span style="color:#f1c40f;">${q.correct}</span>`;
+      fb.className = 'feedback bad';
+      speak(q.correct, 'en-US', 0.85);
+      setTimeout(nextQuestion, 2600);
+    }
+  }
+
+  checkBtn.addEventListener('click', check);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+  setTimeout(() => input.focus(), 300);
+}
+
+// =====================================================================
+//  SIGUIENTE PREGUNTA
+// =====================================================================
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= questions.length) {
+    endGame();
+  } else {
+    loadQuestion();
+  }
+}
+
+// =====================================================================
+//  FIN DEL JUEGO
+// =====================================================================
+function endGame() {
+  document.getElementById('game-screen').classList.add('hidden');
+  document.getElementById('final-screen').classList.remove('hidden');
+  document.getElementById('final-correct').textContent = correctCount;
+  document.getElementById('final-wrong').textContent = wrongCount;
+  const percent = Math.round((correctCount / questions.length) * 100);
+  document.getElementById('final-percent').textContent = percent;
+}
+
+// =====================================================================
+//  EVENTOS
+// =====================================================================
+document.getElementById('btn-start').addEventListener('click', startGame);
+
+document.documentElement.setAttribute('translate', 'no');
+document.documentElement.classList.add('notranslate');
+document.body.setAttribute('translate', 'no');
+document.body.classList.add('notranslate');
+</script>
+
 </body>
 </html>
