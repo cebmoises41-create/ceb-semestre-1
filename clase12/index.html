@@ -1,448 +1,837 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no" class="notranslate">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 12: Unscramble the Pet</title>
-    
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            
-            /* FONDO ELEGANTE */
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 12 - Adjectives</title>
+<style>
+  :root {
+    --primary: #9b59b6;
+    --secondary: #8e44ad;
+    --dark-bg: #1a1a2e;
+    --card-bg: rgba(26, 26, 46, 0.9);
+    --text-light: #ecf0f1;
+    --success: #2ecc71;
+    --error: #e74c3c;
+    --warning: #f1c40f;
+  }
 
-        /* FIRMA DEL AUTOR */
-        .author-box {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #2c3e50;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        h1 { 
-            color: #ffffff; 
-            margin-bottom: 5px; 
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5); 
-        }
-        .subtitle { 
-            color: #ffffff; 
-            margin-bottom: 20px; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
-        }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
 
-        /* Panel de puntuación */
-        .scoreboard {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 12px 35px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            display: flex;
-            gap: 40px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #2c3e50;
-        }
+  .author-box {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    background: #ffffff;
+    color: #2c3e50;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
 
-        .scoreboard .correct { color: #27ae60; }
-        .scoreboard .wrong { color: #c0392b; }
-        
-        .timer {
-            color: #2980b9;
-            min-width: 80px;
-            text-align: center;
-        }
-        .timer.danger {
-            color: #c0392b;
-            animation: pulse 0.5s infinite alternate;
-        }
+  .main-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    margin-top: 50px;
+  }
 
-        @keyframes pulse {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0.6; transform: scale(1.05); }
-        }
+  /* TABS DE NAVEGACIÓN */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 0.95rem;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,0.2); }
+  .tab-btn.active {
+    background: var(--primary);
+    box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+  }
 
-        /* Tarjeta principal */
-        .game-container {
-            background: rgba(44, 62, 80, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            max-width: 650px;
-            width: 100%;
-            text-align: center;
-        }
+  /* CONTENIDO DE LAS PESTAÑAS */
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .progress-bar {
-            font-size: 14px;
-            color: #bdc3c7;
-            margin-bottom: 15px;
-        }
+  h1 { font-size: 2rem; text-align: center; color: var(--warning); margin-bottom: 10px; }
+  h2 { font-size: 1.4rem; text-align: center; margin-bottom: 20px; color: #fff; }
+  .subtitle { text-align: center; color: #bdc3c7; margin-bottom: 20px; line-height: 1.6; }
 
-        /* Tarjeta de la pregunta */
-        .question-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 30px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+  /* ESTILOS APARTADO 1: VOCABULARIO */
+  .explanation-box {
+    background: rgba(255,255,255,0.05);
+    border-left: 5px solid var(--primary);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 1.05rem;
+  }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  .vocab-card {
+    background: #fff;
+    color: #2c3e50;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  .vocab-card:hover { transform: translateY(-3px); }
+  .vocab-info { text-align: left; }
+  .vocab-info strong { font-size: 1.2rem; color: var(--primary); display: block; }
+  .vocab-info span { font-size: 0.9rem; color: #7f8c8d; }
+  .audio-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .audio-btn:hover { background: var(--secondary); transform: scale(1.1); }
 
-        .scrambled-word {
-            font-size: 42px;
-            font-weight: 900;
-            color: #e67e22;
-            letter-spacing: 8px;
-            margin: 0;
-            text-transform: uppercase;
-        }
+  /* ESTILOS PARA JUEGOS (2, 3, 4) */
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-weight: bold;
+    background: rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 15px;
+  }
+  .game-area {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+  }
+  .option-btn {
+    background: #fff;
+    color: #2c3e50;
+    border: 2px solid transparent;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--primary); transform: scale(1.02); }
+  .option-btn.correct { background: #d5f5e3; border-color: var(--success); color: #1e8449; }
+  .option-btn.wrong { background: #fadbd8; border-color: var(--error); color: #922b21; }
 
-        .hint-text {
-            font-size: 15px;
-            color: #7f8c8d;
-            margin-top: 12px;
-            font-style: italic;
-        }
+  .sentence-input {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.2);
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+  }
+  .sentence-input:focus { border-color: var(--primary); }
+  .sentence-input.correct { border-color: var(--success); background: rgba(46, 204, 113, 0.1); }
+  .sentence-input.wrong { border-color: var(--error); background: rgba(231, 76, 60, 0.1); }
 
-        /* Botón de audio */
-        .audio-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 25px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 15px;
-            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
-        }
+  .action-btn {
+    background: var(--warning);
+    color: #2c3e50;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s;
+  }
+  .action-btn:hover { background: #f39c12; transform: scale(1.05); }
+  .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .audio-btn:hover {
-            transform: scale(1.05);
-            background: #2980b9;
-        }
+  .feedback { margin-top: 15px; font-size: 1.2rem; font-weight: bold; min-height: 30px; }
+  .feedback.ok { color: var(--success); }
+  .feedback.bad { color: var(--error); }
 
-        .audio-btn:active {
-            transform: scale(0.95);
-        }
+  /* PALABRAS DESORDENADAS (APARTADO 3) */
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .word-chip {
+    background: var(--primary);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .word-chip:hover { background: var(--secondary); transform: translateY(-3px); }
 
-        /* Botones de opciones */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 5px;
-        }
+  /* BOTONES DE INICIO */
+  .start-screen { text-align: center; padding: 40px 20px; }
+  .btn-start {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+  }
+  .btn-start:hover { background: #27ae60; transform: translateY(-3px); }
 
-        .option-btn {
-            background: #ffffff;
-            border: 2px solid #ecf0f1;
-            border-radius: 12px;
-            padding: 18px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .option-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            border-color: #3498db;
-        }
-
-        .option-btn.correct-answer {
-            border-color: #27ae60 !important;
-            background: #d5f5e3 !important;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
-        }
-
-        .option-btn.wrong-answer {
-            border-color: #c0392b !important;
-            background: #fadbd8 !important;
-        }
-
-        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-
-        /* Botón de reinicio */
-        .btn-reset {
-            margin-top: 25px;
-            padding: 12px 35px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background: #2c3e50;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            max-width: 220px;
-        }
-
-        .btn-reset:hover { background: #1a252f; }
-
-        .celebration { display: none; color: #2ecc71; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-        .game-over { display: none; color: #e74c3c; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-
-        @media (max-width: 500px) {
-            .game-container { padding: 20px; }
-            .options-grid { grid-template-columns: 1fr; }
-            .scrambled-word { font-size: 32px; letter-spacing: 5px; }
-            .scoreboard { gap: 15px; font-size: 15px; padding: 10px 20px; }
-        }
-    </style>
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .main-card { padding: 20px 15px; }
+    .tab-btn { padding: 10px 15px; font-size: 0.85rem; }
+  }
+</style>
 </head>
-<body>
+<body translate="no" class="notranslate">
 
-    <!-- FIRMA DEL AUTOR -->
-    <div class="author-box">FPB with AI</div>
+<div class="author-box" translate="no">FPB with AI</div>
 
-    <h1>Class 12: Pets</h1>
-    <p class="subtitle">🔀 Unscramble the letters. Which pet is it?</p>
+<div class="main-card" translate="no">
+  
+  <h1>Class 12: Adjectives</h1>
+  <p class="subtitle">Learn, listen, order and correct sentences with adjectives.</p>
 
-    <div class="scoreboard">
-        <span class="timer" id="timer-display">⏱️ 8:00</span>
-        <span>✅ <span id="correct-count" class="correct">0</span></span>
-        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+  <!-- MENÚ DE PESTAÑAS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab('tab1')">1. Learn & Audio</button>
+    <button class="tab-btn" onclick="openTab('tab2')">2. Listen & Choose</button>
+    <button class="tab-btn" onclick="openTab('tab3')">3. Order Sentences</button>
+    <button class="tab-btn" onclick="openTab('tab4')">4. Correct Sentences</button>
+    <button class="tab-btn" onclick="openTab('tab5')">5. Final Test</button>
+  </div>
+
+  <!-- ================= APARTADO 1: EXPLICACIÓN Y VOCABULARIO ================= -->
+  <div id="tab1" class="tab-content active">
+    <div class="explanation-box">
+      <h3>📖 What is an Adjective?</h3>
+      <p>An <strong>adjective</strong> is a word that describes a noun (a person, place, or thing) or a pronoun. It tells us <em>what kind</em>, <em>how many</em>, or <em>which one</em>.</p>
+      <p style="margin-top:10px;">In English, adjectives usually go <strong>before the noun</strong> (e.g., a <em>happy</em> dog) or <strong>after the verb 'to be'</strong> (e.g., the dog is <em>happy</em>).</p>
     </div>
 
-    <div class="game-container">
-        <div class="progress-bar" id="progress-text">Question 1 of 20</div>
+    <h2>🔊 Listen and Repeat</h2>
+    <div class="vocab-grid" id="vocab-grid">
+      <!-- Generado por JS -->
+    </div>
+  </div>
 
-        <div class="question-card">
-            <div class="scrambled-word" id="scrambled-word">G D O</div>
-            <div class="hint-text" id="hint-text">💡 Unscramble the letters above.</div>
-            <button class="audio-btn" id="play-audio-btn">🔊 Play Correct Pronunciation</button>
-        </div>
+  <!-- ================= APARTADO 2: ESCUCHAR Y ELEGIR ================= -->
+  <div id="tab2" class="tab-content">
+    <div id="game2-start" class="start-screen">
+      <h2>🎧 Listen & Choose</h2>
+      <p>Escucha el audio y selecciona el adjetivo correcto.</p>
+      <button class="btn-start" onclick="startGame2()">▶ Start Activity</button>
+    </div>
+    <div id="game2-play" style="display:none;">
+      <div class="game-header">
+        <span>Question: <span id="g2-current">1</span>/10</span>
+        <span>Score: <span id="g2-score">0</span></span>
+      </div>
+      <div class="game-area">
+        <button class="audio-btn" style="width:80px; height:80px; font-size:2rem; margin-bottom:20px;" onclick="playCurrentAudio2()">🔊</button>
+        <p style="color:#bdc3c7; font-size:1rem;">Click to listen</p>
+        <div class="options-grid" id="g2-options"></div>
+        <div class="feedback" id="g2-feedback"></div>
+      </div>
+    </div>
+  </div>
 
-        <div class="options-grid" id="options-container">
-            <!-- Botones generados -->
-        </div>
-
-        <div id="celebration-msg" class="celebration">🐾 Amazing! You are a pet expert! 🐾</div>
-        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
+  <!-- ================= APARTADO 3: ORDENAR ORACIONES ================= -->
+  <div id="tab3" class="tab-content">
+    <div id="game3-start" class="start-screen">
+      <h2>🔀 Order the Sentence</h2>
+      <p>Haz clic en las palabras para ordenar la oración correctamente.</p>
+      <button class="btn-start" onclick="startGame3()">▶ Start Activity</button>
+    </div>
+    <div id="game3-play" style="display:none;">
+      <div class="game-header">
+        <span>Question: <span id="g3-current">1</span>/10</span>
+        <span>Score: <span id="g3-score">0</span></span>
+      </div>
+      <div class="game-area">
+        <p style="font-size:1.1rem; margin-bottom:10px;">Form the correct sentence:</p>
+        <div class="word-bank" id="g3-wordbank"></div>
         
-        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+        <div style="min-height:60px; width:100%; max-width:600px; border-bottom: 2px dashed #bdc3c7; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center; padding-bottom:10px;" id="g3-user-sentence">
+          <!-- Palabras seleccionadas -->
+        </div>
+        
+        <div style="display:flex; gap:10px;">
+          <button class="action-btn" style="background:#e74c3c; color:#fff;" onclick="resetGame3()">Clear</button>
+          <button class="action-btn" onclick="checkGame3()">Check</button>
+        </div>
+        <div class="feedback" id="g3-feedback"></div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        // BASE DE DATOS DE 20 MASCOTAS (Palabra, letras desordenadas y pronunciación)
-        const petsData = [
-            { answer: "dog", scrambled: "gdo", audio: "dog" },
-            { answer: "cat", scrambled: "atc", audio: "cat" },
-            { answer: "bird", scrambled: "ribd", audio: "bird" },
-            { answer: "fish", scrambled: "sfih", audio: "fish" },
-            { answer: "hamster", scrambled: "armhets", audio: "hamster" },
-            { answer: "rabbit", scrambled: "tbirab", audio: "rabbit" },
-            { answer: "parrot", scrambled: "ropart", audio: "parrot" },
-            { answer: "turtle", scrambled: "lutret", audio: "turtle" },
-            { answer: "snake", scrambled: "nakes", audio: "snake" },
-            { answer: "lizard", scrambled: "dlirza", audio: "lizard" },
-            { answer: "guinea pig", scrambled: "ineuga gip", audio: "guinea pig" },
-            { answer: "ferret", scrambled: "rtefer", audio: "ferret" },
-            { answer: "hamster", scrambled: "tesmrah", audio: "hamster" },
-            { answer: "pony", scrambled: "ynop", audio: "pony" },
-            { answer: "horse", scrambled: "rheso", audio: "horse" },
-            { answer: "chicken", scrambled: "ceckhin", audio: "chicken" },
-            { answer: "duck", scrambled: "kcud", audio: "duck" },
-            { answer: "goat", scrambled: "tago", audio: "goat" },
-            { answer: "sheep", scrambled: "psehe", audio: "sheep" },
-            { answer: "cow", scrambled: "wco", audio: "cow" }
-        ];
+  <!-- ================= APARTADO 4: CORREGIR ORACIONES ================= -->
+  <div id="tab4" class="tab-content">
+    <div id="game4-start" class="start-screen">
+      <h2>✍️ Correct the Sentence</h2>
+      <p>Lee la oración con errores y escríbela correctamente en el cuadro de texto.</p>
+      <button class="btn-start" onclick="startGame4()">▶ Start Activity</button>
+    </div>
+    <div id="game4-play" style="display:none;">
+      <div class="game-header">
+        <span>Question: <span id="g4-current">1</span>/10</span>
+        <span>Score: <span id="g4-score">0</span></span>
+      </div>
+      <div class="game-area">
+        <p style="font-size:1.2rem; margin-bottom:10px; color:#e74c3c;">❌ Wrong:</p>
+        <p style="font-size:1.5rem; font-weight:bold; margin-bottom:20px;" id="g4-wrong-sentence">She is angri.</p>
+        
+        <p style="font-size:1.2rem; margin-bottom:10px; color:#2ecc71;">✅ Correct it:</p>
+        <input type="text" class="sentence-input" id="g4-input" placeholder="Write the correct sentence..." autocomplete="off">
+        <button class="action-btn" onclick="checkGame4()">Check Answer</button>
+        <div class="feedback" id="g4-feedback"></div>
+      </div>
+    </div>
+  </div>
 
-        let correctCount = 0, wrongCount = 0, currentIndex = 0;
-        let timeLeft = 480; // 8 minutos
-        let timerInterval = null;
-        let isGameActive = false, isAnswered = false;
+  <!-- ================= APARTADO 5: TEST FINAL ================= -->
+  <div id="tab5" class="tab-content">
+    <div id="game5-start" class="start-screen">
+      <h2>🏆 Final Test</h2>
+      <p>Demuestra lo que has aprendido. Mezcla de opciones múltiples.</p>
+      <button class="btn-start" onclick="startGame5()">▶ Start Test</button>
+    </div>
+    <div id="game5-play" style="display:none;">
+      <div class="game-header">
+        <span>Question: <span id="g5-current">1</span>/10</span>
+        <span>Score: <span id="g5-score">0</span></span>
+      </div>
+      <div class="game-area">
+        <h3 style="margin-bottom:20px; font-size:1.4rem;" id="g5-question">Question text</h3>
+        <div class="options-grid" id="g5-options"></div>
+        <div class="feedback" id="g5-feedback"></div>
+      </div>
+    </div>
+  </div>
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+</div>
 
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = seconds % 60;
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
+<script>
+// =====================================================================
+//  BASE DE DATOS DE ADJETIVOS (24 + 6 nuevos = 30)
+// =====================================================================
+const ADJECTIVES = [
+  { word: 'short', meaning: 'bajo/corto' },
+  { word: 'fast', meaning: 'rápido' },
+  { word: 'beautiful', meaning: 'hermoso/a' },
+  { word: 'tall', meaning: 'alto/a' },
+  { word: 'funny', meaning: 'divertido/a' },
+  { word: 'generous', meaning: 'generoso/a' },
+  { word: 'brave', meaning: 'valiente' },
+  { word: 'chatty', meaning: 'hablador/a' },
+  { word: 'clever', meaning: 'inteligente' },
+  { word: 'easy going', meaning: 'relajado/a' },
+  { word: 'friendly', meaning: 'amigable' },
+  { word: 'grumpy', meaning: 'gruñón/ona' },
+  { word: 'hard working', meaning: 'trabajador/a' },
+  { word: 'honest', meaning: 'honesto/a' },
+  { word: 'kind', meaning: 'amable' },
+  { word: 'lazy', meaning: 'perezoso/a' },
+  { word: 'neat', meaning: 'ordenado/a' },
+  { word: 'ugly', meaning: 'feo/a' },
+  { word: 'moody', meaning: 'malhumorado/a' },
+  { word: 'polite', meaning: 'educado/a' },
+  { word: 'quiet', meaning: 'callado/a' },
+  { word: 'selfish', meaning: 'egoísta' },
+  { word: 'shy', meaning: 'tímido/a' },
+  // 6 Extra
+  { word: 'calm', meaning: 'tranquilo/a' },
+  { word: 'creative', meaning: 'creativo/a' },
+  { word: 'energetic', meaning: 'energético/a' },
+  { word: 'patient', meaning: 'paciente' },
+  { word: 'rude', meaning: 'grosero/a' },
+  { word: 'smart', meaning: 'listo/a' }
+];
 
-        function initGame() {
-            clearInterval(timerInterval);
-            timeLeft = 480;
-            isGameActive = true;
-            correctCount = 0;
-            wrongCount = 0;
-            currentIndex = 0;
-            
-            document.getElementById('correct-count').textContent = 0;
-            document.getElementById('wrong-count').textContent = 0;
-            document.getElementById('celebration-msg').style.display = 'none';
-            document.getElementById('game-over-msg').style.display = 'none';
-            document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
-            document.getElementById('timer-display').classList.remove('danger');
+// =====================================================================
+//  UTILIDADES
+// =====================================================================
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
-            shuffleArray(petsData);
-            loadQuestion();
-            startTimer();
-        }
+function normalize(str) {
+  return str.toLowerCase().trim().replace(/\s+/g, ' ').replace(/[.,!?;:]/g, '');
+}
 
-        function loadQuestion() {
-            if (currentIndex >= petsData.length) { gameWon(); return; }
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
 
-            isAnswered = false;
-            const current = petsData[currentIndex];
-            
-            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${petsData.length}`;
-            
-            // Mostrar letras desordenadas (en mayúsculas y con espacios para que se vea fácil)
-            const spacedScrambled = current.scrambled.toUpperCase().split('').join(' ');
-            document.getElementById('scrambled-word').textContent = spacedScrambled;
-            
-            document.getElementById('hint-text').textContent = `💡 Unscramble the letters above.`;
-            document.getElementById('play-audio-btn').dataset.audio = current.audio;
+// =====================================================================
+//  CONTROL DE PESTAÑAS
+// =====================================================================
+function openTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
 
-            // Generar 4 opciones
-            let options = [current.answer];
-            let others = petsData.filter(f => f.answer !== current.answer);
-            shuffleArray(others);
-            for(let i=0; i<3; i++) { options.push(others[i].answer); }
-            shuffleArray(options);
+// =====================================================================
+//  LÓGICA APARTADO 1: VOCABULARIO
+// =====================================================================
+function loadVocab() {
+  const grid = document.getElementById('vocab-grid');
+  grid.innerHTML = '';
+  ADJECTIVES.forEach(adj => {
+    const card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.innerHTML = `
+      <div class="vocab-info">
+        <strong>${adj.word}</strong>
+        <span>${adj.meaning}</span>
+      </div>
+      <button class="audio-btn" onclick="speak('${adj.word}')">🔊</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+document.addEventListener('DOMContentLoaded', loadVocab);
 
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = opt.charAt(0).toUpperCase() + opt.slice(1); // Primera letra mayúscula
-                btn.dataset.correct = (opt === current.answer);
 
-                btn.addEventListener('click', function() {
-                    if (!isGameActive || isAnswered) return;
-                    isAnswered = true;
-                    clearInterval(timerInterval);
-                    window.speechSynthesis.cancel();
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+// =====================================================================
+//  LÓGICA APARTADO 2: ESCUCHAR Y ELEGIR
+// =====================================================================
+let g2Questions = [];
+let g2Index = 0;
+let g2Score = 0;
 
-                    if (this.dataset.correct === 'true') {
-                        this.classList.add('correct-answer');
-                        correctCount++;
-                        document.getElementById('correct-count').textContent = correctCount;
-                        
-                        // Reproducir audio de la respuesta correcta
-                        const utterance = new SpeechSynthesisUtterance(current.audio);
-                        utterance.lang = 'en-US';
-                        utterance.rate = 0.9;
-                        window.speechSynthesis.speak(utterance);
+function startGame2() {
+  document.getElementById('game2-start').style.display = 'none';
+  document.getElementById('game2-play').style.display = 'block';
+  
+  g2Questions = shuffleArray(ADJECTIVES).slice(0, 10);
+  g2Index = 0;
+  g2Score = 0;
+  loadG2Question();
+}
 
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= petsData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 1200);
-                    } else {
-                        this.classList.add('wrong-answer');
-                        wrongCount++;
-                        document.getElementById('wrong-count').textContent = wrongCount;
-                        
-                        document.querySelectorAll('.option-btn').forEach(b => {
-                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                        });
+function loadG2Question() {
+  if (g2Index >= 10) {
+    document.getElementById('game-area').innerHTML = `<h2>🎉 Completed!</h2><p>Your score: ${g2Score}/10</p>`;
+    return;
+  }
+  
+  const current = g2Questions[g2Index];
+  document.getElementById('g2-current').textContent = g2Index + 1;
+  document.getElementById('g2-score').textContent = g2Score;
+  
+  // Generar opciones
+  let options = [current.word];
+  let others = ADJECTIVES.filter(a => a.word !== current.word);
+  shuffleArray(others).slice(0, 3).forEach(a => options.push(a.word));
+  options = shuffleArray(options);
+  
+  const optionsGrid = document.getElementById('g2-options');
+  optionsGrid.innerHTML = '';
+  
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.onclick = () => checkG2(btn, opt, current.word);
+    optionsGrid.appendChild(btn);
+  });
+  
+  document.getElementById('g2-feedback').textContent = '';
+  document.getElementById('g2-feedback').className = 'feedback';
+  
+  // Reproducir audio automáticamente (opcional)
+  setTimeout(() => speak(current.word), 300);
+}
 
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= petsData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 1200);
-                    }
-                });
-                container.appendChild(btn);
-            });
-        }
+function playCurrentAudio2() {
+  speak(g2Questions[g2Index].word);
+}
 
-        // Lógica del botón de Audio (Pronunciación correcta)
-        document.getElementById('play-audio-btn').addEventListener('click', function() {
-            if (!isGameActive || isAnswered) return;
-            const audioText = this.dataset.audio;
-            if (audioText) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(audioText);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            }
-        });
+function checkG2(btn, selected, correct) {
+  const allBtns = document.querySelectorAll('#g2-options .option-btn');
+  allBtns.forEach(b => b.disabled = true);
+  
+  const fb = document.getElementById('g2-feedback');
+  if (selected === correct) {
+    btn.classList.add('correct');
+    g2Score++;
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    fb.textContent = `❌ Correct answer: ${correct}`;
+    fb.className = 'feedback bad';
+  }
+  
+  document.getElementById('g2-score').textContent = g2Score;
+  g2Index++;
+  setTimeout(loadG2Question, 1500);
+}
 
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
-                if (timeLeft <= 60) document.getElementById('timer-display').classList.add('danger');
 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    if (isAnswered) return;
-                    isGameActive = false;
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-                    window.speechSynthesis.cancel();
-                    
-                    document.querySelectorAll('.option-btn').forEach(b => {
-                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                    });
-                    wrongCount++;
-                    document.getElementById('wrong-count').textContent = wrongCount;
+// =====================================================================
+//  LÓGICA APARTADO 3: ORDENAR ORACIONES
+// =====================================================================
+const G3_SENTENCES = [
+  "she is happy",
+  "he is clever",
+  "they are honest",
+  "my dog is funny",
+  "she is very beautiful",
+  "he is brave",
+  "we are friendly",
+  "the cat is lazy",
+  "you are polite",
+  "they are quiet"
+];
 
-                    setTimeout(() => {
-                        currentIndex++;
-                        isGameActive = true;
-                        if (currentIndex >= petsData.length) gameWon();
-                        else { loadQuestion(); startTimer(); }
-                    }, 1500);
-                }
-            }, 1000);
-        }
+let g3Questions = [];
+let g3Index = 0;
+let g3Score = 0;
+let g3CurrentWords = [];
+let g3UserSelection = [];
 
-        function gameWon() {
-            isGameActive = false; 
-            clearInterval(timerInterval);
-            window.speechSynthesis.cancel();
-            document.getElementById('celebration-msg').style.display = 'block';
-        }
+function startGame3() {
+  document.getElementById('game3-start').style.display = 'none';
+  document.getElementById('game3-play').style.display = 'block';
+  
+  g3Questions = shuffleArray(G3_SENTENCES).slice(0, 10);
+  g3Index = 0;
+  g3Score = 0;
+  loadG3Question();
+}
 
-        window.onload = initGame;
-    </script>
+function loadG3Question() {
+  if (g3Index >= 10) {
+    document.getElementById('game3-play').innerHTML = `<div class="game-area"><h2>🎉 Completed!</h2><p>Your score: ${g3Score}/10</p></div>`;
+    return;
+  }
+  
+  document.getElementById('g3-current').textContent = g3Index + 1;
+  document.getElementById('g3-score').textContent = g3Score;
+  
+  const sentence = g3Questions[g3Index];
+  g3CurrentWords = sentence.split(' ');
+  g3UserSelection = [];
+  
+  // Mezclar palabras
+  const shuffled = shuffleArray([...g3CurrentWords]);
+  
+  const bank = document.getElementById('g3-wordbank');
+  bank.innerHTML = '';
+  shuffled.forEach((word, idx) => {
+    const chip = document.createElement('div');
+    chip.className = 'word-chip';
+    chip.textContent = word;
+    chip.onclick = () => selectWordG3(chip, word);
+    bank.appendChild(chip);
+  });
+  
+  document.getElementById('g3-user-sentence').innerHTML = '';
+  document.getElementById('g3-feedback').textContent = '';
+  document.getElementById('g3-feedback').className = 'feedback';
+}
+
+function selectWordG3(chip, word) {
+  chip.style.display = 'none';
+  g3UserSelection.push({ word, chip });
+  
+  const userBox = document.getElementById('g3-user-sentence');
+  const wordEl = document.createElement('div');
+  wordEl.className = 'word-chip';
+  wordEl.textContent = word;
+  wordEl.onclick = () => removeWordG3(wordEl, g3UserSelection.length - 1);
+  userBox.appendChild(wordEl);
+}
+
+function removeWordG3(el, index) {
+  el.remove();
+  const removed = g3UserSelection.splice(index, 1)[0];
+  removed.chip.style.display = 'block';
+}
+
+function resetGame3() {
+  // Devolver todas las palabras al banco
+  g3UserSelection.forEach(item => item.chip.style.display = 'block');
+  g3UserSelection = [];
+  document.getElementById('g3-user-sentence').innerHTML = '';
+}
+
+function checkGame3() {
+  const userWords = g3UserSelection.map(item => item.word).join(' ');
+  const correctSentence = g3CurrentWords.join(' ');
+  
+  const fb = document.getElementById('g3-feedback');
+  
+  if (normalize(userWords) === normalize(correctSentence)) {
+    g3Score++;
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback ok';
+    document.getElementById('g3-score').textContent = g3Score;
+    g3Index++;
+    setTimeout(loadG3Question, 1500);
+  } else {
+    fb.textContent = `❌ Incorrect. Try again.`;
+    fb.className = 'feedback bad';
+  }
+}
+
+
+// =====================================================================
+//  LÓGICA APARTADO 4: CORREGIR ORACIONES
+// =====================================================================
+const G4_SENTENCES = [
+  { wrong: "shi is angry", correct: "she is angry" },
+  { wrong: "he is angri", correct: "he is angry" },
+  { wrong: "they is honest", correct: "they are honest" },
+  { wrong: "she are happy", correct: "she is happy" },
+  { wrong: "the dog am funny", correct: "the dog is funny" },
+  { wrong: "i is clever", correct: "i am clever" },
+  { wrong: "he are tall", correct: "he is tall" },
+  { wrong: "we is friendly", correct: "we are friendly" },
+  { wrong: "you is shy", correct: "you are shy" },
+  { wrong: "she is lazyy", correct: "she is lazy" }
+];
+
+let g4Questions = [];
+let g4Index = 0;
+let g4Score = 0;
+
+function startGame4() {
+  document.getElementById('game4-start').style.display = 'none';
+  document.getElementById('game4-play').style.display = 'block';
+  
+  g4Questions = shuffleArray(G4_SENTENCES).slice(0, 10);
+  g4Index = 0;
+  g4Score = 0;
+  loadG4Question();
+}
+
+function loadG4Question() {
+  if (g4Index >= 10) {
+    document.getElementById('game4-play').innerHTML = `<div class="game-area"><h2>🎉 Completed!</h2><p>Your score: ${g4Score}/10</p></div>`;
+    return;
+  }
+  
+  document.getElementById('g4-current').textContent = g4Index + 1;
+  document.getElementById('g4-score').textContent = g4Score;
+  
+  const current = g4Questions[g4Index];
+  document.getElementById('g4-wrong-sentence').textContent = current.wrong;
+  
+  const input = document.getElementById('g4-input');
+  input.value = '';
+  input.disabled = false;
+  input.className = 'sentence-input';
+  input.focus();
+  
+  document.getElementById('g4-feedback').textContent = '';
+  document.getElementById('g4-feedback').className = 'feedback';
+}
+
+function checkGame4() {
+  const input = document.getElementById('g4-input');
+  const userAns = normalize(input.value);
+  const correctAns = normalize(g4Questions[g4Index].correct);
+  
+  if (!userAns) return;
+  
+  const fb = document.getElementById('g4-feedback');
+  
+  if (userAns === correctAns) {
+    g4Score++;
+    input.classList.add('correct');
+    fb.textContent = '✅ Perfect correction!';
+    fb.className = 'feedback ok';
+    document.getElementById('g4-score').textContent = g4Score;
+  } else {
+    input.classList.add('wrong');
+    fb.textContent = `❌ Correct: ${g4Questions[g4Index].correct}`;
+    fb.className = 'feedback bad';
+  }
+  
+  input.disabled = true;
+  g4Index++;
+  setTimeout(loadG4Question, 2000);
+}
+
+document.getElementById('g4-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') checkGame4();
+});
+
+
+// =====================================================================
+//  LÓGICA APARTADO 5: TEST FINAL
+// =====================================================================
+const G5_QUESTIONS = [
+  { q: "Choose the correct sentence:", opts: ["She are happy", "She is happy", "She am happy", "She be happy"], a: "She is happy" },
+  { q: "What is the opposite of 'generous'?", opts: ["kind", "selfish", "funny", "brave"], a: "selfish" },
+  { q: "Choose the correct spelling:", opts: ["angry", "angri", "angryy", "angrey"], a: "angry" },
+  { q: "The word 'clever' means:", opts: ["tonto", "inteligente", "perezoso", "feo"], a: "inteligente" },
+  { q: "Which is an adjective?", opts: ["run", "quickly", "beautiful", "dog"], a: "beautiful" },
+  { q: "Choose the correct sentence:", opts: ["They is honest", "They are honest", "They am honest", "They be honest"], a: "They are honest" },
+  { q: "What is the opposite of 'hard working'?", opts: ["lazy", "clever", "polite", "neat"], a: "lazy" },
+  { q: "The word 'brave' means:", opts: ["tímido", "valiente", "tranquilo", "grosero"], a: "valiente" },
+  { q: "Choose the correct spelling:", opts: ["frendly", "friendly", "friendlyy", "frendli"], a: "friendly" },
+  { q: "He ___ very tall.", opts: ["is", "are", "am", "be"], a: "is" }
+];
+
+let g5Index = 0;
+let g5Score = 0;
+
+function startGame5() {
+  document.getElementById('game5-start').style.display = 'none';
+  document.getElementById('game5-play').style.display = 'block';
+  
+  g5Index = 0;
+  g5Score = 0;
+  loadG5Question();
+}
+
+function loadG5Question() {
+  if (g5Index >= 10) {
+    document.getElementById('game5-play').innerHTML = `<div class="game-area"><h2>🏆 Test Completed!</h2><p>Your final score: ${g5Score}/10</p></div>`;
+    return;
+  }
+  
+  document.getElementById('g5-current').textContent = g5Index + 1;
+  document.getElementById('g5-score').textContent = g5Score;
+  
+  const current = G5_QUESTIONS[g5Index];
+  document.getElementById('g5-question').textContent = current.q;
+  
+  const optionsGrid = document.getElementById('g5-options');
+  optionsGrid.innerHTML = '';
+  
+  const opts = shuffleArray(current.opts);
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.onclick = () => checkG5(btn, opt, current.a);
+    optionsGrid.appendChild(btn);
+  });
+  
+  document.getElementById('g5-feedback').textContent = '';
+  document.getElementById('g5-feedback').className = 'feedback';
+}
+
+function checkG5(btn, selected, correct) {
+  const allBtns = document.querySelectorAll('#g5-options .option-btn');
+  allBtns.forEach(b => b.disabled = true);
+  
+  const fb = document.getElementById('g5-feedback');
+  if (selected === correct) {
+    btn.classList.add('correct');
+    g5Score++;
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    fb.textContent = `❌ Correct answer: ${correct}`;
+    fb.className = 'feedback bad';
+  }
+  
+  document.getElementById('g5-score').textContent = g5Score;
+  g5Index++;
+  setTimeout(loadG5Question, 1500);
+}
+</script>
+
 </body>
 </html>
