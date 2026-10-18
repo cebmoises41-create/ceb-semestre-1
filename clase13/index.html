@@ -1,437 +1,492 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no" class="notranslate">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 13: Transport Detective</title>
-    
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            
-            /* FONDO ELEGANTE */
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 13 - Dialogues: Verb To Be</title>
+<style>
+  :root {
+    --primary: #e67e22;
+    --secondary: #d35400;
+    --dark-bg: #1a1a2e;
+    --card-bg: rgba(26, 26, 46, 0.9);
+    --text-light: #ecf0f1;
+    --success: #2ecc71;
+    --error: #e74c3c;
+    --warning: #f1c40f;
+  }
 
-        /* FIRMA DEL AUTOR */
-        .author-box {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #2c3e50;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        h1 { 
-            color: #ffffff; 
-            margin-bottom: 5px; 
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5); 
-        }
-        .subtitle { 
-            color: #ffffff; 
-            margin-bottom: 20px; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
-        }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
 
-        /* Panel de puntuación */
-        .scoreboard {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 12px 35px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            display: flex;
-            gap: 40px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #2c3e50;
-        }
+  .author-box {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    background: #ffffff;
+    color: #2c3e50;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
 
-        .scoreboard .correct { color: #27ae60; }
-        .scoreboard .wrong { color: #c0392b; }
-        
-        .timer {
-            color: #2980b9;
-            min-width: 80px;
-            text-align: center;
-        }
-        .timer.danger {
-            color: #c0392b;
-            animation: pulse 0.5s infinite alternate;
-        }
+  .main-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    padding: 35px;
+    max-width: 850px;
+    width: 100%;
+    margin-top: 50px;
+  }
 
-        @keyframes pulse {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0.6; transform: scale(1.05); }
-        }
+  h1 { font-size: 2rem; text-align: center; color: var(--warning); margin-bottom: 10px; }
+  .subtitle { text-align: center; color: #bdc3c7; margin-bottom: 25px; font-size: 1.05rem; }
 
-        /* Tarjeta principal */
-        .game-container {
-            background: rgba(44, 62, 80, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            max-width: 650px;
-            width: 100%;
-            text-align: center;
-        }
+  .instructions {
+    background: rgba(230, 126, 34, 0.1);
+    border-left: 5px solid var(--primary);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    font-size: 1.05rem;
+  }
 
-        .progress-bar {
-            font-size: 14px;
-            color: #bdc3c7;
-            margin-bottom: 15px;
-        }
+  /* ESTILOS DE LOS DIÁLOGOS */
+  .dialogue-container {
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  
+  .dialogue-header {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 
-        /* Tarjeta de la pregunta */
-        .question-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 30px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+  .dialogue-title {
+    color: var(--warning);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    font-style: italic;
+    border-bottom: 1px dashed rgba(255,255,255,0.2);
+    padding-bottom: 10px;
+  }
 
-        .definition-text {
-            font-size: 22px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin: 0;
-            line-height: 1.6;
-        }
+  .dialogue-line {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    display: flex;
+    align-items: flex-start;
+  }
 
-        .hint-text {
-            font-size: 15px;
-            color: #7f8c8d;
-            margin-top: 12px;
-            font-style: italic;
-        }
+  .speaker { 
+    font-weight: bold; 
+    color: #3498db; 
+    margin-right: 10px;
+    min-width: 45px;
+  }
+  
+  /* SELECTS PARA LAS RESPUESTAS */
+  .blank-select {
+    appearance: none;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid #7f8c8d;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s;
+    text-align: center;
+    min-width: 75px;
+    margin: 0 5px;
+  }
+  .blank-select:focus { border-color: var(--primary); }
+  .blank-select option { background: #2c3e50; color: #fff; }
+  
+  .blank-select.correct { border-color: var(--success); background: rgba(46, 204, 113, 0.2); color: var(--success); }
+  .blank-select.wrong { border-color: var(--error); background: rgba(231, 76, 60, 0.2); color: var(--error); }
 
-        /* Botón de audio */
-        .audio-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 25px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 15px;
-            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
-        }
+  /* BOTONES */
+  .actions { text-align: center; margin-top: 30px; }
+  .btn {
+    padding: 14px 35px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 0 10px;
+  }
+  .btn-check { background: var(--success); color: white; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.4); }
+  .btn-check:hover { background: #27ae60; transform: translateY(-2px); }
+  
+  .btn-reset { background: rgba(255,255,255,0.1); color: white; }
+  .btn-reset:hover { background: rgba(255,255,255,0.2); }
 
-        .audio-btn:hover {
-            transform: scale(1.05);
-            background: #2980b9;
-        }
+  .btn-audio { background: #9b59b6; color: white; box-shadow: 0 4px 10px rgba(155, 89, 182, 0.4); margin-top: 15px; font-size: 0.95rem; padding: 10px 20px; }
+  .btn-audio:hover { background: #8e44ad; }
 
-        .audio-btn:active {
-            transform: scale(0.95);
-        }
+  /* RESULTADO FINAL */
+  .result-box {
+    display: none;
+    text-align: center;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid var(--warning);
+  }
+  .result-box h2 { color: var(--warning); margin-bottom: 10px; }
+  .final-score { font-size: 2.5rem; font-weight: bold; color: var(--success); }
 
-        /* Botones de opciones */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 5px;
-        }
-
-        .option-btn {
-            background: #ffffff;
-            border: 2px solid #ecf0f1;
-            border-radius: 12px;
-            padding: 18px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .option-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            border-color: #3498db;
-        }
-
-        .option-btn.correct-answer {
-            border-color: #27ae60 !important;
-            background: #d5f5e3 !important;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
-        }
-
-        .option-btn.wrong-answer {
-            border-color: #c0392b !important;
-            background: #fadbd8 !important;
-        }
-
-        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-
-        /* Botón de reinicio */
-        .btn-reset {
-            margin-top: 25px;
-            padding: 12px 35px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background: #2c3e50;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            max-width: 220px;
-        }
-
-        .btn-reset:hover { background: #1a252f; }
-
-        .celebration { display: none; color: #2ecc71; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-        .game-over { display: none; color: #e74c3c; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-
-        @media (max-width: 500px) {
-            .game-container { padding: 20px; }
-            .options-grid { grid-template-columns: 1fr; }
-            .definition-text { font-size: 18px; }
-            .scoreboard { gap: 15px; font-size: 15px; padding: 10px 20px; }
-        }
-    </style>
+  @media (max-width: 600px) {
+    .main-card { padding: 20px 15px; }
+    .dialogue-line { font-size: 1rem; flex-direction: column; gap: 5px; }
+    .speaker { margin-bottom: 5px; }
+    .btn { font-size: 1rem; padding: 12px 20px; width: 100%; margin-bottom: 10px; }
+    .blank-select { font-size: 1rem; padding: 4px 8px; }
+  }
+</style>
 </head>
-<body>
+<body translate="no" class="notranslate">
 
-    <!-- FIRMA DEL AUTOR -->
-    <div class="author-box">FPB with AI</div>
+<div class="author-box" translate="no">FPB with AI</div>
 
-    <h1>Class 13: Transport</h1>
-    <p class="subtitle">🔊 Read or listen. Which transport is it?</p>
+<div class="main-card" translate="no">
+  
+  <h1>Class 13: Dialogues</h1>
+  <p class="subtitle">Complete the conversations using <strong>am, is, are</strong> (Verb To Be)</p>
 
-    <div class="scoreboard">
-        <span class="timer" id="timer-display">⏱️ 8:00</span>
-        <span>✅ <span id="correct-count" class="correct">0</span></span>
-        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+  <div class="instructions">
+    <strong>Instructions:</strong> Read the 4 dialogues. Click on each blank space and select the correct form of the verb <em>To Be</em>. 
+    <br>There is a total of <strong>24 blanks</strong> across all 4 dialogues. Good luck! 🍀
+  </div>
+
+  <!-- DIÁLOGO 1 -->
+  <div class="dialogue-container">
+    <div class="dialogue-header">Dialogue 1</div>
+    <p class="dialogue-title">🏫 At the School (Jobs & Feelings)</p>
+    
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Good morning! How 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      you today?
     </div>
-
-    <div class="game-container">
-        <div class="progress-bar" id="progress-text">Question 1 of 20</div>
-
-        <div class="question-card">
-            <div class="definition-text" id="definition-text">It is a large vehicle that flies in the sky and carries many passengers.</div>
-            <div class="hint-text" id="hint-text">💡 Read or tap the audio to listen.</div>
-            <button class="audio-btn" id="play-audio-btn">🔊 Play Audio</button>
-        </div>
-
-        <div class="options-grid" id="options-container">
-            <!-- Botones generados -->
-        </div>
-
-        <div id="celebration-msg" class="celebration">🚗 Amazing! You are a transport expert! 🚗</div>
-        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
-        
-        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> I 
+      <select class="blank-select" data-answer="am"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      fine, thank you. Look at the new teacher.
     </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> He 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      very tall! Is he a math teacher?
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Yes, he is. I 
+      <select class="blank-select" data-answer="am"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      very happy because I love math!
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> That 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      great. We 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      lucky to have him.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Yes, we are. My friends 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      very excited too.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> I have to go to class now. Have a good day!
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> You too! Goodbye!
+    </div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="btn btn-audio" onclick="speakDialogue(1)">🔊 Listen to Dialogue 1</button>
+    </div>
+  </div>
 
-    <script>
-        // BASE DE DATOS DE 20 MEDIOS DE TRANSPORTE
-        const transportData = [
-            { answer: "airplane", definition: "It is a large vehicle that flies in the sky and carries many passengers." },
-            { answer: "train", definition: "It is a long vehicle that runs on tracks and carries people or goods." },
-            { answer: "bus", definition: "It is a large road vehicle that carries passengers from one place to another." },
-            { answer: "ship", definition: "It is a large boat that sails across the ocean and carries cargo or people." },
-            { answer: "car", definition: "It is a small road vehicle with four wheels that carries a few people." },
-            { answer: "bicycle", definition: "It is a two-wheeled vehicle that you pedal to move forward." },
-            { answer: "motorcycle", definition: "It is a two-wheeled vehicle with an engine, faster than a bicycle." },
-            { answer: "helicopter", definition: "It is a flying vehicle with large blades on top that can go up and down vertically." },
-            { answer: "submarine", definition: "It is a vehicle that travels underwater." },
-            { answer: "rocket", definition: "It is a powerful vehicle that travels into outer space." },
-            { answer: "taxi", definition: "It is a car with a driver that you pay to take you somewhere." },
-            { answer: "truck", definition: "It is a large road vehicle used to carry heavy goods." },
-            { answer: "van", definition: "It is a larger vehicle than a car, used to carry people or small items." },
-            { answer: "tram", definition: "It is a passenger vehicle that runs on tracks in the streets of a city." },
-            { answer: "ferry", definition: "It is a boat that carries people and cars across a river or sea." },
-            { answer: "hot air balloon", definition: "It is a large bag filled with hot air that floats in the sky." },
-            { answer: "skateboard", definition: "It is a small board with wheels that you stand on to move." },
-            { answer: "scooter", definition: "It is a small vehicle with two wheels and a motor, used for short trips." },
-            { answer: "spaceship", definition: "It is a vehicle designed to travel outside Earth's atmosphere." },
-            { answer: "ambulance", definition: "It is a special vehicle used to take sick or injured people to the hospital." }
-        ];
+  <!-- DIÁLOGO 2 -->
+  <div class="dialogue-container">
+    <div class="dialogue-header">Dialogue 2</div>
+    <p class="dialogue-title">🏙️ In the Street (Public Places & Jobs)</p>
+    
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Excuse me, good afternoon!
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Good afternoon, sir. How can I help you?
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> I 
+      <select class="blank-select" data-answer="am"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      lost. Where 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      the hospital?
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> The hospital 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      next to the park.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> 
+      <select class="blank-select" data-answer="Is"><option value="">___</option><option value="Am">Am</option><option value="Is">Is</option><option value="Are">Are</option></select> 
+      there a pharmacy near here?
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Yes, there is. My mother 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      a nurse there.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Thank you very much for your help. Have a nice day!
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> You 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      welcome! Goodbye!
+    </div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="btn btn-audio" onclick="speakDialogue(2)">🔊 Listen to Dialogue 2</button>
+    </div>
+  </div>
 
-        let correctCount = 0, wrongCount = 0, currentIndex = 0;
-        let timeLeft = 480; // 8 minutos
-        let timerInterval = null;
-        let isGameActive = false, isAnswered = false;
+  <!-- DIÁLOGO 3 -->
+  <div class="dialogue-container">
+    <div class="dialogue-header">Dialogue 3</div>
+    <p class="dialogue-title">🌳 At the Park (Public Places & Feelings)</p>
+    
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Hello! What a beautiful day!
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Hi! Yes, the weather 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      perfect today.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Look, the children 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      in the park.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Yes, they 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      very excited.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> 
+      <select class="blank-select" data-answer="Are"><option value="">___</option><option value="Am">Am</option><option value="Is">Is</option><option value="Are">Are</option></select> 
+      they your friends?
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Yes, they are. We 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      in the same class.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> That's nice. I hope they have fun! See you later!
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> See you later! Bye!
+    </div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="btn btn-audio" onclick="speakDialogue(3)">🔊 Listen to Dialogue 3</button>
+    </div>
+  </div>
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+  <!-- DIÁLOGO 4 -->
+  <div class="dialogue-container">
+    <div class="dialogue-header">Dialogue 4</div>
+    <p class="dialogue-title">☕ At the Café (Jobs & Feelings)</p>
+    
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Good evening! Welcome to the café.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Good evening! I 
+      <select class="blank-select" data-answer="am"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      very hungry.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Where 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      the waiter? I want to order.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> He 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      a chef, not a waiter. But I can help you.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Okay, thank you. 
+      <select class="blank-select" data-answer="Is"><option value="">___</option><option value="Am">Am</option><option value="Is">Is</option><option value="Are">Are</option></select> 
+      the food good here?
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> Yes, it is! And the chef 
+      <select class="blank-select" data-answer="is"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      very busy right now.
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">A:</span> Perfect. I will wait. Thank you so much!
+    </div>
+    <div class="dialogue-line">
+      <span class="speaker">B:</span> You 
+      <select class="blank-select" data-answer="are"><option value="">___</option><option value="am">am</option><option value="is">is</option><option value="are">are</option></select> 
+      welcome. Have a great meal!
+    </div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="btn btn-audio" onclick="speakDialogue(4)">🔊 Listen to Dialogue 4</button>
+    </div>
+  </div>
 
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = seconds % 60;
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
+  <!-- ACCIONES FINALES -->
+  <div class="actions">
+    <button class="btn btn-check" onclick="checkAnswers()">✅ Check Answers</button>
+    <button class="btn btn-reset" onclick="resetGame()">🔄 Try Again</button>
+  </div>
 
-        function initGame() {
-            clearInterval(timerInterval);
-            timeLeft = 480;
-            isGameActive = true;
-            correctCount = 0;
-            wrongCount = 0;
-            currentIndex = 0;
-            
-            document.getElementById('correct-count').textContent = 0;
-            document.getElementById('wrong-count').textContent = 0;
-            document.getElementById('celebration-msg').style.display = 'none';
-            document.getElementById('game-over-msg').style.display = 'none';
-            document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
-            document.getElementById('timer-display').classList.remove('danger');
+  <div class="result-box" id="result-box">
+    <h2>🎉 Activity Completed!</h2>
+    <p>You got <span class="final-score" id="final-score">0</span> out of 24 correct.</p>
+    <p id="result-message" style="margin-top:10px; font-size:1.1rem;"></p>
+  </div>
 
-            shuffleArray(transportData);
-            loadQuestion();
-            startTimer();
-        }
+</div>
 
-        function loadQuestion() {
-            if (currentIndex >= transportData.length) { gameWon(); return; }
+<script>
+  // =====================================================================
+  //  TEXTOS COMPLETOS PARA EL AUDIO
+  // =====================================================================
+  const dialogueAudios = {
+    1: "A: Good morning! How are you today? B: I am fine, thank you. Look at the new teacher. A: He is very tall! Is he a math teacher? B: Yes, he is. I am very happy because I love math! A: That is great. We are lucky to have him. B: Yes, we are. My friends are very excited too. A: I have to go to class now. Have a good day! B: You too! Goodbye!",
+    2: "A: Excuse me, good afternoon! B: Good afternoon, sir. How can I help you? A: I am lost. Where is the hospital? B: The hospital is next to the park. A: Is there a pharmacy near here? B: Yes, there is. My mother is a nurse there. A: Thank you very much for your help. Have a nice day! B: You are welcome! Goodbye!",
+    3: "A: Hello! What a beautiful day! B: Hi! Yes, the weather is perfect today. A: Look, the children are in the park. B: Yes, they are very excited. A: Are they your friends? B: Yes, they are. We are in the same class. A: That's nice. I hope they have fun! See you later! B: See you later! Bye!",
+    4: "A: Good evening! Welcome to the café. B: Good evening! I am very hungry. A: Where is the waiter? I want to order. B: He is a chef, not a waiter. But I can help you. A: Okay, thank you. Is the food good here? B: Yes, it is! And the chef is very busy right now. A: Perfect. I will wait. Thank you so much! B: You are welcome. Have a great meal!"
+  };
 
-            isAnswered = false;
-            const current = transportData[currentIndex];
-            
-            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${transportData.length}`;
-            document.getElementById('definition-text').textContent = current.definition;
-            document.getElementById('hint-text').textContent = `💡 Read or tap the audio to listen.`;
-            document.getElementById('play-audio-btn').dataset.audio = current.definition;
+  function speakDialogue(id) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(dialogueAudios[id]);
+    u.lang = 'en-US';
+    u.rate = 0.9;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const englishVoice = voices.find(v => v.lang.startsWith('en'));
+    if(englishVoice) u.voice = englishVoice;
 
-            // Generar 4 opciones
-            let options = [current.answer];
-            let others = transportData.filter(f => f.answer !== current.answer);
-            shuffleArray(others);
-            for(let i=0; i<3; i++) { options.push(others[i].answer); }
-            shuffleArray(options);
+    window.speechSynthesis.speak(u);
+  }
 
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
-                btn.dataset.correct = (opt === current.answer);
+  // =====================================================================
+  //  LÓGICA DE VERIFICACIÓN
+  // =====================================================================
+  function checkAnswers() {
+    const selects = document.querySelectorAll('.blank-select');
+    let correctCount = 0;
+    let total = selects.length;
+    let allAnswered = true;
 
-                btn.addEventListener('click', function() {
-                    if (!isGameActive || isAnswered) return;
-                    isAnswered = true;
-                    clearInterval(timerInterval);
-                    window.speechSynthesis.cancel();
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+    selects.forEach(select => {
+      if (select.value === "") {
+        allAnswered = false;
+      }
+    });
 
-                    if (this.dataset.correct === 'true') {
-                        this.classList.add('correct-answer');
-                        correctCount++;
-                        document.getElementById('correct-count').textContent = correctCount;
-                        
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= transportData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 800);
-                    } else {
-                        this.classList.add('wrong-answer');
-                        wrongCount++;
-                        document.getElementById('wrong-count').textContent = wrongCount;
-                        
-                        document.querySelectorAll('.option-btn').forEach(b => {
-                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                        });
+    if (!allAnswered) {
+      alert("Please fill in all the blanks before checking.");
+      return;
+    }
 
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= transportData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 1200);
-                    }
-                });
-                container.appendChild(btn);
-            });
-        }
+    selects.forEach(select => {
+      select.disabled = true;
+      const userAns = select.value;
+      const correctAns = select.dataset.answer;
 
-        // Lógica del botón de Audio
-        document.getElementById('play-audio-btn').addEventListener('click', function() {
-            if (!isGameActive || isAnswered) return;
-            const audioText = this.dataset.audio;
-            if (audioText) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(audioText);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.85;
-                window.speechSynthesis.speak(utterance);
-            }
-        });
+      if (userAns === correctAns) {
+        select.classList.add('correct');
+        correctCount++;
+      } else {
+        select.classList.add('wrong');
+      }
+    });
 
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
-                if (timeLeft <= 60) document.getElementById('timer-display').classList.add('danger');
+    const resultBox = document.getElementById('result-box');
+    const finalScore = document.getElementById('final-score');
+    const resultMsg = document.getElementById('result-message');
+    
+    resultBox.style.display = 'block';
+    finalScore.textContent = correctCount;
+    
+    if (correctCount === total) {
+      resultMsg.innerHTML = "🌟 Perfect! You are a grammar master! 🌟";
+      resultMsg.style.color = "#2ecc71";
+    } else if (correctCount >= total * 0.7) {
+      resultMsg.innerHTML = "👏 Great job! Keep practicing!";
+      resultMsg.style.color = "#f1c40f";
+    } else {
+      resultMsg.innerHTML = "📖 Review the verb 'To Be' and try again.";
+      resultMsg.style.color = "#e74c3c";
+    }
+    
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+  }
 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    if (isAnswered) return;
-                    isGameActive = false;
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-                    window.speechSynthesis.cancel();
-                    
-                    document.querySelectorAll('.option-btn').forEach(b => {
-                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                    });
-                    wrongCount++;
-                    document.getElementById('wrong-count').textContent = wrongCount;
+  function resetGame() {
+    const selects = document.querySelectorAll('.blank-select');
+    selects.forEach(select => {
+      select.value = "";
+      select.disabled = false;
+      select.classList.remove('correct', 'wrong');
+    });
+    
+    document.getElementById('result-box').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 
-                    setTimeout(() => {
-                        currentIndex++;
-                        isGameActive = true;
-                        if (currentIndex >= transportData.length) gameWon();
-                        else { loadQuestion(); startTimer(); }
-                    }, 1500);
-                }
-            }, 1000);
-        }
-
-        function gameWon() {
-            isGameActive = false; 
-            clearInterval(timerInterval);
-            window.speechSynthesis.cancel();
-            document.getElementById('celebration-msg').style.display = 'block';
-        }
-
-        window.onload = initGame;
-    </script>
 </body>
 </html>
