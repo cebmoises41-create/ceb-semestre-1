@@ -1,352 +1,322 @@
 <!DOCTYPE html>
-<html lang="en" translate="no" class="notranslate">
+<html lang="es" translate="no" class="notranslate">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google" content="notranslate"> <!-- LÍNEA AGREGADA AQUÍ -->
-<title>Class 11 - Mix Review: Places, Feelings & Jobs</title>
+<meta name="google" content="notranslate">
+<meta name="robots" content="notranslate">
+<title>FUTURE CLASS — Will & Going To</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Azul profundo para Places/Jobs */
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    color: #1a202c;
+    line-height: 1.6;
     padding: 20px;
-    position: relative;
   }
-
-  .author-box {
-    position: absolute;
-    top: 20px;
-    right: 25px;
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
     background: #ffffff;
-    color: #2c3e50;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    z-index: 10;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: 30px 40px;
+  }
+  h1 { text-align: center; color: #2b6cb0; font-size: 1.8rem; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #718096; font-size: 1rem; margin-bottom: 25px; }
+
+  /* BLOGGER NOTICE */
+  .blogger-notice {
+    background: #fefcbf; border-left: 6px solid #d69e2e;
+    padding: 16px 20px; border-radius: 10px; margin-bottom: 25px;
+    color: #744210; font-size: 0.98rem;
+  }
+  .blogger-notice strong { color: #975a16; }
+  .blogger-notice ul { margin: 8px 0 0 20px; }
+  .blogger-notice li { margin-bottom: 4px; }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap;
+    border-bottom: 3px solid #e2e8f0; padding-bottom: 10px;
+  }
+  .tab-btn {
+    padding: 10px 14px; font-size: 0.9rem; font-weight: 600;
+    background: #edf2f7; color: #4a5568; border: none;
+    border-radius: 10px; cursor: pointer; transition: all 0.3s;
+  }
+  .tab-btn:hover { background: #bee3f8; color: #2c5282; }
+  .tab-btn.active { background: #2b6cb0; color: white; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* SECTION */
+  .section-box {
+    background: #f7fafc; border: 2px solid #e2e8f0;
+    border-radius: 14px; padding: 22px 26px; margin-bottom: 25px;
+  }
+  .section-box h2 {
+    color: #2b6cb0; font-size: 1.2rem; margin-bottom: 12px;
+    border-bottom: 2px dashed #bee3f8; padding-bottom: 8px;
+  }
+  .instruction { color: #4a5568; margin-bottom: 12px; font-size: 0.98rem; }
+
+  .grammar-tip {
+    background: #ebf8ff; border-left: 5px solid #4299e1;
+    padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;
+    color: #2c5282; font-size: 0.95rem;
+  }
+  .grammar-tip strong { color: #2b6cb0; }
+
+  .note-box {
+    background: #fffaf0; border-left: 5px solid #ed8936;
+    padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;
+    color: #7b341e; font-size: 0.95rem;
   }
 
-  .card {
-    background: rgba(30, 60, 114, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    padding: 35px 30px;
-    max-width: 820px;
-    width: 100%;
-    text-align: center;
-    margin: 60px auto 20px;
+  /* QUESTION */
+  .question {
+    background: #ffffff; border-radius: 10px; padding: 16px 18px;
+    margin-bottom: 14px; border: 1px solid #e2e8f0;
+  }
+  .question .q-num {
+    font-weight: 700; color: #2b6cb0; margin-right: 6px;
+  }
+  .question .q-prompt {
+    font-size: 1.02rem; color: #2d3748; margin-bottom: 8px;
+    font-weight: 600;
   }
 
-  h1 { font-size: 1.9rem; margin-bottom: 10px; }
-  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #f1c40f; }
-
-  .subtitle { color: #bdc3c7; font-size: 1rem; margin-bottom: 18px; line-height: 1.6; }
-
-  .notebook-box {
-    background: rgba(241, 196, 15, 0.12);
-    border: 1px solid rgba(241, 196, 15, 0.4);
-    border-radius: 14px;
-    padding: 14px 18px;
-    margin: 18px 0;
-    color: #f7dc6f;
-    font-size: 0.95rem;
-    text-align: left;
-    line-height: 1.7;
+  .audio-btn {
+    background: #4299e1; color: white; border: none;
+    padding: 8px 14px; border-radius: 8px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600; margin: 4px 4px 8px 0;
+    transition: background 0.3s;
   }
+  .audio-btn:hover { background: #3182ce; }
+  .audio-btn:disabled { background: #a0aec0; cursor: not-allowed; }
 
-  .section-intro {
-    background: rgba(255,255,255,0.1);
-    border-left: 4px solid #f1c40f;
-    border-radius: 10px;
-    padding: 16px 18px;
-    margin: 18px 0;
-    text-align: left;
-    line-height: 1.7;
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .options label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border-radius: 8px; cursor: pointer;
+    background: #f7fafc; border: 1px solid #e2e8f0;
+    transition: background 0.2s, border 0.2s;
     font-size: 0.98rem;
   }
-  .section-intro h3 { color: #f1c40f; margin-bottom: 6px; font-size: 1.05rem; }
+  .options label:hover { background: #ebf8ff; border-color: #bee3f8; }
+  .options input[type="radio"] { accent-color: #2b6cb0; width: 18px; height: 18px; cursor: pointer; }
 
-  .btn {
-    background: #3498db;
-    color: #ffffff;
-    border: none;
-    border-radius: 50px;
-    padding: 14px 34px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin: 8px 5px;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
-  }
-  .btn:hover { background: #2980b9; transform: translateY(-2px); }
-  .btn.green { background: #27ae60; box-shadow: 0 4px 12px rgba(39,174,96,0.4); }
-  .btn.green:hover { background: #219150; }
-  .btn.orange { background: #e67e22; box-shadow: 0 4px 12px rgba(230,126,34,0.4); }
-  .btn.orange:hover { background: #ca6f1e; }
-  .btn.small { padding: 10px 20px; font-size: 0.95rem; }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-  .score-bar {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 0.95rem;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .score-bar span { display: flex; align-items: center; gap: 6px; }
-
-  .badge {
-    display: inline-block;
-    background: rgba(52, 152, 219, 0.3);
-    color: #85c1e9;
-    font-size: 0.78rem;
-    padding: 6px 14px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: bold;
-  }
-
-  .prompt {
-    font-size: 1.25rem;
-    margin: 18px 0;
-    line-height: 1.7;
-    color: #ecf0f1;
-    min-height: 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-  }
-  .prompt .instruction { font-size: 0.95rem; color: #bdc3c7; }
-  .prompt .blank {
-    display: inline-block;
-    min-width: 70px;
-    border-bottom: 2px solid #f1c40f;
-    color: #f1c40f;
-    font-weight: bold;
-  }
-
-  .options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 16px;
-  }
-  .option {
-    background: #ffffff;
-    color: #2c3e50;
-    border: 2px solid transparent;
-    border-radius: 14px;
-    padding: 15px 18px;
-    font-size: 1.05rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-  }
-  .option:hover:not(:disabled) {
-    transform: translateY(-2px);
-    border-color: #3498db;
-    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
-  }
-  .option:disabled { cursor: not-allowed; }
-  .option.correct { background: #d5f5e3; border-color: #27ae60; color: #1e8449; }
-  .option.wrong { background: #fadbd8; border-color: #e74c3c; color: #922b21; }
-
-  .input-answer {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border: 2px solid rgba(255,255,255,0.25);
-    background: rgba(255,255,255,0.1);
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-align: center;
-    outline: none;
+  /* INPUT (para escribir) */
+  .write-input {
+    width: 100%; padding: 12px 14px; border-radius: 10px;
+    border: 2px solid #cbd5e0; font-size: 1rem; outline: none;
+    font-family: inherit; background: #fff; color: #1a202c;
     transition: border 0.2s;
-    font-family: inherit;
-    margin-top: 8px;
+    margin-top: 6px;
   }
-  .input-answer:focus { border-color: #3498db; background: rgba(255,255,255,0.15); }
-  .input-answer.correct { border-color: #27ae60; background: rgba(39,174,96,0.2); }
-  .input-answer.wrong { border-color: #e74c3c; background: rgba(231,76,60,0.2); }
+  .write-input:focus { border-color: #2b6cb0; }
+  .write-input.correct { border-color: #38a169; background: #f0fff4; }
+  .write-input.wrong { border-color: #e53e3e; background: #fff5f5; }
 
-  .progress { margin-top: 16px; color: #bdc3c7; font-size: 0.9rem; }
-  .hidden { display: none !important; }
-
-  .final-screen h2 { font-size: 2rem; margin-bottom: 15px; color: #f1c40f; }
-  .final-screen p { font-size: 1.15rem; margin: 8px 0; color: #ecf0f1; }
-
-  .audio-big {
-    background: #9b59b6;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 6px 20px rgba(155,89,182,0.5);
-    margin: 10px auto;
-    display: block;
+  /* CHECK BUTTON */
+  .check-btn {
+    background: #ed8936; color: white; border: none;
+    padding: 8px 18px; border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 0.92rem; margin-top: 8px;
+    transition: background 0.2s;
   }
-  .audio-big:hover { background: #8e44ad; transform: scale(1.06); }
+  .check-btn:hover { background: #dd6b20; }
+  .check-btn:disabled { background: #a0aec0; cursor: not-allowed; }
 
   .feedback {
-    margin-top: 14px;
-    font-size: 1.05rem;
-    font-weight: bold;
-    min-height: 26px;
+    margin-top: 8px; font-weight: 600; font-size: 0.95rem;
+    min-height: 22px;
   }
-  .feedback.ok { color: #2ecc71; }
-  .feedback.bad { color: #e74c3c; }
+  .feedback.ok { color: #2f855a; }
+  .feedback.bad { color: #c53030; }
 
-  @media (max-width: 520px) {
-    .card { padding: 22px 16px; margin-top: 70px; }
-    h1 { font-size: 1.4rem; }
-    .option { font-size: 0.95rem; padding: 12px 10px; }
-    .options { grid-template-columns: 1fr; }
-    .prompt { font-size: 1.05rem; }
-    .btn { font-size: 1rem; padding: 12px 24px; }
+  /* BTN */
+  .btn {
+    display: inline-block; padding: 12px 35px; font-size: 1rem;
+    border: none; border-radius: 10px; cursor: pointer;
+    transition: background 0.3s, transform 0.1s; font-weight: 600;
+  }
+  .btn-success { background: #38a169; color: white; }
+  .btn-success:hover { background: #2f855a; transform: scale(1.02); }
+  .btn-primary { background: #2b6cb0; color: white; }
+  .btn-primary:hover { background: #2c5282; transform: scale(1.02); }
+  .btn-center { text-align: center; margin: 25px 0 10px; }
+
+  /* RESULTS */
+  #resultsScreen { display: none; text-align: center; padding: 30px 20px; }
+  #resultsScreen h2 { color: #2b6cb0; margin-bottom: 15px; }
+  .score-box {
+    background: #ebf8ff; border-radius: 14px; padding: 25px;
+    margin: 20px auto; max-width: 600px; text-align: left;
+  }
+  .score-item {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    border-bottom: 1px solid #bee3f8; font-size: 1.02rem;
+  }
+  .score-item:last-child { border-bottom: none; font-weight: 700; color: #2b6cb0; font-size: 1.12rem; }
+  .feedback-final { margin-top: 15px; font-weight: 600; font-size: 1.1rem; text-align: center; }
+
+  @media (max-width: 600px) {
+    .container { padding: 20px 16px; }
+    h1 { font-size: 1.35rem; }
+    .tab-btn { font-size: 0.8rem; padding: 8px 10px; }
+    .section-box { padding: 16px; }
   }
 </style>
 </head>
 <body translate="no" class="notranslate">
 
-<div class="author-box" translate="no">FPB with AI</div>
+<div class="container" translate="no">
 
-<div class="card" translate="no">
+  <div id="mainContent">
 
-  <!-- ================= PANTALLA DE INTRODUCCIÓN ================= -->
-  <div id="intro-screen">
-    <h1>Class 11: Mix Review 🌎</h1>
-    <p class="subtitle">
-      Repasa <strong>Public Places</strong>, <strong>Feelings</strong> y <strong>Jobs</strong> en inglés.
-    </p>
-
-    <div class="notebook-box">
-      📓 <strong>Before we start:</strong><br>
-      • Escribe en tu cuaderno con <strong>tinta azul</strong>.<br>
-      • Anota la <strong>fecha</strong> y tu <strong>nombre</strong>.<br>
-      • Copia cada ejercicio y tu respuesta completa.
+    <div class="blogger-notice">
+      📝 <strong>Instrucciones importantes:</strong>
+      <ul>
+        <li>Contesta este ejercicio en el <strong>blog de Blogger</strong>.</li>
+        <li><strong>Todas las actividades se realizan en tu cuaderno</strong> con <strong>tinta azul</strong>.</li>
+        <li>Anota la <strong>fecha</strong> y tu <strong>nombre</strong> antes de comenzar.</li>
+        <li><strong>Actividad 1:</strong> elige la opción correcta del verbo <em>To Be</em> (am, is, are).</li>
+        <li><strong>Actividad 2:</strong> escribe la palabra correcta (am, is, are).</li>
+        <li><strong>Actividad 3:</strong> corrige las oraciones que tienen errores gramaticales.</li>
+        <li><strong>Actividad 4:</strong> ordena las palabras y escribe la oración completa.</li>
+        <li><strong>Actividad 5:</strong> escucha el audio y elige la oración correcta.</li>
+        <li>Al terminar las actividades, presiona <strong>"VER RESULTADOS"</strong>.</li>
+      </ul>
     </div>
 
-    <div class="section-intro">
-      <h3>🎮 How the game works</h3>
-      <p>
-        <strong>Part A:</strong> Elige la palabra correcta. 🔤<br>
-        <strong>Part B:</strong> Escribe la palabra que falta. ✍️<br>
-        <strong>Part C:</strong> Ordena las palabras y escribe la oración completa. ✍️
-      </p>
+    <h1>🌍 MIX REVIEW — VERB TO BE (Places, Feelings, Jobs)</h1>
+    <p class="subtitle">Multiple Choice · Fill in the blanks · Correct · Order · Listening</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(1, this)">🔘 Act 1 — Multiple Choice</button>
+      <button class="tab-btn" onclick="switchTab(2, this)">✍️ Act 2 — Fill in the Blanks</button>
+      <button class="tab-btn" onclick="switchTab(3, this)">🛠️ Act 3 — Correct the Mistake</button>
+      <button class="tab-btn" onclick="switchTab(4, this)">🧩 Act 4 — Order</button>
+      <button class="tab-btn" onclick="switchTab(5, this)">🎧 Act 5 — Listening</button>
     </div>
 
-    <button class="btn green" id="btn-start">▶ Start Game</button>
+    <!-- ============ ACTIVIDAD 1 ============ -->
+    <div id="tab1" class="tab-content active">
+      <div class="section-box">
+        <h2>🔘 ACTIVIDAD 1 — Multiple Choice</h2>
+        <p class="instruction">Elige la opción correcta (<strong>am, is, are</strong>) para completar cada oración. (15 ejercicios)</p>
+        <div class="grammar-tip">
+          💡 <strong>Grammar Tip:</strong> I → <em>am</em> · He/She/It → <em>is</em> · We/You/They → <em>are</em>
+        </div>
+        <div class="note-box">
+          ✏️ <strong>En tu cuaderno:</strong> escribe la oración completa con tu respuesta.
+        </div>
+        <div id="actividad1"></div>
+      </div>
+    </div>
+
+    <!-- ============ ACTIVIDAD 2 ============ -->
+    <div id="tab2" class="tab-content">
+      <div class="section-box">
+        <h2>✍️ ACTIVIDAD 2 — Fill in the Blanks</h2>
+        <p class="instruction">Escribe la forma correcta del verbo To Be (<strong>am, is, are</strong>) para completar la oración. (15 ejercicios)</p>
+        <div class="note-box">
+          ✏️ <strong>En tu cuaderno:</strong> escribe la oración completa con tu respuesta.
+        </div>
+        <div id="actividad2"></div>
+      </div>
+    </div>
+
+    <!-- ============ ACTIVIDAD 3 ============ -->
+    <div id="tab3" class="tab-content">
+      <div class="section-box">
+        <h2>🛠️ ACTIVIDAD 3 — Correct the Mistake</h2>
+        <p class="instruction">Lee la oración incorrecta y <strong>escríbela correctamente</strong>. (15 ejercicios)</p>
+        <div class="note-box">
+          ✏️ <strong>En tu cuaderno:</strong> escribe la oración corregida.
+        </div>
+        <div id="actividad3"></div>
+      </div>
+    </div>
+
+    <!-- ============ ACTIVIDAD 4 ============ -->
+    <div id="tab4" class="tab-content">
+      <div class="section-box">
+        <h2>🧩 ACTIVIDAD 4 — Order the Words</h2>
+        <p class="instruction">Ordena las palabras y <strong>escribe</strong> la oración completa. (15 ejercicios)</p>
+        <div class="note-box">
+          ✏️ <strong>En tu cuaderno:</strong> escribe la oración ordenada completa.
+        </div>
+        <div id="actividad4"></div>
+      </div>
+    </div>
+
+    <!-- ============ ACTIVIDAD 5 ============ -->
+    <div id="tab5" class="tab-content">
+      <div class="section-box">
+        <h2>🎧 ACTIVIDAD 5 — Listen & Choose</h2>
+        <p class="instruction">Escucha la oración y elige la opción correcta. (15 ejercicios)</p>
+        <div class="note-box">
+          ✏️ <strong>En tu cuaderno:</strong> escribe lo que escuchas y luego la opción correcta.
+        </div>
+        <div id="actividad5"></div>
+      </div>
+    </div>
+
+    <div class="btn-center">
+      <button class="btn btn-success" onclick="showResults()">✅ VER RESULTADOS</button>
+    </div>
+
   </div>
 
-  <!-- ================= PANTALLA DE JUEGO ================= -->
-  <div id="game-screen" class="hidden">
-    <div class="score-bar">
-      <span>📝 <span id="q-counter">1 / 30</span></span>
-      <span>✅ <span id="score-correct">0</span></span>
-      <span>❌ <span id="score-wrong">0</span></span>
-      <span>📚 Part <span id="part-label">A</span></span>
+  <!-- ============ RESULTADOS ============ -->
+  <div id="resultsScreen">
+    <h2>🏆 Resultados — Mix Review</h2>
+    <div class="score-box" id="scoreBox"></div>
+    <div class="btn-center">
+      <button class="btn btn-primary" onclick="location.reload()">🔄 Volver al inicio</button>
     </div>
-
-    <div id="badge-container"><span class="badge" id="badge">Part A · Multiple Choice</span></div>
-    <div class="prompt" id="prompt"></div>
-    <div id="dynamic-area"></div>
-    <div class="feedback" id="feedback"></div>
-
-    <p class="progress">Question <span id="q-current">1</span> of <span id="q-total">30</span></p>
-  </div>
-
-  <!-- ================= PANTALLA FINAL ================= -->
-  <div id="final-screen" class="hidden final-screen">
-    <h2>🎉 Great job!</h2>
-    <p>✅ Correct: <span id="final-correct">0</span></p>
-    <p>❌ Wrong: <span id="final-wrong">0</span></p>
-    <p>📊 Score: <span id="final-percent">0</span>%</p>
-    <p style="margin-top:16px; color:#f1c40f;">
-      ✍️ Recuerda copiar tus respuestas en el cuaderno con tinta azul.
-    </p>
-    <button class="btn green" onclick="location.reload()" style="margin-top:20px;">🔁 Play Again</button>
   </div>
 
 </div>
 
 <script>
-// =====================================================================
-//  CLASS 11 - MIX: PUBLIC PLACES, FEELINGS, JOBS
-//  30 ejercicios en 3 partes (10 cada una)
-// =====================================================================
+/* ============ TABS ============ */
+function switchTab(num, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab' + num).classList.add('active');
+  btn.classList.add('active');
+}
 
-// -------------------- PARTE A: Opciones Múltiples (Lugares) --------------------
-const PART_A = [
-  { sentence: "The doctor works at the ___.",              correct: "hospital",    options: ["hospital", "school", "bank", "park"] },
-  { sentence: "We buy food at the ___.",                   correct: "supermarket", options: ["supermarket", "library", "restaurant", "pharmacy"] },
-  { sentence: "You can borrow books at the ___.",          correct: "library",     options: ["library", "museum", "park", "cinema"] },
-  { sentence: "You can save your money at the ___.",       correct: "bank",        options: ["bank", "store", "hospital", "school"] },
-  { sentence: "Children play in the ___.",                 correct: "park",        options: ["park", "hospital", "bank", "museum"] },
-  { sentence: "We watch movies at the ___.",               correct: "cinema",      options: ["cinema", "library", "bank", "pharmacy"] },
-  { sentence: "You buy medicine at the ___.",              correct: "pharmacy",    options: ["pharmacy", "park", "school", "bank"] },
-  { sentence: "We eat dinner at a ___.",                   correct: "restaurant",  options: ["restaurant", "library", "park", "pharmacy"] },
-  { sentence: "Students learn at the ___.",                correct: "school",      options: ["school", "hospital", "bank", "cinema"] },
-  { sentence: "We look at old things at the ___.",         correct: "museum",      options: ["museum", "park", "pharmacy", "bank"] }
-];
+/* ============ SPEECH ============ */
+function speak(text, btnElement, lang = 'en-US') {
+  if (!('speechSynthesis' in window)) {
+    alert('Tu navegador no soporta síntesis de voz. Usa Chrome, Edge o Safari.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang;
+  utter.rate = 0.85;
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(x => x.lang && x.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase()));
+  if (v) utter.voice = v;
+  if (btnElement) {
+    btnElement.disabled = true;
+    const original = btnElement.textContent;
+    utter.onend = () => { btnElement.disabled = false; btnElement.textContent = original; };
+  }
+  window.speechSynthesis.speak(utter);
+}
+if ('speechSynthesis' in window) { window.speechSynthesis.getVoices(); }
 
-// -------------------- PARTE B: Escribir la palabra (Feelings) --------------------
-const PART_B = [
-  { sentence: "When I get a gift, I feel very ___.",          correct: "happy" },
-  { sentence: "He cries because he is ___.",                  correct: "sad" },
-  { sentence: "She lost her keys and she is ___.",            correct: "angry" },
-  { sentence: "After working all day, I am very ___.",        correct: "tired" },
-  { sentence: "The loud thunder makes my dog feel ___.",      correct: "scared" },
-  { sentence: "Tomorrow is my birthday and I am ___.",        correct: "excited" },
-  { sentence: "Before the big test, she feels ___.",          correct: "nervous" },
-  { sentence: "He drank warm milk and feels ___.",            correct: "calm" },
-  { sentence: "The joke was so funny, I am ___.",             correct: "surprised" },
-  { sentence: "She won the lottery and is very ___.",         correct: "surprised" }
-];
-
-// -------------------- PARTE C: Ordenar y escribir (Jobs) --------------------
-const PART_C = [
-  { words: ["is", "The", "teacher", "in", "the", "classroom"], correct: "The teacher is in the classroom." },
-  { words: ["works", "The", "doctor", "at", "the", "hospital"], correct: "The doctor works at the hospital." },
-  { words: ["cooks", "The", "chef", "delicious", "food"],     correct: "The chef cooks delicious food." },
-  { words: ["flies", "The", "pilot", "the", "airplane"],      correct: "The pilot flies the airplane." },
-  { words: ["helps", "The", "nurse", "the", "doctor"],        correct: "The nurse helps the doctor." },
-  { words: ["catches", "The", "police", "officer", "thieves"],correct: "The police officer catches thieves." },
-  { words: ["puts", "The", "firefighter", "out", "fires"],    correct: "The firefighter puts out fires." },
-  { words: ["builds", "The", "engineer", "new", "buildings"], correct: "The engineer builds new buildings." },
-  { words: ["drives", "The", "taxi", "driver", "a", "car"],   correct: "The taxi driver drives a car." },
-  { words: ["sells", "The", "seller", "clothes", "in", "the", "store"], correct: "The seller sells clothes in the store." }
-];
-
-// =====================================================================
-//  UTILIDADES
-// =====================================================================
-function shuffleArray(arr) {
+/* ============ UTIL ============ */
+function shuffleArr(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -354,324 +324,355 @@ function shuffleArray(arr) {
   }
   return a;
 }
-
 function normalize(str) {
-  return str.toLowerCase().trim().replace(/\s+/g, ' ').replace(/[.,!?;:]/g, '');
+  return (str || '').toLowerCase().trim()
+    .replace(/[.,!?;:¿¡"']/g, '')
+    .replace(/\s+/g, ' ');
 }
 
-function speak(text, lang = 'en-US', rate = 0.85) {
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = lang;
-  u.rate = rate;
-  window.speechSynthesis.speak(u);
+/* =====================================================================
+   ACTIVIDAD 1 — 15 Multiple Choice (Mezclado: To Be + Places/Feelings/Jobs)
+   ===================================================================== */
+const ACTIVIDAD1 = [
+  { sentence: "The doctor ___ at the hospital.", correct: "is", wrong: ["are", "am", "be"] },
+  { sentence: "I ___ very happy today.", correct: "am", wrong: ["is", "are", "be"] },
+  { sentence: "The teachers ___ at the school.", correct: "are", wrong: ["is", "am", "be"] },
+  { sentence: "My dog ___ scared of the thunder.", correct: "is", wrong: ["are", "am", "be"] },
+  { sentence: "We ___ at the supermarket.", correct: "are", wrong: ["is", "am", "be"] },
+  { sentence: "The chef ___ in the kitchen.", correct: "is", wrong: ["are", "am", "be"] },
+  { sentence: "They ___ excited about the trip.", correct: "are", wrong: ["is", "am", "be"] },
+  { sentence: "I ___ at the library right now.", correct: "am", wrong: ["is", "are", "be"] },
+  { sentence: "The police officer ___ brave.", correct: "is", wrong: ["are", "am", "be"] },
+  { sentence: "The children ___ sad because it's raining.", correct: "are", wrong: ["is", "am", "be"] },
+  { sentence: "My mother ___ a nurse at the clinic.", correct: "is", wrong: ["are", "am", "be"] },
+  { sentence: "We ___ at the cinema watching a movie.", correct: "are", wrong: ["is", "am", "be"] },
+  { sentence: "He ___ angry because he lost his keys.", correct: "is", wrong: ["are", "am", "be"] },
+  { sentence: "You ___ very polite and kind.", correct: "are", wrong: ["is", "am", "be"] },
+  { sentence: "The pilot ___ in the airplane.", correct: "is", wrong: ["are", "am", "be"] }
+];
+
+/* =====================================================================
+   ACTIVIDAD 2 — 15 Fill in the Blanks (Mezclado)
+   ===================================================================== */
+const ACTIVIDAD2 = [
+  { sentence: "The students ___ at the museum.", correct: "are" },
+  { sentence: "I ___ tired after working all day.", correct: "am" },
+  { sentence: "The firefighter ___ very brave.", correct: "is" },
+  { sentence: "We ___ at the restaurant eating dinner.", correct: "are" },
+  { sentence: "She ___ nervous before the big test.", correct: "is" },
+  { sentence: "The seller ___ at the store.", correct: "is" },
+  { sentence: "They ___ at the bank to save money.", correct: "are" },
+  { sentence: "My dog ___ calm now.", correct: "is" },
+  { sentence: "You ___ surprised by the news.", correct: "are" },
+  { sentence: "The engineer ___ building new houses.", correct: "is" },
+  { sentence: "I ___ at the pharmacy right now.", correct: "am" },
+  { sentence: "The taxi driver ___ at the park.", correct: "is" },
+  { sentence: "We ___ happy to see you.", correct: "are" },
+  { sentence: "She ___ at the bank.", correct: "is" },
+  { sentence: "The kids ___ at the park.", correct: "are" }
+];
+
+/* =====================================================================
+   ACTIVIDAD 3 — 15 Correct the Mistake (Mezclado)
+   ===================================================================== */
+const ACTIVIDAD3 = [
+  { wrong: "The doctor are at the hospital.", correct: "The doctor is at the hospital." },
+  { wrong: "I is very happy today.", correct: "I am very happy today." },
+  { wrong: "The teachers is at the school.", correct: "The teachers are at the school." },
+  { wrong: "My dog are scared of the thunder.", correct: "My dog is scared of the thunder." },
+  { wrong: "We is at the supermarket.", correct: "We are at the supermarket." },
+  { wrong: "The chef are in the kitchen.", correct: "The chef is in the kitchen." },
+  { wrong: "They is excited about the trip.", correct: "They are excited about the trip." },
+  { wrong: "I are at the library right now.", correct: "I am at the library right now." },
+  { wrong: "The police officer are brave.", correct: "The police officer is brave." },
+  { wrong: "The children is sad because it's raining.", correct: "The children are sad because it's raining." },
+  { wrong: "My mother are a nurse at the clinic.", correct: "My mother is a nurse at the clinic." },
+  { wrong: "We is at the cinema watching a movie.", correct: "We are at the cinema watching a movie." },
+  { wrong: "He are angry because he lost his keys.", correct: "He is angry because he lost his keys." },
+  { wrong: "You is very polite and kind.", correct: "You are very polite and kind." },
+  { wrong: "The pilot are in the airplane.", correct: "The pilot is in the airplane." }
+];
+
+/* =====================================================================
+   ACTIVIDAD 4 — 15 Order the Words (Mezclado)
+   ===================================================================== */
+const ACTIVIDAD4 = [
+  { words: ["is", "The", "doctor", "hospital", "at", "the"], correct: "The doctor is at the hospital" },
+  { words: ["am", "I", "happy", "very"], correct: "I am very happy" },
+  { words: ["are", "The", "teachers", "school", "at", "the"], correct: "The teachers are at the school" },
+  { words: ["is", "My", "dog", "scared"], correct: "My dog is scared" },
+  { words: ["are", "We", "supermarket", "at", "the"], correct: "We are at the supermarket" },
+  { words: ["is", "The", "chef", "kitchen", "in", "the"], correct: "The chef is in the kitchen" },
+  { words: ["are", "They", "excited"], correct: "They are excited" },
+  { words: ["am", "I", "library", "at", "the"], correct: "I am at the library" },
+  { words: ["is", "The", "police", "officer", "brave"], correct: "The police officer is brave" },
+  { words: ["are", "The", "children", "sad"], correct: "The children are sad" },
+  { words: ["is", "My", "mother", "nurse", "a"], correct: "My mother is a nurse" },
+  { words: ["are", "We", "cinema", "at", "the"], correct: "We are at the cinema" },
+  { words: ["is", "He", "angry"], correct: "He is angry" },
+  { words: ["are", "You", "polite", "very"], correct: "You are very polite" },
+  { words: ["is", "The", "pilot", "airplane", "in", "the"], correct: "The pilot is in the airplane" }
+];
+
+/* =====================================================================
+   ACTIVIDAD 5 — 15 Listen & Choose (Mezclado)
+   ===================================================================== */
+const ACTIVIDAD5 = [
+  { audio: "The doctor is at the hospital.", correct: "The doctor is at the hospital.",
+    options: ["The doctor is at the hospital.", "The doctor are at the hospital.", "The doctor am at the hospital.", "The doctor is at hospital."] },
+  { audio: "I am very happy today.", correct: "I am very happy today.",
+    options: ["I am very happy today.", "I is very happy today.", "I are very happy today.", "I am very happy."] },
+  { audio: "The teachers are at the school.", correct: "The teachers are at the school.",
+    options: ["The teachers are at the school.", "The teachers is at the school.", "The teachers am at the school.", "The teacher are at the school."] },
+  { audio: "My dog is scared.", correct: "My dog is scared.",
+    options: ["My dog is scared.", "My dog are scared.", "My dog am scared.", "My dog is scard."] },
+  { audio: "We are at the supermarket.", correct: "We are at the supermarket.",
+    options: ["We are at the supermarket.", "We is at the supermarket.", "We am at the supermarket.", "We are at supermarket."] },
+  { audio: "The chef is in the kitchen.", correct: "The chef is in the kitchen.",
+    options: ["The chef is in the kitchen.", "The chef are in the kitchen.", "The chef am in the kitchen.", "The chef is on the kitchen."] },
+  { audio: "They are excited.", correct: "They are excited.",
+    options: ["They are excited.", "They is excited.", "They am excited.", "They are excite."] },
+  { audio: "I am at the library.", correct: "I am at the library.",
+    options: ["I am at the library.", "I is at the library.", "I are at the library.", "I am at library."] },
+  { audio: "The police officer is brave.", correct: "The police officer is brave.",
+    options: ["The police officer is brave.", "The police officer are brave.", "The police officer am brave.", "The police officer is brav."] },
+  { audio: "The children are sad.", correct: "The children are sad.",
+    options: ["The children are sad.", "The children is sad.", "The children am sad.", "The childs are sad."] },
+  { audio: "My mother is a nurse.", correct: "My mother is a nurse.",
+    options: ["My mother is a nurse.", "My mother are a nurse.", "My mother am a nurse.", "My mother is nurse."] },
+  { audio: "We are at the cinema.", correct: "We are at the cinema.",
+    options: ["We are at the cinema.", "We is at the cinema.", "We am at the cinema.", "We are at cinema."] },
+  { audio: "He is angry.", correct: "He is angry.",
+    options: ["He is angry.", "He are angry.", "He am angry.", "He is angri."] },
+  { audio: "You are very polite.", correct: "You are very polite.",
+    options: ["You are very polite.", "You is very polite.", "You am very polite.", "You are very polite."] },
+  { audio: "The pilot is in the airplane.", correct: "The pilot is in the airplane.",
+    options: ["The pilot is in the airplane.", "The pilot are in the airplane.", "The pilot am in the airplane.", "The pilot is in airplane."] }
+];
+
+/* =====================================================================
+   RENDER ACTIVIDAD 1
+   ===================================================================== */
+function renderActividad1() {
+  const c = document.getElementById('actividad1');
+  c.innerHTML = ACTIVIDAD1.map((q, i) => {
+    const options = shuffleArr([q.correct, ...q.wrong]);
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <div class="q-prompt">${q.sentence}</div>
+        <div class="options">
+          ${options.map(opt => `
+            <label>
+              <input type="radio" name="a1_${i}" value="${opt.replace(/"/g, '&quot;')}">
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
-// =====================================================================
-//  ESTADO
-// =====================================================================
-let questions = [];
-let currentIndex = 0;
-let correctCount = 0;
-let wrongCount = 0;
-let locked = false;
-
-function buildQuestions() {
-  const list = [];
-
-  // A
-  shuffleArray(PART_A).forEach(q => {
-    list.push({
-      part: 'A',
-      badge: 'Part A · Public Places',
-      instruction: '🔤 Elige el lugar correcto:',
-      type: 'options',
-      sentence: q.sentence,
-      correct: q.correct,
-      options: q.options,
-      speakText: q.sentence.replace(/___/g, q.correct)
-    });
-  });
-
-  // B
-  shuffleArray(PART_B).forEach(q => {
-    list.push({
-      part: 'B',
-      badge: 'Part B · Feelings',
-      instruction: '✍️ Escribe la emoción que falta:',
-      type: 'write-word',
-      sentence: q.sentence,
-      correct: q.correct,
-      speakText: q.sentence.replace(/___/g, q.correct)
-    });
-  });
-
-  // C
-  shuffleArray(PART_C).forEach(q => {
-    list.push({
-      part: 'C',
-      badge: 'Part C · Jobs',
-      instruction: '✍️ Ordena las palabras y ESCRIBE la oración:',
-      type: 'write-sentence',
-      words: shuffleArray(q.words),
-      correct: q.correct
-    });
-  });
-
-  return list;
+/* =====================================================================
+   RENDER ACTIVIDAD 2 (Escribir)
+   ===================================================================== */
+function renderActividad2() {
+  const c = document.getElementById('actividad2');
+  c.innerHTML = ACTIVIDAD2.map((q, i) => {
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <div class="q-prompt">${q.sentence}</div>
+        <input type="text" class="write-input" id="a2_input_${i}"
+               placeholder="Escribe tu respuesta aquí..." autocomplete="off"
+               autocorrect="off" autocapitalize="off" spellcheck="false" translate="no">
+        <button class="check-btn" onclick="checkWriteA2(${i})">✔ Verificar escritura</button>
+        <div class="feedback" id="a2_fb_${i}"></div>
+      </div>
+    `;
+  }).join('');
 }
 
-function startGame() {
-  questions = buildQuestions();
-  currentIndex = 0;
-  correctCount = 0;
-  wrongCount = 0;
-
-  document.getElementById('intro-screen').classList.add('hidden');
-  document.getElementById('game-screen').classList.remove('hidden');
-  document.getElementById('q-total').textContent = questions.length;
-  loadQuestion();
-}
-
-function loadQuestion() {
-  locked = false;
-  const q = questions[currentIndex];
-
-  document.getElementById('q-current').textContent = currentIndex + 1;
-  document.getElementById('q-counter').textContent = `${currentIndex + 1} / ${questions.length}`;
-  document.getElementById('part-label').textContent = q.part;
-  document.getElementById('badge').textContent = q.badge;
-  document.getElementById('feedback').textContent = '';
-  document.getElementById('feedback').className = 'feedback';
-
-  const promptEl = document.getElementById('prompt');
-  const dynamicArea = document.getElementById('dynamic-area');
-  promptEl.innerHTML = `<span class="instruction">${q.instruction}</span>`;
-  dynamicArea.innerHTML = '';
-
-  if (q.type === 'options') renderOptions(q, promptEl, dynamicArea);
-  else if (q.type === 'write-word') renderWriteWord(q, promptEl, dynamicArea);
-  else if (q.type === 'write-sentence') renderWriteSentence(q, promptEl, dynamicArea);
-}
-
-function renderOptions(q, promptEl, dynamicArea) {
-  const sentenceEl = document.createElement('div');
-  const parts = q.sentence.split('___');
-  sentenceEl.innerHTML = `${parts[0]}<span class="blank">?</span>${parts[1] || ''}`;
-  promptEl.appendChild(sentenceEl);
-
-  const audioBtn = document.createElement('button');
-  audioBtn.className = 'audio-big';
-  audioBtn.innerHTML = '🔊';
-  audioBtn.addEventListener('click', () => speak(q.speakText, 'en-US', 0.8));
-  promptEl.appendChild(audioBtn);
-
-  const optionsWrap = document.createElement('div');
-  optionsWrap.className = 'options';
-  const opts = shuffleArray(q.options);
-
-  opts.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'option';
-    btn.textContent = opt;
-    btn.addEventListener('click', () => checkOptionsAnswer(btn, opt, q.correct, optionsWrap, q.speakText));
-    optionsWrap.appendChild(btn);
-  });
-  dynamicArea.appendChild(optionsWrap);
-}
-
-function checkOptionsAnswer(btn, selected, correct, wrap, speakText) {
-  if (locked) return;
-  locked = true;
-  const allButtons = wrap.querySelectorAll('.option');
-  allButtons.forEach(b => b.disabled = true);
-  const fb = document.getElementById('feedback');
-
-  if (selected === correct) {
-    btn.classList.add('correct');
-    correctCount++;
-    document.getElementById('score-correct').textContent = correctCount;
-    fb.textContent = '✅ Correct!';
+function checkWriteA2(i) {
+  const q = ACTIVIDAD2[i];
+  const input = document.getElementById(`a2_input_${i}`);
+  const fb = document.getElementById(`a2_fb_${i}`);
+  if (!input.value.trim()) { input.focus(); return; }
+  
+  if (normalize(input.value) === normalize(q.correct)) {
+    input.classList.add('correct'); input.classList.remove('wrong');
+    fb.textContent = '✅ ¡Excelente! Correcto.';
     fb.className = 'feedback ok';
-    speak(speakText, 'en-US', 0.85);
-    setTimeout(nextQuestion, 1400);
   } else {
-    btn.classList.add('wrong');
-    wrongCount++;
-    document.getElementById('score-wrong').textContent = wrongCount;
-    allButtons.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
-    fb.textContent = `❌ Correct answer: ${correct}`;
+    input.classList.add('wrong'); input.classList.remove('correct');
+    fb.innerHTML = `❌ Correcto: <strong>${q.correct}</strong>`;
     fb.className = 'feedback bad';
-    speak(speakText, 'en-US', 0.85);
-    setTimeout(nextQuestion, 2200);
   }
 }
 
-function renderWriteWord(q, promptEl, dynamicArea) {
-  const sentenceEl = document.createElement('div');
-  const parts = q.sentence.split('___');
-  sentenceEl.innerHTML = `${parts[0]}<span class="blank">?</span>${parts[1] || ''}`;
-  promptEl.appendChild(sentenceEl);
-
-  const hint = document.createElement('div');
-  hint.className = 'instruction';
-  hint.textContent = `💡 Pista: empieza con "${q.correct.charAt(0)}" (${q.correct.length} letras)`;
-  promptEl.appendChild(hint);
-
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.className = 'input-answer';
-  input.placeholder = 'Escribe la palabra aquí...';
-  input.autocomplete = 'off';
-  dynamicArea.appendChild(input);
-
-  const checkBtn = document.createElement('button');
-  checkBtn.className = 'btn orange';
-  checkBtn.style.marginTop = '14px';
-  checkBtn.textContent = '✔ Check Answer';
-  dynamicArea.appendChild(checkBtn);
-
-  const audioHintBtn = document.createElement('button');
-  audioHintBtn.className = 'btn small';
-  audioHintBtn.style.marginTop = '14px';
-  audioHintBtn.style.marginLeft = '8px';
-  audioHintBtn.style.background = '#9b59b6';
-  audioHintBtn.textContent = '🔊 Escuchar';
-  audioHintBtn.addEventListener('click', () => speak(q.speakText, 'en-US', 0.8));
-  dynamicArea.appendChild(audioHintBtn);
-
-  function check() {
-    if (locked) return;
-    const userAnswer = input.value;
-    if (!userAnswer.trim()) { input.focus(); return; }
-    locked = true;
-    checkBtn.disabled = true;
-    audioHintBtn.disabled = true;
-    input.disabled = true;
-
-    const fb = document.getElementById('feedback');
-    const isCorrect = normalize(userAnswer) === normalize(q.correct);
-
-    if (isCorrect) {
-      input.classList.add('correct');
-      correctCount++;
-      document.getElementById('score-correct').textContent = correctCount;
-      fb.textContent = '✅ Excellent!';
-      fb.className = 'feedback ok';
-      speak(q.speakText, 'en-US', 0.85);
-      setTimeout(nextQuestion, 1500);
-    } else {
-      input.classList.add('wrong');
-      wrongCount++;
-      document.getElementById('score-wrong').textContent = wrongCount;
-      fb.innerHTML = `❌ Correct: <span style="color:#f1c40f;">${q.correct}</span>`;
-      fb.className = 'feedback bad';
-      speak(q.speakText, 'en-US', 0.85);
-      setTimeout(nextQuestion, 2500);
-    }
-  }
-
-  checkBtn.addEventListener('click', check);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
-  setTimeout(() => input.focus(), 300);
+/* =====================================================================
+   RENDER ACTIVIDAD 3 (Corregir oraciones)
+   ===================================================================== */
+function renderActividad3() {
+  const c = document.getElementById('actividad3');
+  c.innerHTML = ACTIVIDAD3.map((q, i) => {
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <div class="q-prompt" style="color:#e53e3e;">❌ Wrong: ${q.wrong}</div>
+        <input type="text" class="write-input" id="a3_input_${i}"
+               placeholder="Escribe la oración correcta..." autocomplete="off"
+               autocorrect="off" autocapitalize="off" spellcheck="false" translate="no">
+        <button class="check-btn" onclick="checkWriteA3(${i})">✔ Verificar corrección</button>
+        <div class="feedback" id="a3_fb_${i}"></div>
+      </div>
+    `;
+  }).join('');
 }
 
-function renderWriteSentence(q, promptEl, dynamicArea) {
-  const wordBank = document.createElement('div');
-  wordBank.style.display = 'flex';
-  wordBank.style.flexWrap = 'wrap';
-  wordBank.style.gap = '8px';
-  wordBank.style.justifyContent = 'center';
-  wordBank.style.margin = '14px 0';
+function checkWriteA3(i) {
+  const q = ACTIVIDAD3[i];
+  const input = document.getElementById(`a3_input_${i}`);
+  const fb = document.getElementById(`a3_fb_${i}`);
+  if (!input.value.trim()) { input.focus(); return; }
+  
+  if (normalize(input.value) === normalize(q.correct)) {
+    input.classList.add('correct'); input.classList.remove('wrong');
+    fb.textContent = '✅ ¡Excelente! Corrección perfecta.';
+    fb.className = 'feedback ok';
+  } else {
+    input.classList.add('wrong'); input.classList.remove('correct');
+    fb.innerHTML = `❌ Correcto: <strong>${q.correct}</strong>`;
+    fb.className = 'feedback bad';
+  }
+}
 
-  q.words.forEach(w => {
-    const chip = document.createElement('span');
-    chip.textContent = w;
-    chip.style.background = '#3498db';
-    chip.style.color = '#fff';
-    chip.style.borderRadius = '10px';
-    chip.style.padding = '10px 16px';
-    chip.style.fontSize = '1rem';
-    chip.style.fontWeight = 'bold';
-    wordBank.appendChild(chip);
+/* =====================================================================
+   RENDER ACTIVIDAD 4 (Ordenar)
+   ===================================================================== */
+function renderActividad4() {
+  const c = document.getElementById('actividad4');
+  c.innerHTML = ACTIVIDAD4.map((q, i) => {
+    const words = shuffleArr(q.words);
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <div class="q-prompt">Palabras: <em>${words.join(' · ')}</em></div>
+        <input type="text" class="write-input" id="a4_input_${i}"
+               placeholder="Escribe la oración ordenada..." autocomplete="off"
+               autocorrect="off" autocapitalize="off" spellcheck="false" translate="no">
+        <button class="check-btn" onclick="checkWriteA4(${i})">✔ Verificar</button>
+        <div class="feedback" id="a4_fb_${i}"></div>
+      </div>
+    `;
+  }).join('');
+}
+
+function checkWriteA4(i) {
+  const q = ACTIVIDAD4[i];
+  const input = document.getElementById(`a4_input_${i}`);
+  const fb = document.getElementById(`a4_fb_${i}`);
+  if (!input.value.trim()) { input.focus(); return; }
+  
+  if (normalize(input.value) === normalize(q.correct)) {
+    input.classList.add('correct'); input.classList.remove('wrong');
+    fb.textContent = '✅ ¡Excelente! Oración correcta.';
+    fb.className = 'feedback ok';
+  } else {
+    input.classList.add('wrong'); input.classList.remove('correct');
+    fb.innerHTML = `❌ Correcto: <strong>${q.correct}</strong>`;
+    fb.className = 'feedback bad';
+  }
+}
+
+/* =====================================================================
+   RENDER ACTIVIDAD 5 (Audio y opciones)
+   ===================================================================== */
+function renderActividad5() {
+  const c = document.getElementById('actividad5');
+  c.innerHTML = ACTIVIDAD5.map((q, i) => {
+    const options = shuffleArr(q.options);
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <button class="audio-btn" onclick="speak('${q.audio.replace(/'/g, "\\'")}', this)">
+          🔊 Escuchar oración
+        </button>
+        <div class="options">
+          ${options.map(opt => `
+            <label>
+              <input type="radio" name="a5_${i}" value="${opt.replace(/"/g, '&quot;')}">
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ============ INIT ============ */
+renderActividad1();
+renderActividad2();
+renderActividad3();
+renderActividad4();
+renderActividad5();
+
+/* =====================================================================
+   RESULTADOS
+   ===================================================================== */
+function showResults() {
+  let score1 = 0, score2 = 0, score3 = 0, score4 = 0, score5 = 0;
+
+  ACTIVIDAD1.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="a1_${i}"]:checked`);
+    if (sel && normalize(sel.value) === normalize(q.correct)) score1++;
   });
-  dynamicArea.appendChild(wordBank);
+  ACTIVIDAD2.forEach((q, i) => {
+    const inp = document.getElementById(`a2_input_${i}`);
+    if (inp && normalize(inp.value) === normalize(q.correct)) score2++;
+  });
+  ACTIVIDAD3.forEach((q, i) => {
+    const inp = document.getElementById(`a3_input_${i}`);
+    if (inp && normalize(inp.value) === normalize(q.correct)) score3++;
+  });
+  ACTIVIDAD4.forEach((q, i) => {
+    const inp = document.getElementById(`a4_input_${i}`);
+    if (inp && normalize(inp.value) === normalize(q.correct)) score4++;
+  });
+  ACTIVIDAD5.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="a5_${i}"]:checked`);
+    if (sel && normalize(sel.value) === normalize(q.correct)) score5++;
+  });
 
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.className = 'input-answer';
-  input.placeholder = 'Escribe la oración completa aquí...';
-  input.autocomplete = 'off';
-  dynamicArea.appendChild(input);
+  const total = score1 + score2 + score3 + score4 + score5;
+  const max = 15 * 5;
+  const pct = Math.round((total / max) * 100);
 
-  const checkBtn = document.createElement('button');
-  checkBtn.className = 'btn orange';
-  checkBtn.style.marginTop = '14px';
-  checkBtn.textContent = '✔ Check Answer';
-  dynamicArea.appendChild(checkBtn);
+  let msg = '';
+  if (pct >= 90) msg = '🏆 Outstanding! Dominas el Verb To Be.';
+  else if (pct >= 75) msg = '🌟 Great job! Sigue practicando.';
+  else if (pct >= 60) msg = '👍 Good. Repasa am, is, are.';
+  else msg = '📚 Keep practicing. Repasa el Verb To Be.';
 
-  const audioHintBtn = document.createElement('button');
-  audioHintBtn.className = 'btn small';
-  audioHintBtn.style.marginTop = '14px';
-  audioHintBtn.style.marginLeft = '8px';
-  audioHintBtn.style.background = '#9b59b6';
-  audioHintBtn.textContent = '🔊 Escuchar pista';
-  audioHintBtn.addEventListener('click', () => speak(q.correct, 'en-US', 0.8));
-  dynamicArea.appendChild(audioHintBtn);
+  document.getElementById('scoreBox').innerHTML = `
+    <div class="score-item"><span>🔘 Actividad 1 (Multiple Choice)</span><span>${score1} / 15</span></div>
+    <div class="score-item"><span>✍️ Actividad 2 (Fill in the Blanks)</span><span>${score2} / 15</span></div>
+    <div class="score-item"><span>🛠️ Actividad 3 (Correct the Mistake)</span><span>${score3} / 15</span></div>
+    <div class="score-item"><span>🧩 Actividad 4 (Order the Words)</span><span>${score4} / 15</span></div>
+    <div class="score-item"><span>🎧 Actividad 5 (Listening)</span><span>${score5} / 15</span></div>
+    <div class="score-item"><span>TOTAL</span><span>${total} / ${max} (${pct}%)</span></div>
+    <div class="feedback-final">${msg}</div>
+    <p style="margin-top:12px; color:#718096; font-size:0.9rem; text-align:center;">
+      ⚠️ Recuerda copiar todas tus respuestas en el cuaderno con tinta azul.
+    </p>
+  `;
 
-  function check() {
-    if (locked) return;
-    const userAnswer = input.value;
-    if (!userAnswer.trim()) { input.focus(); return; }
-    locked = true;
-    checkBtn.disabled = true;
-    audioHintBtn.disabled = true;
-    input.disabled = true;
-
-    const fb = document.getElementById('feedback');
-    const isCorrect = normalize(userAnswer) === normalize(q.correct);
-
-    if (isCorrect) {
-      input.classList.add('correct');
-      correctCount++;
-      document.getElementById('score-correct').textContent = correctCount;
-      fb.textContent = '✅ Excellent! Well written.';
-      fb.className = 'feedback ok';
-      speak(q.correct, 'en-US', 0.85);
-      setTimeout(nextQuestion, 1600);
-    } else {
-      input.classList.add('wrong');
-      wrongCount++;
-      document.getElementById('score-wrong').textContent = wrongCount;
-      fb.innerHTML = `❌ Correct: <span style="color:#f1c40f;">${q.correct}</span>`;
-      fb.className = 'feedback bad';
-      speak(q.correct, 'en-US', 0.85);
-      setTimeout(nextQuestion, 2600);
-    }
-  }
-
-  checkBtn.addEventListener('click', check);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
-  setTimeout(() => input.focus(), 300);
+  document.getElementById('mainContent').style.display = 'none';
+  document.getElementById('resultsScreen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function nextQuestion() {
-  currentIndex++;
-  if (currentIndex >= questions.length) endGame();
-  else loadQuestion();
-}
-
-function endGame() {
-  document.getElementById('game-screen').classList.add('hidden');
-  document.getElementById('final-screen').classList.remove('hidden');
-  document.getElementById('final-correct').textContent = correctCount;
-  document.getElementById('final-wrong').textContent = wrongCount;
-  const percent = Math.round((correctCount / questions.length) * 100);
-  document.getElementById('final-percent').textContent = percent;
-}
-
-document.getElementById('btn-start').addEventListener('click', startGame);
 </script>
 
 </body>
