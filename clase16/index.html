@@ -1,449 +1,631 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" translate="no" class="notranslate">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 16: Weather Fill & Listen</title>
-    
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            
-            /* FONDO ELEGANTE */
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<meta name="robots" content="notranslate">
+<title>Clase 16 — Bare Verbs (Essentials)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    color: #1a202c;
+    line-height: 1.6;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: 30px 40px;
+  }
+  h1 { text-align: center; color: #2b6cb0; font-size: 1.8rem; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #718096; font-size: 1rem; margin-bottom: 25px; }
 
-        /* FIRMA DEL AUTOR */
-        .author-box {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #2c3e50;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+  /* BLOGGER NOTICE */
+  .blogger-notice {
+    background: #fefcbf; border-left: 6px solid #d69e2e;
+    padding: 16px 20px; border-radius: 10px; margin-bottom: 25px;
+    color: #744210; font-size: 0.98rem;
+  }
+  .blogger-notice strong { color: #975a16; }
+  .blogger-notice ul { margin: 8px 0 0 20px; }
+  .blogger-notice li { margin-bottom: 4px; }
 
-        h1 { 
-            color: #ffffff; 
-            margin-bottom: 5px; 
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5); 
-        }
-        .subtitle { 
-            color: #ffffff; 
-            margin-bottom: 20px; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
-        }
+  /* TABS */
+  .tabs {
+    display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap;
+    border-bottom: 3px solid #e2e8f0; padding-bottom: 10px;
+  }
+  .tab-btn {
+    padding: 10px 14px; font-size: 0.9rem; font-weight: 600;
+    background: #edf2f7; color: #4a5568; border: none;
+    border-radius: 10px; cursor: pointer; transition: all 0.3s;
+  }
+  .tab-btn:hover { background: #bee3f8; color: #2c5282; }
+  .tab-btn.active { background: #2b6cb0; color: white; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 
-        /* Panel de puntuación */
-        .scoreboard {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 12px 35px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            display: flex;
-            gap: 40px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #2c3e50;
-        }
+  /* SECTION */
+  .section-box {
+    background: #f7fafc; border: 2px solid #e2e8f0;
+    border-radius: 14px; padding: 22px 26px; margin-bottom: 25px;
+  }
+  .section-box h2 {
+    color: #2b6cb0; font-size: 1.2rem; margin-bottom: 12px;
+    border-bottom: 2px dashed #bee3f8; padding-bottom: 8px;
+  }
+  .instruction { color: #4a5568; margin-bottom: 12px; font-size: 0.98rem; }
 
-        .scoreboard .correct { color: #27ae60; }
-        .scoreboard .wrong { color: #c0392b; }
-        
-        .timer {
-            color: #2980b9;
-            min-width: 80px;
-            text-align: center;
-        }
-        .timer.danger {
-            color: #c0392b;
-            animation: pulse 0.5s infinite alternate;
-        }
+  .note-box {
+    background: #fffaf0; border-left: 5px solid #ed8936;
+    padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;
+    color: #7b341e; font-size: 0.95rem;
+  }
 
-        @keyframes pulse {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0.6; transform: scale(1.05); }
-        }
+  /* QUESTION */
+  .question {
+    background: #ffffff; border-radius: 10px; padding: 16px 18px;
+    margin-bottom: 14px; border: 1px solid #e2e8f0;
+  }
+  .question .q-num {
+    font-weight: 700; color: #2b6cb0; margin-right: 6px;
+  }
+  .question .q-prompt {
+    font-size: 1.05rem; color: #2d3748; margin-bottom: 8px;
+    font-weight: 600;
+  }
 
-        /* Tarjeta principal */
-        .game-container {
-            background: rgba(44, 62, 80, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            max-width: 650px;
-            width: 100%;
-            text-align: center;
-        }
+  .audio-btn {
+    background: #4299e1; color: white; border: none;
+    padding: 8px 14px; border-radius: 8px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600; margin: 4px 4px 8px 0;
+    transition: background 0.3s;
+  }
+  .audio-btn:hover { background: #3182ce; }
+  .audio-btn:disabled { background: #a0aec0; cursor: not-allowed; }
 
-        .progress-bar {
-            font-size: 14px;
-            color: #bdc3c7;
-            margin-bottom: 15px;
-        }
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .options label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 8px; cursor: pointer;
+    background: #f7fafc; border: 1px solid #e2e8f0;
+    transition: background 0.2s, border 0.2s;
+    font-size: 1rem;
+  }
+  .options label:hover { background: #ebf8ff; border-color: #bee3f8; }
+  .options input[type="radio"] { accent-color: #2b6cb0; width: 18px; height: 18px; cursor: pointer; }
 
-        /* Tarjeta de la pregunta */
-        .question-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 30px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+  /* INPUT (para escribir) */
+  .write-input {
+    width: 100%; padding: 12px 14px; border-radius: 10px;
+    border: 2px solid #cbd5e0; font-size: 1.05rem; outline: none;
+    font-family: inherit; background: #fff; color: #1a202c;
+    transition: border 0.2s;
+    margin-top: 6px;
+  }
+  .write-input:focus { border-color: #2b6cb0; }
+  .write-input.correct { border-color: #38a169; background: #f0fff4; }
+  .write-input.wrong { border-color: #e53e3e; background: #fff5f5; }
 
-        .question-text {
-            font-size: 22px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin: 0;
-            line-height: 1.6;
-        }
+  /* CHECK BUTTON */
+  .check-btn {
+    background: #ed8936; color: white; border: none;
+    padding: 8px 18px; border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 0.92rem; margin-top: 8px;
+    transition: background 0.2s;
+  }
+  .check-btn:hover { background: #dd6b20; }
+  .check-btn:disabled { background: #a0aec0; cursor: not-allowed; }
 
-        .question-text .blank {
-            color: #e67e22;
-            font-weight: 900;
-            border-bottom: 3px solid #e67e22;
-            padding: 0 10px;
-        }
+  .feedback {
+    margin-top: 8px; font-weight: 600; font-size: 0.95rem;
+    min-height: 22px;
+  }
+  .feedback.ok { color: #2f855a; }
+  .feedback.bad { color: #c53030; }
 
-        .hint-text {
-            font-size: 15px;
-            color: #7f8c8d;
-            margin-top: 12px;
-            font-style: italic;
-        }
+  /* HANGMAN */
+  .hangman-box {
+    background: #ffffff; border-radius: 12px; padding: 20px;
+    border: 2px dashed #4299e1; text-align: center;
+    margin-bottom: 15px;
+  }
+  .hangman-emoji {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+  }
+  .hangman-word {
+    font-size: 2rem; font-weight: 700; letter-spacing: 8px;
+    color: #2b6cb0; margin: 15px 0; font-family: monospace;
+    text-transform: uppercase;
+  }
+  .hangman-letters-input {
+    display: flex; justify-content: center; gap: 10px; margin-top: 15px;
+  }
+  
+  /* INPUT DEL AHORCADO MAS CLARO */
+  .hangman-letter-input {
+    width: 70px; height: 70px; font-size: 2.5rem; text-align: center;
+    text-transform: uppercase; border: 3px solid #4299e1;
+    background-color: #ebf8ff;
+    border-radius: 12px; outline: none; font-weight: bold; color: #2b6cb0;
+    box-shadow: 0 4px 6px rgba(66, 153, 225, 0.2);
+  }
+  .hangman-letter-input::placeholder { color: #a0aec0; font-size: 1.5rem; }
+  .hangman-letter-input:focus { border-color: #2b6cb0; background-color: #fff; }
+  
+  .hangman-status {
+    font-weight: bold; font-size: 1.1rem; margin-top: 15px; color: #e53e3e;
+    min-height: 25px;
+  }
+  .hangman-drawing {
+    font-family: monospace; font-size: 1.2rem; color: #2d3748;
+    margin: 15px 0; white-space: pre; line-height: 1.2; text-align: left; display: inline-block;
+    background: #edf2f7; padding: 10px 20px; border-radius: 8px;
+    min-height: 80px;
+  }
 
-        /* Botón de audio */
-        .audio-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 25px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 15px;
-            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
-        }
+  /* BTN */
+  .btn {
+    display: inline-block; padding: 12px 35px; font-size: 1rem;
+    border: none; border-radius: 10px; cursor: pointer;
+    transition: background 0.3s, transform 0.1s; font-weight: 600;
+  }
+  .btn-success { background: #38a169; color: white; }
+  .btn-success:hover { background: #2f855a; transform: scale(1.02); }
+  .btn-primary { background: #2b6cb0; color: white; }
+  .btn-primary:hover { background: #2c5282; transform: scale(1.02); }
+  .btn-center { text-align: center; margin: 25px 0 10px; }
 
-        .audio-btn:hover {
-            transform: scale(1.05);
-            background: #2980b9;
-        }
+  /* RESULTS */
+  #resultsScreen { display: none; text-align: center; padding: 30px 20px; }
+  #resultsScreen h2 { color: #2b6cb0; margin-bottom: 15px; }
+  .score-box {
+    background: #ebf8ff; border-radius: 14px; padding: 25px;
+    margin: 20px auto; max-width: 600px; text-align: left;
+  }
+  .score-item {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    border-bottom: 1px solid #bee3f8; font-size: 1.02rem;
+  }
+  .score-item:last-child { border-bottom: none; font-weight: 700; color: #2b6cb0; font-size: 1.12rem; }
+  .feedback-final { margin-top: 15px; font-weight: 600; font-size: 1.1rem; text-align: center; }
 
-        .audio-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Botones de opciones */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 5px;
-        }
-
-        .option-btn {
-            background: #ffffff;
-            border: 2px solid #ecf0f1;
-            border-radius: 12px;
-            padding: 18px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .option-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            border-color: #3498db;
-        }
-
-        .option-btn.correct-answer {
-            border-color: #27ae60 !important;
-            background: #d5f5e3 !important;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
-        }
-
-        .option-btn.wrong-answer {
-            border-color: #c0392b !important;
-            background: #fadbd8 !important;
-        }
-
-        .option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-
-        /* Botón de reinicio */
-        .btn-reset {
-            margin-top: 25px;
-            padding: 12px 35px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background: #2c3e50;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            max-width: 220px;
-        }
-
-        .btn-reset:hover { background: #1a252f; }
-
-        .celebration { display: none; color: #2ecc71; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-        .game-over { display: none; color: #e74c3c; margin-top: 15px; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-
-        @media (max-width: 500px) {
-            .game-container { padding: 20px; }
-            .options-grid { grid-template-columns: 1fr; }
-            .question-text { font-size: 18px; }
-            .scoreboard { gap: 15px; font-size: 15px; padding: 10px 20px; }
-        }
-    </style>
+  @media (max-width: 600px) {
+    .container { padding: 20px 16px; }
+    h1 { font-size: 1.35rem; }
+    .tab-btn { font-size: 0.8rem; padding: 8px 10px; }
+    .section-box { padding: 16px; }
+    .hangman-word { font-size: 1.5rem; letter-spacing: 4px; }
+  }
+</style>
 </head>
-<body>
+<body translate="no" class="notranslate">
 
-    <!-- FIRMA DEL AUTOR -->
-    <div class="author-box">FPB with AI</div>
+<div class="container" translate="no">
 
-    <h1>Class 16: Weather</h1>
-    <p class="subtitle">🔊 Listen to the audio. Fill in the missing word.</p>
+  <div id="mainContent">
 
-    <div class="scoreboard">
-        <span class="timer" id="timer-display">⏱️ 8:00</span>
-        <span>✅ <span id="correct-count" class="correct">0</span></span>
-        <span>❌ <span id="wrong-count" class="wrong">0</span></span>
+    <div class="blogger-notice">
+      📝 <strong>Instrucciones importantes:</strong>
+      <ul>
+        <li>Contesta este ejercicio en el <strong>blog de Blogger</strong>.</li>
+        <li><strong>Todas las actividades se realizan en tu cuaderno</strong> con <strong>tinta azul</strong> (excepto el Ahorcado).</li>
+        <li>Anota la <strong>fecha</strong> y tu <strong>nombre</strong> antes de comenzar.</li>
+        <li><strong>Actividad 1:</strong> escucha el audio en inglés y elige la traducción al español.</li>
+        <li><strong>Actividad 2:</strong> lee la acción en español y <strong>escribe</strong> el verbo en inglés.</li>
+        <li><strong>Actividad 3:</strong> escucha el audio en inglés y elige el verbo escrito correcto.</li>
+        <li><strong>Actividad 4:</strong> Juega al Ahorcado. Escribe <strong>UNA LETRA</strong> en la caja azul. Tienes máximo <strong>2 errores</strong>.</li>
+        <li>Al terminar las actividades, presiona <strong>"VER RESULTADOS"</strong>.</li>
+      </ul>
     </div>
 
-    <div class="game-container">
-        <div class="progress-bar" id="progress-text">Question 1 of 20</div>
+    <h1>💼 CLASE 16 — BARE VERBS (Essentials)</h1>
+    <p class="subtitle">Vocabulary Practice: Audio, Writing & Hangman</p>
 
-        <div class="question-card">
-            <div class="question-text" id="question-text">It is very <span class="blank">______</span> today. Take your umbrella.</div>
-            <div class="hint-text" id="hint-text">💡 Listen to the audio to fill the blank.</div>
-            <button class="audio-btn" id="play-audio-btn">▶️ Play Full Audio</button>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(1, this)">🎧 Act 1 — Audio & Spanish</button>
+      <button class="tab-btn" onclick="switchTab(2, this)">✍️ Act 2 — Spanish to English</button>
+      <button class="tab-btn" onclick="switchTab(3, this)">🔉 Act 3 — Listen & Choose</button>
+      <button class="tab-btn" onclick="switchTab(4, this)">🪢 Act 4 — Hangman</button>
+    </div>
+
+    <!-- ============ ACTIVIDAD 1 ============ -->
+    <div id="tab1" class="tab-content active">
+      <div class="section-box">
+        <h2>🎧 ACTIVIDAD 1 — Audio & Spanish</h2>
+        <p class="instruction">Escucha el verbo en inglés y elige la <strong>traducción correcta al español</strong>. (15 ejercicios)</p>
+        <div id="actividad1"></div>
+      </div>
+    </div>
+
+    <!-- ============ ACTIVIDAD 2 ============ -->
+    <div id="tab2" class="tab-content">
+      <div class="section-box">
+        <h2>✍️ ACTIVIDAD 2 — Spanish to English</h2>
+        <p class="instruction">Lee la acción en español y <strong>escribe el verbo en inglés</strong>. (15 ejercicios)</p>
+        <div class="note-box">
+          ✏️ <strong>En tu cuaderno:</strong> escribe la palabra y el verbo en inglés.
         </div>
+        <div id="actividad2"></div>
+      </div>
+    </div>
 
-        <div class="options-grid" id="options-container">
-            <!-- Botones generados -->
+    <!-- ============ ACTIVIDAD 3 ============ -->
+    <div id="tab3" class="tab-content">
+      <div class="section-box">
+        <h2>🔉 ACTIVIDAD 3 — Listen & Choose</h2>
+        <p class="instruction">Escucha el audio en inglés y elige la <strong>opción escrita correcta</strong>. (15 ejercicios)</p>
+        <div class="note-box">
+          ✏️ <strong>En tu cuaderno:</strong> escribe lo que escuchas.
         </div>
+        <div id="actividad3"></div>
+      </div>
+    </div>
 
-        <div id="celebration-msg" class="celebration">🌤️ Amazing! You know the weather perfectly! 🌤️</div>
-        <div id="game-over-msg" class="game-over">⏰ Time's up!</div>
+    <!-- ============ ACTIVIDAD 4 ============ -->
+    <div id="tab4" class="tab-content">
+      <div class="section-box">
+        <h2>🪢 ACTIVIDAD 4 — Hangman</h2>
+        <p class="instruction">Adivina el verbo en inglés letra por letra. Escribe en la caja azul. (15 ejercicios)</p>
+        <div class="note-box">
+          ✏️ <strong>Aquí mismo:</strong> haz clic en la caja azul y escribe una letra para adivinar.
+        </div>
+        <div id="actividad4"></div>
+      </div>
+    </div>
+
+    <div class="btn-center">
+      <button class="btn btn-success" onclick="showResults()">✅ VER RESULTADOS</button>
+    </div>
+
+  </div>
+
+  <!-- ============ RESULTADOS ============ -->
+  <div id="resultsScreen">
+    <h2>🏆 Resultados — Clase 16</h2>
+    <div class="score-box" id="scoreBox"></div>
+    <div class="btn-center">
+      <button class="btn btn-primary" onclick="location.reload()">🔄 Volver al inicio</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ============ TABS ============ */
+function switchTab(num, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab' + num).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ============ SPEECH ============ */
+function speak(text, btnElement, lang = 'en-US') {
+  if (!('speechSynthesis' in window)) {
+    alert('Tu navegador no soporta síntesis de voz.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang;
+  utter.rate = 0.85;
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(x => x.lang && x.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase()));
+  if (v) utter.voice = v;
+  if (btnElement) {
+    btnElement.disabled = true;
+    const original = btnElement.textContent;
+    utter.onend = () => { btnElement.disabled = false; btnElement.textContent = original; };
+  }
+  window.speechSynthesis.speak(utter);
+}
+if ('speechSynthesis' in window) { window.speechSynthesis.getVoices(); }
+
+/* ============ UTIL ============ */
+function shuffleArr(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function normalize(str) {
+  return (str || '').toLowerCase().trim()
+    .replace(/[.,!?;:¿¡"']/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+/* =====================================================================
+   LISTA DE VERBOS CON EMOJIS (Clase 16 - Essentials)
+   ===================================================================== */
+const VERBS = [
+  { en: "have", es: "tener", emoji: "🤲" },
+  { en: "want", es: "querer", emoji: "🫴" },
+  { en: "need", es: "necesitar", emoji: "🚨" },
+  { en: "like", es: "gustar", emoji: "👍" },
+  { en: "know", es: "saber/conocer", emoji: "🧠" },
+  { en: "think", es: "pensar", emoji: "🤔" },
+  { en: "say", es: "decir", emoji: "🗣️" },
+  { en: "give", es: "dar", emoji: "🎁" },
+  { en: "get", es: "obtener", emoji: "🫳" },
+  { en: "find", es: "encontrar", emoji: "🔍" },
+  { en: "open", es: "abrir", emoji: "🔓" },
+  { en: "close", es: "cerrar", emoji: "🔒" },
+  { en: "jump", es: "saltar", emoji: "🦘" },
+  { en: "ride", es: "montar", emoji: "🚲" },
+  { en: "learn", es: "aprender", emoji: "🎓" }
+];
+
+/* =====================================================================
+   ACTIVIDAD 1 — Audio & Spanish
+   ===================================================================== */
+function renderActividad1() {
+  const c = document.getElementById('actividad1');
+  c.innerHTML = VERBS.map((v, i) => {
+    const others = VERBS.filter(x => x.es !== v.es).map(x => x.es);
+    const wrong = shuffleArr(others).slice(0, 3);
+    const options = shuffleArr([v.es, ...wrong]);
+    
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <button class="audio-btn" onclick="speak('${v.en}', this)">
+          🔊 Escuchar verbo
+        </button>
+        <div class="options">
+          ${options.map(opt => `
+            <label>
+              <input type="radio" name="a1_${i}" value="${opt.replace(/"/g, '&quot;')}">
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* =====================================================================
+   ACTIVIDAD 2 — Spanish to English
+   ===================================================================== */
+function renderActividad2() {
+  const c = document.getElementById('actividad2');
+  c.innerHTML = VERBS.map((v, i) => {
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <div class="q-prompt">Acción: <strong>${v.es}</strong></div>
+        <input type="text" class="write-input" id="a2_input_${i}"
+               placeholder="Escribe el verbo en inglés..." autocomplete="off"
+               autocorrect="off" autocapitalize="off" spellcheck="false" translate="no">
+        <button class="check-btn" onclick="checkWriteA2(${i}, '${v.en}')">✔ Verificar</button>
+        <div class="feedback" id="a2_fb_${i}"></div>
+      </div>
+    `;
+  }).join('');
+}
+
+function checkWriteA2(i, correct) {
+  const input = document.getElementById(`a2_input_${i}`);
+  const fb = document.getElementById(`a2_fb_${i}`);
+  if (!input.value.trim()) { input.focus(); return; }
+  
+  if (normalize(input.value) === normalize(correct)) {
+    input.classList.add('correct'); input.classList.remove('wrong');
+    fb.textContent = '✅ ¡Excelente! Correcto.';
+    fb.className = 'feedback ok';
+  } else {
+    input.classList.add('wrong'); input.classList.remove('correct');
+    fb.innerHTML = `❌ Correcto: <strong>${correct}</strong>`;
+    fb.className = 'feedback bad';
+  }
+}
+
+/* =====================================================================
+   ACTIVIDAD 3 — Listen & Choose
+   ===================================================================== */
+function renderActividad3() {
+  const c = document.getElementById('actividad3');
+  c.innerHTML = VERBS.map((v, i) => {
+    const others = VERBS.filter(x => x.en !== v.en).map(x => x.en);
+    const wrong = shuffleArr(others).slice(0, 3);
+    const options = shuffleArr([v.en, ...wrong]);
+    
+    return `
+      <div class="question">
+        <span class="q-num">${i + 1}.</span>
+        <button class="audio-btn" onclick="speak('${v.en}', this)">
+          🔊 Escuchar verbo
+        </button>
+        <div class="options">
+          ${options.map(opt => `
+            <label>
+              <input type="radio" name="a3_${i}" value="${opt.replace(/"/g, '&quot;')}">
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* =====================================================================
+   ACTIVIDAD 4 — Hangman (Letra por letra con Emojis)
+   ===================================================================== */
+let hangmanState = [];
+
+function renderActividad4() {
+  const c = document.getElementById('actividad4');
+  hangmanState = []; // Reset state
+  
+  c.innerHTML = VERBS.map((v, i) => {
+    const displayWord = v.en.split('').map(char => char === ' ' ? ' ' : '_').join(' ');
+    
+    hangmanState.push({
+      word: v.en.toLowerCase(),
+      guessed: [],
+      errors: 0,
+      maxErrors: 2,
+      solved: false,
+      failed: false
+    });
+    
+    return `
+      <div class="hangman-box" id="hangman_box_${i}">
+        <div class="hangman-emoji">${v.emoji}</div>
+        <div class="hangman-word" id="hangman_word_${i}">${displayWord}</div>
         
-        <button class="btn-reset" onclick="initGame()">🔄 Restart Game</button>
-    </div>
+        <div class="hangman-drawing" id="hangman_drawing_${i}"></div>
+        
+        <div class="hangman-letters-input">
+          <!-- Input más claro y visible -->
+          <input type="text" class="hangman-letter-input" id="hangman_input_${i}" 
+                 maxlength="1" autocomplete="off" translate="no" 
+                 oninput="guessLetter(${i})" placeholder="A">
+        </div>
+        
+        <div class="hangman-status" id="hangman_status_${i}"></div>
+      </div>
+    `;
+  }).join('');
+}
 
-    <script>
-        // BASE DE DATOS DE 20 ORACIONES SOBRE EL CLIMA
-        const weatherData = [
-            { answer: "rainy", sentence: "It is very ______ today. Take your umbrella.", audio: "It is very rainy today. Take your umbrella." },
-            { answer: "sunny", sentence: "The weather is ______. Let's go to the beach!", audio: "The weather is sunny. Let's go to the beach!" },
-            { answer: "cloudy", sentence: "The sky is ______. I think it will rain later.", audio: "The sky is cloudy. I think it will rain later." },
-            { answer: "windy", sentence: "It is very ______ today. The trees are moving a lot.", audio: "It is very windy today. The trees are moving a lot." },
-            { answer: "cold", sentence: "It is very ______ outside. Wear your winter coat.", audio: "It is very cold outside. Wear your winter coat." },
-            { answer: "hot", sentence: "It is very ______ in the desert during summer.", audio: "It is very hot in the desert during summer." },
-            { answer: "snowy", sentence: "The mountains are ______ today. We can go skiing.", audio: "The mountains are snowy today. We can go skiing." },
-            { answer: "foggy", sentence: "The road is ______. Please drive slowly.", audio: "The road is foggy. Please drive slowly." },
-            { answer: "stormy", sentence: "The weather is ______. The thunder is very loud.", audio: "The weather is stormy. The thunder is very loud." },
-            { answer: "warm", sentence: "The spring weather is very ______. The flowers are beautiful.", audio: "The spring weather is very warm. The flowers are beautiful." },
-            { answer: "cool", sentence: "The evening is ______. I need to put on a sweater.", audio: "The evening is cool. I need to put on a sweater." },
-            { answer: "dry", sentence: "The desert is very ______. There is almost no water.", audio: "The desert is very dry. There is almost no water." },
-            { answer: "humid", sentence: "The rainforest is very ______ and hot.", audio: "The rainforest is very humid and hot." },
-            { answer: "bright", sentence: "The morning is so ______. The sun is shining.", audio: "The morning is so bright. The sun is shining." },
-            { answer: "dark", sentence: "The sky is getting ______. It might rain soon.", audio: "The sky is getting dark. It might rain soon." },
-            { answer: "freezing", sentence: "The temperature is ______. It is below zero.", audio: "The temperature is freezing. It is below zero." },
-            { answer: "clear", sentence: "The night sky is ______. I can see all the stars.", audio: "The night sky is clear. I can see all the stars." },
-            { answer: "mild", sentence: "The weather today is ______. Not too hot and not too cold.", audio: "The weather today is mild. Not too hot and not too cold." },
-            { answer: "icy", sentence: "The roads are ______. Be careful when you walk.", audio: "The roads are icy. Be careful when you walk." },
-            { answer: "sunny", sentence: "What a ______ day! Perfect for a picnic.", audio: "What a sunny day! Perfect for a picnic." }
-        ];
+function guessLetter(index) {
+  const state = hangmanState[index];
+  if (state.solved || state.failed) return;
+  
+  const input = document.getElementById(`hangman_input_${index}`);
+  const letter = input.value.toLowerCase();
+  
+  if (!letter || !/^[a-z]$/.test(letter)) return;
+  if (state.guessed.includes(letter)) {
+    input.value = '';
+    return;
+  }
+  
+  state.guessed.push(letter);
+  input.value = ''; 
+  
+  const wordDisplay = document.getElementById(`hangman_word_${index}`);
+  const status = document.getElementById(`hangman_status_${index}`);
+  const drawing = document.getElementById(`hangman_drawing_${index}`);
+  const box = document.getElementById(`hangman_box_${index}`);
+  
+  if (state.word.includes(letter)) {
+    let newDisplay = '';
+    for (let i = 0; i < state.word.length; i++) {
+      const char = state.word[i];
+      if (char === ' ') {
+        newDisplay += '  ';
+      } else if (state.guessed.includes(char)) {
+        newDisplay += char.toUpperCase() + ' ';
+      } else {
+        newDisplay += '_ ';
+      }
+    }
+    wordDisplay.textContent = newDisplay.trim();
+    
+    const allGuessed = state.word.split('').every(c => c === ' ' || state.guessed.includes(c));
+    if (allGuessed) {
+      state.solved = true;
+      status.textContent = '✅ ¡Ganaste! Has salvado al muñeco.';
+      status.style.color = '#38a169';
+      box.style.borderColor = '#38a169';
+      box.style.background = '#f0fff4';
+      drawing.style.opacity = '0.5';
+      document.getElementById(`hangman_input_${index}`).disabled = true;
+    }
+  } else {
+    state.errors++;
+    let drawArt = '';
+    if (state.errors === 1) {
+      drawArt = "  O  ";
+      status.textContent = `❌ Error 1 de 2. Te queda 1 oportunidad.`;
+    } else if (state.errors === 2) {
+      drawArt = "  O  \n /|\\ \n / \\ ";
+      status.textContent = `💀 ¡Ahorcado! La palabra era: ${state.word.toUpperCase()}`;
+      status.style.color = '#e53e3e';
+      state.failed = true;
+      box.style.borderColor = '#e53e3e';
+      box.style.background = '#fff5f5';
+      wordDisplay.textContent = state.word.toUpperCase();
+      wordDisplay.style.color = '#e53e3e';
+      document.getElementById(`hangman_input_${index}`).disabled = true;
+    }
+    drawing.textContent = drawArt;
+    status.style.color = '#e53e3e';
+  }
+}
 
-        let correctCount = 0, wrongCount = 0, currentIndex = 0;
-        let timeLeft = 480; // 8 minutos
-        let timerInterval = null;
-        let isGameActive = false, isAnswered = false;
+/* ============ INIT ============ */
+renderActividad1();
+renderActividad2();
+renderActividad3();
+renderActividad4();
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+/* =====================================================================
+   RESULTADOS
+   ===================================================================== */
+function showResults() {
+  let score1 = 0, score2 = 0, score3 = 0, score4 = 0;
 
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = seconds % 60;
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
+  VERBS.forEach((v, i) => {
+    const sel = document.querySelector(`input[name="a1_${i}"]:checked`);
+    if (sel && normalize(sel.value) === normalize(v.es)) score1++;
+  });
 
-        function initGame() {
-            clearInterval(timerInterval);
-            timeLeft = 480;
-            isGameActive = true;
-            correctCount = 0;
-            wrongCount = 0;
-            currentIndex = 0;
-            
-            document.getElementById('correct-count').textContent = 0;
-            document.getElementById('wrong-count').textContent = 0;
-            document.getElementById('celebration-msg').style.display = 'none';
-            document.getElementById('game-over-msg').style.display = 'none';
-            document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
-            document.getElementById('timer-display').classList.remove('danger');
+  VERBS.forEach((v, i) => {
+    const inp = document.getElementById(`a2_input_${i}`);
+    if (inp && normalize(inp.value) === normalize(v.en)) score2++;
+  });
 
-            shuffleArray(weatherData);
-            loadQuestion();
-            startTimer();
-        }
+  VERBS.forEach((v, i) => {
+    const sel = document.querySelector(`input[name="a3_${i}"]:checked`);
+    if (sel && normalize(sel.value) === normalize(v.en)) score3++;
+  });
 
-        function loadQuestion() {
-            if (currentIndex >= weatherData.length) { gameWon(); return; }
+  hangmanState.forEach(state => {
+    if (state.solved) score4++;
+  });
 
-            isAnswered = false;
-            const current = weatherData[currentIndex];
-            
-            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} of ${weatherData.length}`;
-            
-            // Resaltar el blank en la oración
-            let sentenceHTML = current.sentence.replace('______', '<span class="blank">______</span>');
-            document.getElementById('question-text').innerHTML = sentenceHTML;
-            document.getElementById('hint-text').textContent = `💡 Listen to the full audio.`;
+  const total = score1 + score2 + score3 + score4;
+  const max = VERBS.length * 4;
+  const pct = Math.round((total / max) * 100);
 
-            // Guardar el audio para el botón
-            document.getElementById('play-audio-btn').dataset.audio = current.audio;
+  let msg = '';
+  if (pct >= 90) msg = '🏆 Outstanding! Dominas estos verbos.';
+  else if (pct >= 75) msg = '🌟 Great job! Sigue practicando.';
+  else if (pct >= 60) msg = '👍 Good. Repasa los verbos.';
+  else msg = '📚 Keep practicing. Repasa el vocabulario.';
 
-            // Generar 4 opciones
-            let options = [current.answer];
-            let others = weatherData.filter(f => f.answer !== current.answer);
-            shuffleArray(others);
-            for(let i=0; i<3; i++) { options.push(others[i].answer); }
-            shuffleArray(options);
+  document.getElementById('scoreBox').innerHTML = `
+    <div class="score-item"><span>🎧 Actividad 1 (Audio & Spanish)</span><span>${score1} / 15</span></div>
+    <div class="score-item"><span>✍️ Actividad 2 (Spanish to English)</span><span>${score2} / 15</span></div>
+    <div class="score-item"><span>🔉 Actividad 3 (Listen & Choose)</span><span>${score3} / 15</span></div>
+    <div class="score-item"><span>🪢 Actividad 4 (Hangman)</span><span>${score4} / 15</span></div>
+    <div class="score-item"><span>TOTAL</span><span>${total} / ${max} (${pct}%)</span></div>
+    <div class="feedback-final">${msg}</div>
+    <p style="margin-top:12px; color:#718096; font-size:0.9rem; text-align:center;">
+      ⚠️ Recuerda copiar todas tus respuestas en el cuaderno con tinta azul.
+    </p>
+  `;
 
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
-                btn.dataset.correct = (opt === current.answer);
+  document.getElementById('mainContent').style.display = 'none';
+  document.getElementById('resultsScreen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 
-                btn.addEventListener('click', function() {
-                    if (!isGameActive || isAnswered) return;
-                    isAnswered = true;
-                    clearInterval(timerInterval);
-                    window.speechSynthesis.cancel();
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-
-                    if (this.dataset.correct === 'true') {
-                        this.classList.add('correct-answer');
-                        correctCount++;
-                        document.getElementById('correct-count').textContent = correctCount;
-                        
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= weatherData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 800);
-                    } else {
-                        this.classList.add('wrong-answer');
-                        wrongCount++;
-                        document.getElementById('wrong-count').textContent = wrongCount;
-                        
-                        document.querySelectorAll('.option-btn').forEach(b => {
-                            if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                        });
-
-                        setTimeout(() => { 
-                            currentIndex++; 
-                            if (currentIndex >= weatherData.length) gameWon(); 
-                            else { loadQuestion(); startTimer(); } 
-                        }, 1200);
-                    }
-                });
-                container.appendChild(btn);
-            });
-        }
-
-        // Lógica del botón de Audio
-        document.getElementById('play-audio-btn').addEventListener('click', function() {
-            if (!isGameActive || isAnswered) return;
-            const audioText = this.dataset.audio;
-            if (audioText) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(audioText);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            }
-        });
-
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer-display').textContent = `⏱️ ${formatTime(timeLeft)}`;
-                if (timeLeft <= 60) document.getElementById('timer-display').classList.add('danger');
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    if (isAnswered) return;
-                    isGameActive = false;
-                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-                    window.speechSynthesis.cancel();
-                    
-                    document.querySelectorAll('.option-btn').forEach(b => {
-                        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
-                    });
-                    wrongCount++;
-                    document.getElementById('wrong-count').textContent = wrongCount;
-
-                    setTimeout(() => {
-                        currentIndex++;
-                        isGameActive = true;
-                        if (currentIndex >= weatherData.length) gameWon();
-                        else { loadQuestion(); startTimer(); }
-                    }, 1500);
-                }
-            }, 1000);
-        }
-
-        function gameWon() {
-            isGameActive = false; 
-            clearInterval(timerInterval);
-            window.speechSynthesis.cancel();
-            document.getElementById('celebration-msg').style.display = 'block';
-        }
-
-        window.onload = initGame;
-    </script>
 </body>
 </html>
