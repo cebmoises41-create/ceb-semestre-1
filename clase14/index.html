@@ -5,630 +5,205 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google" content="notranslate">
 <meta name="robots" content="notranslate">
-<title>Clase 14 — Bare Verbs (Routines)</title>
+<title>CEB 1st Semester - Games</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f4f8;
+    background: #f4f7f6;
     color: #1a202c;
-    line-height: 1.6;
-    padding: 20px;
+    padding: 40px 20px;
   }
-  .container {
-    max-width: 1000px;
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .header h1 {
+    color: #2b6cb0;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+  .header p {
+    color: #718096;
+    font-size: 1.1rem;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
     margin: 0 auto;
-    background: #ffffff;
+  }
+  .class-card {
     border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    padding: 30px 40px;
+    padding: 25px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #1a202c;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
   }
-  h1 { text-align: center; color: #2b6cb0; font-size: 1.8rem; margin-bottom: 8px; }
-  .subtitle { text-align: center; color: #718096; font-size: 1rem; margin-bottom: 25px; }
-
-  /* BLOGGER NOTICE */
-  .blogger-notice {
-    background: #fefcbf; border-left: 6px solid #d69e2e;
-    padding: 16px 20px; border-radius: 10px; margin-bottom: 25px;
-    color: #744210; font-size: 0.98rem;
+  .class-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
   }
-  .blogger-notice strong { color: #975a16; }
-  .blogger-notice ul { margin: 8px 0 0 20px; }
-  .blogger-notice li { margin-bottom: 4px; }
-
-  /* TABS */
-  .tabs {
-    display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap;
-    border-bottom: 3px solid #e2e8f0; padding-bottom: 10px;
-  }
-  .tab-btn {
-    padding: 10px 14px; font-size: 0.9rem; font-weight: 600;
-    background: #edf2f7; color: #4a5568; border: none;
-    border-radius: 10px; cursor: pointer; transition: all 0.3s;
-  }
-  .tab-btn:hover { background: #bee3f8; color: #2c5282; }
-  .tab-btn.active { background: #2b6cb0; color: white; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-
-  /* SECTION */
-  .section-box {
-    background: #f7fafc; border: 2px solid #e2e8f0;
-    border-radius: 14px; padding: 22px 26px; margin-bottom: 25px;
-  }
-  .section-box h2 {
-    color: #2b6cb0; font-size: 1.2rem; margin-bottom: 12px;
-    border-bottom: 2px dashed #bee3f8; padding-bottom: 8px;
-  }
-  .instruction { color: #4a5568; margin-bottom: 12px; font-size: 0.98rem; }
-
-  .note-box {
-    background: #fffaf0; border-left: 5px solid #ed8936;
-    padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;
-    color: #7b341e; font-size: 0.95rem;
-  }
-
-  /* QUESTION */
-  .question {
-    background: #ffffff; border-radius: 10px; padding: 16px 18px;
-    margin-bottom: 14px; border: 1px solid #e2e8f0;
-  }
-  .question .q-num {
-    font-weight: 700; color: #2b6cb0; margin-right: 6px;
-  }
-  .question .q-prompt {
-    font-size: 1.05rem; color: #2d3748; margin-bottom: 8px;
-    font-weight: 600;
-  }
-
-  .audio-btn {
-    background: #4299e1; color: white; border: none;
-    padding: 8px 14px; border-radius: 8px; cursor: pointer;
-    font-size: 0.88rem; font-weight: 600; margin: 4px 4px 8px 0;
-    transition: background 0.3s;
-  }
-  .audio-btn:hover { background: #3182ce; }
-  .audio-btn:disabled { background: #a0aec0; cursor: not-allowed; }
-
-  /* OPTIONS */
-  .options { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-  .options label {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 14px; border-radius: 8px; cursor: pointer;
-    background: #f7fafc; border: 1px solid #e2e8f0;
-    transition: background 0.2s, border 0.2s;
-    font-size: 1rem;
-  }
-  .options label:hover { background: #ebf8ff; border-color: #bee3f8; }
-  .options input[type="radio"] { accent-color: #2b6cb0; width: 18px; height: 18px; cursor: pointer; }
-
-  /* INPUT (para escribir) */
-  .write-input {
-    width: 100%; padding: 12px 14px; border-radius: 10px;
-    border: 2px solid #cbd5e0; font-size: 1.05rem; outline: none;
-    font-family: inherit; background: #fff; color: #1a202c;
-    transition: border 0.2s;
-    margin-top: 6px;
-  }
-  .write-input:focus { border-color: #2b6cb0; }
-  .write-input.correct { border-color: #38a169; background: #f0fff4; }
-  .write-input.wrong { border-color: #e53e3e; background: #fff5f5; }
-
-  /* CHECK BUTTON */
-  .check-btn {
-    background: #ed8936; color: white; border: none;
-    padding: 8px 18px; border-radius: 8px; cursor: pointer;
-    font-weight: 600; font-size: 0.92rem; margin-top: 8px;
-    transition: background 0.2s;
-  }
-  .check-btn:hover { background: #dd6b20; }
-  .check-btn:disabled { background: #a0aec0; cursor: not-allowed; }
-
-  .feedback {
-    margin-top: 8px; font-weight: 600; font-size: 0.95rem;
-    min-height: 22px;
-  }
-  .feedback.ok { color: #2f855a; }
-  .feedback.bad { color: #c53030; }
-
-  /* HANGMAN */
-  .hangman-box {
-    background: #ffffff; border-radius: 12px; padding: 20px;
-    border: 2px dashed #4299e1; text-align: center;
+  .class-card .icon {
+    font-size: 3rem;
     margin-bottom: 15px;
   }
-  .hangman-word {
-    font-size: 2rem; font-weight: 700; letter-spacing: 8px;
-    color: #2b6cb0; margin: 15px 0; font-family: monospace;
-    text-transform: uppercase;
+  .class-card .class-title {
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
   }
-  .hangman-letters-input {
-    display: flex; justify-content: center; gap: 10px; margin-top: 15px;
-  }
-  .hangman-letter-input {
-    width: 60px; height: 60px; font-size: 2rem; text-align: center;
-    text-transform: uppercase; border: 3px solid #cbd5e0;
-    border-radius: 12px; outline: none; font-weight: bold; color: #2b6cb0;
-  }
-  .hangman-letter-input:focus { border-color: #2b6cb0; }
-  
-  .hangman-status {
-    font-weight: bold; font-size: 1.1rem; margin-top: 15px; color: #e53e3e;
-    min-height: 25px;
-  }
-  .hangman-drawing {
-    font-family: monospace; font-size: 1.2rem; color: #2d3748;
-    margin: 15px 0; white-space: pre; line-height: 1.2; text-align: left; display: inline-block;
-    background: #edf2f7; padding: 10px 20px; border-radius: 8px;
-    min-height: 80px;
-  }
-
-  /* BTN */
-  .btn {
-    display: inline-block; padding: 12px 35px; font-size: 1rem;
-    border: none; border-radius: 10px; cursor: pointer;
-    transition: background 0.3s, transform 0.1s; font-weight: 600;
-  }
-  .btn-success { background: #38a169; color: white; }
-  .btn-success:hover { background: #2f855a; transform: scale(1.02); }
-  .btn-primary { background: #2b6cb0; color: white; }
-  .btn-primary:hover { background: #2c5282; transform: scale(1.02); }
-  .btn-center { text-align: center; margin: 25px 0 10px; }
-
-  /* RESULTS */
-  #resultsScreen { display: none; text-align: center; padding: 30px 20px; }
-  #resultsScreen h2 { color: #2b6cb0; margin-bottom: 15px; }
-  .score-box {
-    background: #ebf8ff; border-radius: 14px; padding: 25px;
-    margin: 20px auto; max-width: 600px; text-align: left;
-  }
-  .score-item {
-    display: flex; justify-content: space-between; padding: 8px 0;
-    border-bottom: 1px solid #bee3f8; font-size: 1.02rem;
-  }
-  .score-item:last-child { border-bottom: none; font-weight: 700; color: #2b6cb0; font-size: 1.12rem; }
-  .feedback-final { margin-top: 15px; font-weight: 600; font-size: 1.1rem; text-align: center; }
-
-  @media (max-width: 600px) {
-    .container { padding: 20px 16px; }
-    h1 { font-size: 1.35rem; }
-    .tab-btn { font-size: 0.8rem; padding: 8px 10px; }
-    .section-box { padding: 16px; }
-    .hangman-word { font-size: 1.5rem; letter-spacing: 4px; }
+  .class-card .class-subtitle {
+    font-size: 0.95rem;
+    color: #4a5568;
+    font-weight: 600;
   }
 </style>
 </head>
 <body translate="no" class="notranslate">
 
-<div class="container" translate="no">
-
-  <div id="mainContent">
-
-    <div class="blogger-notice">
-      📝 <strong>Instrucciones importantes:</strong>
-      <ul>
-        <li>Contesta este ejercicio en el <strong>blog de Blogger</strong>.</li>
-        <li><strong>Todas las actividades se realizan en tu cuaderno</strong> con <strong>tinta azul</strong>.</li>
-        <li>Anota la <strong>fecha</strong> y tu <strong>nombre</strong> antes de comenzar.</li>
-        <li><strong>Actividad 1:</strong> escucha el audio en inglés y elige la traducción al español.</li>
-        <li><strong>Actividad 2:</strong> lee la acción en español y <strong>escribe</strong> el verbo en inglés.</li>
-        <li><strong>Actividad 3:</strong> escucha el audio en inglés y elige el verbo escrito correcto.</li>
-        <li><strong>Actividad 4:</strong> Juega al Ahorcado. Escribe <strong>UNA LETRA</strong> a la vez. Tienes máximo <strong>2 errores</strong>.</li>
-        <li>Al terminar las actividades, presiona <strong>"VER RESULTADOS"</strong>.</li>
-      </ul>
-    </div>
-
-    <h1>🏃‍♂️ CLASE 14 — BARE VERBS (Routines)</h1>
-    <p class="subtitle">Vocabulary Practice: Audio, Writing & Hangman</p>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab(1, this)">🎧 Act 1 — Audio & Spanish</button>
-      <button class="tab-btn" onclick="switchTab(2, this)">✍️ Act 2 — Spanish to English</button>
-      <button class="tab-btn" onclick="switchTab(3, this)">🔉 Act 3 — Listen & Choose</button>
-      <button class="tab-btn" onclick="switchTab(4, this)">🪢 Act 4 — Hangman</button>
-    </div>
-
-    <!-- ============ ACTIVIDAD 1 ============ -->
-    <div id="tab1" class="tab-content active">
-      <div class="section-box">
-        <h2>🎧 ACTIVIDAD 1 — Audio & Spanish</h2>
-        <p class="instruction">Escucha el verbo en inglés y elige la <strong>traducción correcta al español</strong>. (15 ejercicios)</p>
-        <div id="actividad1"></div>
-      </div>
-    </div>
-
-    <!-- ============ ACTIVIDAD 2 ============ -->
-    <div id="tab2" class="tab-content">
-      <div class="section-box">
-        <h2>✍️ ACTIVIDAD 2 — Spanish to English</h2>
-        <p class="instruction">Lee la acción en español y <strong>escribe el verbo en inglés</strong>. (15 ejercicios)</p>
-        <div class="note-box">
-          ✏️ <strong>En tu cuaderno:</strong> escribe la palabra y el verbo en inglés.
-        </div>
-        <div id="actividad2"></div>
-      </div>
-    </div>
-
-    <!-- ============ ACTIVIDAD 3 ============ -->
-    <div id="tab3" class="tab-content">
-      <div class="section-box">
-        <h2>🔉 ACTIVIDAD 3 — Listen & Choose</h2>
-        <p class="instruction">Escucha el audio en inglés y elige la <strong>opción escrita correcta</strong>. (15 ejercicios)</p>
-        <div class="note-box">
-          ✏️ <strong>En tu cuaderno:</strong> escribe lo que escuchas.
-        </div>
-        <div id="actividad3"></div>
-      </div>
-    </div>
-
-    <!-- ============ ACTIVIDAD 4 ============ -->
-    <div id="tab4" class="tab-content">
-      <div class="section-box">
-        <h2>🪢 ACTIVIDAD 4 — Hangman</h2>
-        <p class="instruction">Adivina el verbo en inglés letra por letra. Tienes máximo <strong>2 errores</strong>. (15 ejercicios)</p>
-        <div class="note-box">
-          ✏️ <strong>En tu cuaderno:</strong> escribe el verbo que descubras.
-        </div>
-        <div id="actividad4"></div>
-      </div>
-    </div>
-
-    <div class="btn-center">
-      <button class="btn btn-success" onclick="showResults()">✅ VER RESULTADOS</button>
-    </div>
-
+  <div class="header">
+    <h1>🎓 CEB 1st Semester - Games</h1>
+    <p>Selecciona una clase para comenzar</p>
   </div>
 
-  <!-- ============ RESULTADOS ============ -->
-  <div id="resultsScreen">
-    <h2>🏆 Resultados — Clase 14</h2>
-    <div class="score-box" id="scoreBox"></div>
-    <div class="btn-center">
-      <button class="btn btn-primary" onclick="location.reload()">🔄 Volver al inicio</button>
-    </div>
+  <div class="grid-container">
+
+    <!-- Clase 7 -->
+    <a href="clase7.html" class="class-card" style="background: #d6bcfa;">
+      <div class="icon">🚗</div>
+      <div class="class-title">Class 7</div>
+      <div class="class-subtitle">Clothes</div>
+    </a>
+
+    <!-- Clase 8 -->
+    <a href="clase8.html" class="class-card" style="background: #fbb6ce;">
+      <div class="icon">⚙️</div>
+      <div class="class-title">Class 8</div>
+      <div class="class-subtitle">Food</div>
+    </a>
+
+    <!-- Clase 9 -->
+    <a href="clase9.html" class="class-card" style="background: #feb2b2;">
+      <div class="icon">🧑‍🍳</div>
+      <div class="class-title">Class 9</div>
+      <div class="class-subtitle">Verbs</div>
+    </a>
+
+    <!-- Clase 10 -->
+    <a href="clase10.html" class="class-card" style="background: #fbd38d;">
+      <div class="icon">📅</div>
+      <div class="class-title">Class 10</div>
+      <div class="class-subtitle">Days & Months</div>
+    </a>
+
+    <!-- Clase 11 -->
+    <a href="clase11.html" class="class-card" style="background: #fef08a;">
+      <div class="icon">🏠</div>
+      <div class="class-title">Class 11</div>
+      <div class="class-subtitle">Mix to be</div>
+    </a>
+
+    <!-- Clase 12 -->
+    <a href="clase12.html" class="class-card" style="background: #c6f6d5;">
+      <div class="icon">🐕</div>
+      <div class="class-title">Class 12</div>
+      <div class="class-subtitle">Adjectives</div>
+    </a>
+
+    <!-- Clase 13 -->
+    <a href="clase13.html" class="class-card" style="background: #bee3f8;">
+      <div class="icon">📍</div>
+      <div class="class-title">Class 13</div>
+      <div class="class-subtitle">Dialogs to be</div>
+    </a>
+
+    <!-- Clase 14 (ACTUALIZADA) -->
+    <a href="clase14.html" class="class-card" style="background: #fbb6ce;">
+      <div class="icon">🏃‍♂️</div>
+      <div class="class-title">Class 14</div>
+      <div class="class-subtitle">Verbs (Part 1)</div>
+    </a>
+
+    <!-- Clase 15 -->
+    <a href="clase15.html" class="class-card" style="background: #f9a8d4;">
+      <div class="icon">🏊‍♂️</div>
+      <div class="class-title">Class 15</div>
+      <div class="class-subtitle">Verbs (Part 2)</div>
+    </a>
+
+    <!-- Clase 16 -->
+    <a href="clase16.html" class="class-card" style="background: #a3e4d7;">
+      <div class="icon">🧠</div>
+      <div class="class-title">Class 16</div>
+      <div class="class-subtitle">Verbs (Part 3)</div>
+    </a>
+
+    <!-- Clase 17 -->
+    <a href="clase17.html" class="class-card" style="background: #fdcba1;">
+      <div class="icon">🏪</div>
+      <div class="class-title">Class 17</div>
+      <div class="class-subtitle">Greetings</div>
+    </a>
+
+    <!-- Clase 18 -->
+    <a href="clase18.html" class="class-card" style="background: #fef08a;">
+      <div class="icon">🖥️</div>
+      <div class="class-title">Class 18</div>
+      <div class="class-subtitle">Emotions</div>
+    </a>
+
+    <!-- Clase 19 -->
+    <a href="clase19.html" class="class-card" style="background: #d0f0c0;">
+      <div class="icon">🚌</div>
+      <div class="class-title">Class 19</div>
+      <div class="class-subtitle">School</div>
+    </a>
+
+    <!-- Clase 20 -->
+    <a href="clase20.html" class="class-card" style="background: #b5f5e1;">
+      <div class="icon">🛋️</div>
+      <div class="class-title">Class 20</div>
+      <div class="class-subtitle">Furniture</div>
+    </a>
+
+    <!-- Clase 21 -->
+    <a href="clase21.html" class="class-card" style="background: #bee3f8;">
+      <div class="icon">🎸</div>
+      <div class="class-title">Class 21</div>
+      <div class="class-subtitle">Instruments</div>
+    </a>
+
+    <!-- Clase 22 -->
+    <a href="clase22.html" class="class-card" style="background: #e9d8fd;">
+      <div class="icon">🏷️</div>
+      <div class="class-title">Class 22</div>
+      <div class="class-subtitle">Actions</div>
+    </a>
+
+    <!-- Clase 23 -->
+    <a href="clase23.html" class="class-card" style="background: #fbb6ce;">
+      <div class="icon">🔨</div>
+      <div class="class-title">Class 23</div>
+      <div class="class-subtitle">Routines</div>
+    </a>
+
+    <!-- Clase 24 -->
+    <a href="clase24.html" class="class-card" style="background: #c6f6d5;">
+      <div class="icon">💼</div>
+      <div class="class-title">Class 24</div>
+      <div class="class-subtitle">Landscapes</div>
+    </a>
+
   </div>
-
-</div>
-
-<script>
-/* ============ TABS ============ */
-function switchTab(num, btn) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab' + num).classList.add('active');
-  btn.classList.add('active');
-}
-
-/* ============ SPEECH ============ */
-function speak(text, btnElement, lang = 'en-US') {
-  if (!('speechSynthesis' in window)) {
-    alert('Tu navegador no soporta síntesis de voz.');
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = lang;
-  utter.rate = 0.85;
-  const voices = window.speechSynthesis.getVoices();
-  const v = voices.find(x => x.lang && x.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase()));
-  if (v) utter.voice = v;
-  if (btnElement) {
-    btnElement.disabled = true;
-    const original = btnElement.textContent;
-    utter.onend = () => { btnElement.disabled = false; btnElement.textContent = original; };
-  }
-  window.speechSynthesis.speak(utter);
-}
-if ('speechSynthesis' in window) { window.speechSynthesis.getVoices(); }
-
-/* ============ UTIL ============ */
-function shuffleArr(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-function normalize(str) {
-  return (str || '').toLowerCase().trim()
-    .replace(/[.,!?;:¿¡"']/g, '')
-    .replace(/\s+/g, ' ');
-}
-
-/* =====================================================================
-   LISTA DE VERBOS (Clase 14 - Rutinas)
-   ===================================================================== */
-const VERBS = [
-  { en: "wake up", es: "despertarse" },
-  { en: "brush", es: "cepillar" },
-  { en: "wash", es: "lavar" },
-  { en: "eat", es: "comer" },
-  { en: "drink", es: "beber" },
-  { en: "cook", es: "cocinar" },
-  { en: "sleep", es: "dormir" },
-  { en: "run", es: "correr" },
-  { en: "walk", es: "caminar" },
-  { en: "go", es: "ir" },
-  { en: "take", es: "tomar" },
-  { en: "make", es: "hacer" },
-  { en: "clean", es: "limpiar" },
-  { en: "watch", es: "ver" },
-  { en: "listen", es: "escuchar" }
-];
-
-/* =====================================================================
-   ACTIVIDAD 1 — Audio & Spanish
-   ===================================================================== */
-function renderActividad1() {
-  const c = document.getElementById('actividad1');
-  c.innerHTML = VERBS.map((v, i) => {
-    const others = VERBS.filter(x => x.es !== v.es).map(x => x.es);
-    const wrong = shuffleArr(others).slice(0, 3);
-    const options = shuffleArr([v.es, ...wrong]);
-    
-    return `
-      <div class="question">
-        <span class="q-num">${i + 1}.</span>
-        <button class="audio-btn" onclick="speak('${v.en}', this)">
-          🔊 Escuchar verbo
-        </button>
-        <div class="options">
-          ${options.map(opt => `
-            <label>
-              <input type="radio" name="a1_${i}" value="${opt.replace(/"/g, '&quot;')}">
-              ${opt}
-            </label>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-/* =====================================================================
-   ACTIVIDAD 2 — Spanish to English
-   ===================================================================== */
-function renderActividad2() {
-  const c = document.getElementById('actividad2');
-  c.innerHTML = VERBS.map((v, i) => {
-    return `
-      <div class="question">
-        <span class="q-num">${i + 1}.</span>
-        <div class="q-prompt">Acción: <strong>${v.es}</strong></div>
-        <input type="text" class="write-input" id="a2_input_${i}"
-               placeholder="Escribe el verbo en inglés..." autocomplete="off"
-               autocorrect="off" autocapitalize="off" spellcheck="false" translate="no">
-        <button class="check-btn" onclick="checkWriteA2(${i}, '${v.en}')">✔ Verificar</button>
-        <div class="feedback" id="a2_fb_${i}"></div>
-      </div>
-    `;
-  }).join('');
-}
-
-function checkWriteA2(i, correct) {
-  const input = document.getElementById(`a2_input_${i}`);
-  const fb = document.getElementById(`a2_fb_${i}`);
-  if (!input.value.trim()) { input.focus(); return; }
-  
-  if (normalize(input.value) === normalize(correct)) {
-    input.classList.add('correct'); input.classList.remove('wrong');
-    fb.textContent = '✅ ¡Excelente! Correcto.';
-    fb.className = 'feedback ok';
-  } else {
-    input.classList.add('wrong'); input.classList.remove('correct');
-    fb.innerHTML = `❌ Correcto: <strong>${correct}</strong>`;
-    fb.className = 'feedback bad';
-  }
-}
-
-/* =====================================================================
-   ACTIVIDAD 3 — Listen & Choose
-   ===================================================================== */
-function renderActividad3() {
-  const c = document.getElementById('actividad3');
-  c.innerHTML = VERBS.map((v, i) => {
-    const others = VERBS.filter(x => x.en !== v.en).map(x => x.en);
-    const wrong = shuffleArr(others).slice(0, 3);
-    const options = shuffleArr([v.en, ...wrong]);
-    
-    return `
-      <div class="question">
-        <span class="q-num">${i + 1}.</span>
-        <button class="audio-btn" onclick="speak('${v.en}', this)">
-          🔊 Escuchar verbo
-        </button>
-        <div class="options">
-          ${options.map(opt => `
-            <label>
-              <input type="radio" name="a3_${i}" value="${opt.replace(/"/g, '&quot;')}">
-              ${opt}
-            </label>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-/* =====================================================================
-   ACTIVIDAD 4 — Hangman (Letra por letra)
-   ===================================================================== */
-let hangmanState = [];
-
-function renderActividad4() {
-  const c = document.getElementById('actividad4');
-  hangmanState = []; // Reset state
-  
-  c.innerHTML = VERBS.map((v, i) => {
-    const displayWord = v.en.split('').map(char => char === ' ' ? ' ' : '_').join(' ');
-    
-    hangmanState.push({
-      word: v.en.toLowerCase(),
-      guessed: [],
-      errors: 0,
-      maxErrors: 2,
-      solved: false,
-      failed: false
-    });
-    
-    return `
-      <div class="hangman-box" id="hangman_box_${i}">
-        <div style="color: #718096; font-size: 0.9rem;">Traducción: <strong>${v.es}</strong></div>
-        <div class="hangman-word" id="hangman_word_${i}">${displayWord}</div>
-        
-        <div class="hangman-drawing" id="hangman_drawing_${i}"></div>
-        
-        <div class="hangman-letters-input">
-          <input type="text" class="hangman-letter-input" id="hangman_input_${i}" 
-                 maxlength="1" autocomplete="off" translate="no" 
-                 oninput="guessLetter(${i})" placeholder="?">
-        </div>
-        
-        <div class="hangman-status" id="hangman_status_${i}"></div>
-      </div>
-    `;
-  }).join('');
-}
-
-function guessLetter(index) {
-  const state = hangmanState[index];
-  if (state.solved || state.failed) return;
-  
-  const input = document.getElementById(`hangman_input_${index}`);
-  const letter = input.value.toLowerCase();
-  
-  // Si está vacío o no es una letra, no hacer nada
-  if (!letter || !/^[a-z]$/.test(letter)) return;
-  
-  // Si ya se adivinó esa letra, ignorar
-  if (state.guessed.includes(letter)) {
-    input.value = '';
-    return;
-  }
-  
-  state.guessed.push(letter);
-  input.value = ''; // Limpiar el input para la siguiente letra
-  
-  const wordDisplay = document.getElementById(`hangman_word_${index}`);
-  const status = document.getElementById(`hangman_status_${index}`);
-  const drawing = document.getElementById(`hangman_drawing_${index}`);
-  const box = document.getElementById(`hangman_box_${index}`);
-  
-  // Verificar si la letra está en la palabra
-  if (state.word.includes(letter)) {
-    // Actualizar los guiones
-    let newDisplay = '';
-    for (let i = 0; i < state.word.length; i++) {
-      const char = state.word[i];
-      if (char === ' ') {
-        newDisplay += '  ';
-      } else if (state.guessed.includes(char)) {
-        newDisplay += char.toUpperCase() + ' ';
-      } else {
-        newDisplay += '_ ';
-      }
-    }
-    wordDisplay.textContent = newDisplay.trim();
-    
-    // Comprobar si ganó
-    const allGuessed = state.word.split('').every(c => c === ' ' || state.guessed.includes(c));
-    if (allGuessed) {
-      state.solved = true;
-      status.textContent = '✅ ¡Ganaste! Has salvado al muñeco.';
-      status.style.color = '#38a169';
-      box.style.borderColor = '#38a169';
-      box.style.background = '#f0fff4';
-      drawing.style.opacity = '0.5';
-      document.getElementById(`hangman_input_${index}`).disabled = true;
-    }
-  } else {
-    // Letra incorrecta
-    state.errors++;
-    
-    // Dibujar el muñeco
-    let drawArt = '';
-    if (state.errors === 1) {
-      drawArt = "  O  ";
-      status.textContent = `❌ Error 1 de 2. Te queda 1 oportunidad.`;
-    } else if (state.errors === 2) {
-      drawArt = "  O  \n /|\\ \n / \\ ";
-      status.textContent = `💀 ¡Ahorcado! La palabra era: ${state.word.toUpperCase()}`;
-      status.style.color = '#e53e3e';
-      state.failed = true;
-      box.style.borderColor = '#e53e3e';
-      box.style.background = '#fff5f5';
-      wordDisplay.textContent = state.word.toUpperCase();
-      wordDisplay.style.color = '#e53e3e';
-      document.getElementById(`hangman_input_${index}`).disabled = true;
-    }
-    drawing.textContent = drawArt;
-    status.style.color = '#e53e3e';
-  }
-}
-
-/* ============ INIT ============ */
-renderActividad1();
-renderActividad2();
-renderActividad3();
-renderActividad4();
-
-/* =====================================================================
-   RESULTADOS
-   ===================================================================== */
-function showResults() {
-  let score1 = 0, score2 = 0, score3 = 0, score4 = 0;
-
-  // Evaluar Act 1
-  VERBS.forEach((v, i) => {
-    const sel = document.querySelector(`input[name="a1_${i}"]:checked`);
-    if (sel && normalize(sel.value) === normalize(v.es)) score1++;
-  });
-
-  // Evaluar Act 2
-  VERBS.forEach((v, i) => {
-    const inp = document.getElementById(`a2_input_${i}`);
-    if (inp && normalize(inp.value) === normalize(v.en)) score2++;
-  });
-
-  // Evaluar Act 3
-  VERBS.forEach((v, i) => {
-    const sel = document.querySelector(`input[name="a3_${i}"]:checked`);
-    if (sel && normalize(sel.value) === normalize(v.en)) score3++;
-  });
-
-  // Evaluar Act 4 (Hangman)
-  hangmanState.forEach(state => {
-    if (state.solved) score4++;
-  });
-
-  const total = score1 + score2 + score3 + score4;
-  const max = VERBS.length * 4; // 15 * 4 = 60
-  const pct = Math.round((total / max) * 100);
-
-  let msg = '';
-  if (pct >= 90) msg = '🏆 Outstanding! Dominas estos verbos.';
-  else if (pct >= 75) msg = '🌟 Great job! Sigue practicando.';
-  else if (pct >= 60) msg = '👍 Good. Repasa los verbos.';
-  else msg = '📚 Keep practicing. Repasa el vocabulario.';
-
-  document.getElementById('scoreBox').innerHTML = `
-    <div class="score-item"><span>🎧 Actividad 1 (Audio & Spanish)</span><span>${score1} / 15</span></div>
-    <div class="score-item"><span>✍️ Actividad 2 (Spanish to English)</span><span>${score2} / 15</span></div>
-    <div class="score-item"><span>🔉 Actividad 3 (Listen & Choose)</span><span>${score3} / 15</span></div>
-    <div class="score-item"><span>🪢 Actividad 4 (Hangman)</span><span>${score4} / 15</span></div>
-    <div class="score-item"><span>TOTAL</span><span>${total} / ${max} (${pct}%)</span></div>
-    <div class="feedback-final">${msg}</div>
-    <p style="margin-top:12px; color:#718096; font-size:0.9rem; text-align:center;">
-      ⚠️ Recuerda copiar todas tus respuestas en el cuaderno con tinta azul.
-    </p>
-  `;
-
-  document.getElementById('mainContent').style.display = 'none';
-  document.getElementById('resultsScreen').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-</script>
 
 </body>
 </html>
