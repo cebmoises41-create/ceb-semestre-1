@@ -137,6 +137,10 @@
     border: 2px dashed #4299e1; text-align: center;
     margin-bottom: 15px;
   }
+  .hangman-emoji {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+  }
   .hangman-word {
     font-size: 2rem; font-weight: 700; letter-spacing: 8px;
     color: #2b6cb0; margin: 15px 0; font-family: monospace;
@@ -145,12 +149,17 @@
   .hangman-letters-input {
     display: flex; justify-content: center; gap: 10px; margin-top: 15px;
   }
+  
+  /* INPUT DEL AHORCADO MAS CLARO */
   .hangman-letter-input {
-    width: 60px; height: 60px; font-size: 2rem; text-align: center;
-    text-transform: uppercase; border: 3px solid #cbd5e0;
+    width: 70px; height: 70px; font-size: 2.5rem; text-align: center;
+    text-transform: uppercase; border: 3px solid #4299e1;
+    background-color: #ebf8ff;
     border-radius: 12px; outline: none; font-weight: bold; color: #2b6cb0;
+    box-shadow: 0 4px 6px rgba(66, 153, 225, 0.2);
   }
-  .hangman-letter-input:focus { border-color: #2b6cb0; }
+  .hangman-letter-input::placeholder { color: #a0aec0; font-size: 1.5rem; }
+  .hangman-letter-input:focus { border-color: #2b6cb0; background-color: #fff; }
   
   .hangman-status {
     font-weight: bold; font-size: 1.1rem; margin-top: 15px; color: #e53e3e;
@@ -208,12 +217,12 @@
       📝 <strong>Instrucciones importantes:</strong>
       <ul>
         <li>Contesta este ejercicio en el <strong>blog de Blogger</strong>.</li>
-        <li><strong>Todas las actividades se realizan en tu cuaderno</strong> con <strong>tinta azul</strong>.</li>
+        <li><strong>Todas las actividades se realizan en tu cuaderno</strong> con <strong>tinta azul</strong> (excepto el Ahorcado).</li>
         <li>Anota la <strong>fecha</strong> y tu <strong>nombre</strong> antes de comenzar.</li>
         <li><strong>Actividad 1:</strong> escucha el audio en inglés y elige la traducción al español.</li>
         <li><strong>Actividad 2:</strong> lee la acción en español y <strong>escribe</strong> el verbo en inglés.</li>
         <li><strong>Actividad 3:</strong> escucha el audio en inglés y elige el verbo escrito correcto.</li>
-        <li><strong>Actividad 4:</strong> Juega al Ahorcado. Escribe <strong>UNA LETRA</strong> a la vez. Tienes máximo <strong>2 errores</strong>.</li>
+        <li><strong>Actividad 4:</strong> Juega al Ahorcado. Escribe <strong>UNA LETRA</strong> en la caja azul. Tienes máximo <strong>2 errores</strong>.</li>
         <li>Al terminar las actividades, presiona <strong>"VER RESULTADOS"</strong>.</li>
       </ul>
     </div>
@@ -265,9 +274,9 @@
     <div id="tab4" class="tab-content">
       <div class="section-box">
         <h2>🪢 ACTIVIDAD 4 — Hangman</h2>
-        <p class="instruction">Adivina el verbo en inglés letra por letra. Tienes máximo <strong>2 errores</strong>. (15 ejercicios)</p>
+        <p class="instruction">Adivina el verbo en inglés letra por letra. Escribe en la caja azul. (15 ejercicios)</p>
         <div class="note-box">
-          ✏️ <strong>En tu cuaderno:</strong> escribe el verbo que descubras.
+          ✏️ <strong>Aquí mismo:</strong> haz clic en la caja azul y escribe una letra para adivinar.
         </div>
         <div id="actividad4"></div>
       </div>
@@ -337,24 +346,24 @@ function normalize(str) {
 }
 
 /* =====================================================================
-   LISTA DE VERBOS (Clase 14 - Rutinas)
+   LISTA DE VERBOS CON EMOJIS (Clase 14 - Rutinas)
    ===================================================================== */
 const VERBS = [
-  { en: "wake up", es: "despertarse" },
-  { en: "brush", es: "cepillar" },
-  { en: "wash", es: "lavar" },
-  { en: "eat", es: "comer" },
-  { en: "drink", es: "beber" },
-  { en: "cook", es: "cocinar" },
-  { en: "sleep", es: "dormir" },
-  { en: "run", es: "correr" },
-  { en: "walk", es: "caminar" },
-  { en: "go", es: "ir" },
-  { en: "take", es: "tomar" },
-  { en: "make", es: "hacer" },
-  { en: "clean", es: "limpiar" },
-  { en: "watch", es: "ver" },
-  { en: "listen", es: "escuchar" }
+  { en: "wake up", es: "despertarse", emoji: "⏰" },
+  { en: "brush", es: "cepillar", emoji: "🪥" },
+  { en: "wash", es: "lavar", emoji: "🧼" },
+  { en: "eat", es: "comer", emoji: "🍎" },
+  { en: "drink", es: "beber", emoji: "💧" },
+  { en: "cook", es: "cocinar", emoji: "🍳" },
+  { en: "sleep", es: "dormir", emoji: "😴" },
+  { en: "run", es: "correr", emoji: "🏃‍♂️" },
+  { en: "walk", es: "caminar", emoji: "🚶‍♂️" },
+  { en: "go", es: "ir", emoji: "🚶" },
+  { en: "take", es: "tomar", emoji: "🤲" },
+  { en: "make", es: "hacer", emoji: "🛠️" },
+  { en: "clean", es: "limpiar", emoji: "🧹" },
+  { en: "watch", es: "ver", emoji: "📺" },
+  { en: "listen", es: "escuchar", emoji: "🎧" }
 ];
 
 /* =====================================================================
@@ -452,7 +461,7 @@ function renderActividad3() {
 }
 
 /* =====================================================================
-   ACTIVIDAD 4 — Hangman (Letra por letra)
+   ACTIVIDAD 4 — Hangman (Letra por letra con Emojis)
    ===================================================================== */
 let hangmanState = [];
 
@@ -474,15 +483,16 @@ function renderActividad4() {
     
     return `
       <div class="hangman-box" id="hangman_box_${i}">
-        <div style="color: #718096; font-size: 0.9rem;">Traducción: <strong>${v.es}</strong></div>
+        <div class="hangman-emoji">${v.emoji}</div>
         <div class="hangman-word" id="hangman_word_${i}">${displayWord}</div>
         
         <div class="hangman-drawing" id="hangman_drawing_${i}"></div>
         
         <div class="hangman-letters-input">
+          <!-- Input más claro y visible -->
           <input type="text" class="hangman-letter-input" id="hangman_input_${i}" 
                  maxlength="1" autocomplete="off" translate="no" 
-                 oninput="guessLetter(${i})" placeholder="?">
+                 oninput="guessLetter(${i})" placeholder="A">
         </div>
         
         <div class="hangman-status" id="hangman_status_${i}"></div>
