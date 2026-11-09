@@ -71,7 +71,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
-        /* Iconos descargados de internet */
         .class-card img {
             width: 60px;
             height: 60px;
@@ -104,11 +103,10 @@
     <div class="grid-container" id="menu-container"></div>
 
     <script>
-        // Número total de clases (Ahora son 51)
+        // Número total de clases
         const totalClasses = 51;
         const container = document.getElementById('menu-container');
 
-        // 51 colores pasteles (Agregamos 3 más para las nuevas clases)
         const colors = [
             "#FFADAD", "#FFD6A5", "#FDFFB6", "#CAFFBF", "#9BF6FF", "#A0C4FF", "#BDB2FF", "#FFC6FF",
             "#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#E8BAFF", "#FFB3E6", "#B3D9FF",
@@ -116,11 +114,9 @@
             "#F9B3B3", "#F9D9B3", "#F9F9B3", "#B3F9B3", "#B3F9D9", "#B3D9F9", "#D9B3F9", "#F9B3D9",
             "#FFC4B3", "#FFE4B3", "#F0FFB3", "#B3FFD4", "#B3E4FF", "#C4B3FF", "#FFB3E4", "#D4FFB3",
             "#FFAD85", "#FFD185", "#F5FF85", "#85FFB5", "#85D1FF", "#AD85FF", "#FF85D1", "#B5FF85",
-            /* Nuevos colores para 49, 50 y 51 */
             "#A1C4FD", "#FBC2EB", "#FDD982" 
         ];
 
-        // 51 temas en inglés
         const classData = [
             { topic: "The Alphabet", icon: "https://cdn-icons-png.flaticon.com/512/2436/2436874.png" },
             { topic: "Pronouns", icon: "https://cdn-icons-png.flaticon.com/512/3014/3014456.png" },
@@ -170,8 +166,6 @@
             { topic: "Extreme Sports", icon: "https://cdn-icons-png.flaticon.com/512/2784/2784203.png" },
             { topic: "Seasons", icon: "https://cdn-icons-png.flaticon.com/512/992/992019.png" },
             { topic: "Holidays", icon: "https://cdn-icons-png.flaticon.com/512/2493/2493230.png" },
-            
-            /* Nuevas Clases 49, 50 y 51 */
             { topic: "Present Simple (+)", icon: "https://cdn-icons-png.flaticon.com/512/2641/2641457.png" },
             { topic: "Present Simple (- / ?)", icon: "https://cdn-icons-png.flaticon.com/512/5996/5996016.png" },
             { topic: "Present Simple (Mix)", icon: "https://cdn-icons-png.flaticon.com/512/5996/5996016.png" }
@@ -181,8 +175,20 @@
 
         for (let i = 1; i <= totalClasses; i++) {
             let formattedNumber = i.toString().padStart(2, '0');
-            let folderName = `clase${formattedNumber}`;
-            let url = `${folderName}/index.html`;
+            let url = '';
+            
+            // Lógica especial: si es la clase 49, 50 o 51, usa el archivo con espacio
+            if (i === 49) {
+                url = 'clase 49.html';
+            } else if (i === 50) {
+                url = 'clase 50.html';
+            } else if (i === 51) {
+                url = 'clase 51.html';
+            } else {
+                // Para las clases 1 a 48, usa las carpetas normales
+                let folderName = `clase${formattedNumber}`;
+                url = `${folderName}/index.html`;
+            }
 
             let color = colors[i-1];
             let data = classData[i-1];
