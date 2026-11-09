@@ -107,6 +107,7 @@
         const totalClasses = 51;
         const container = document.getElementById('menu-container');
 
+        // Colores pasteles
         const colors = [
             "#FFADAD", "#FFD6A5", "#FDFFB6", "#CAFFBF", "#9BF6FF", "#A0C4FF", "#BDB2FF", "#FFC6FF",
             "#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#E8BAFF", "#FFB3E6", "#B3D9FF",
@@ -117,6 +118,7 @@
             "#A1C4FD", "#FBC2EB", "#FDD982" 
         ];
 
+        // Temas e iconos
         const classData = [
             { topic: "The Alphabet", icon: "https://cdn-icons-png.flaticon.com/512/2436/2436874.png" },
             { topic: "Pronouns", icon: "https://cdn-icons-png.flaticon.com/512/3014/3014456.png" },
@@ -177,13 +179,13 @@
             let formattedNumber = i.toString().padStart(2, '0');
             let url = '';
             
-            // Lógica especial: si es la clase 49, 50 o 51, usa el archivo con espacio
+            // Lógica para las clases 49, 50 y 51 (carpetas correctas)
             if (i === 49) {
-                url = 'clase 49.html';
+                url = 'clase49/index.html';
             } else if (i === 50) {
-                url = 'clase 50.html';
+                url = 'clase50/index.html';
             } else if (i === 51) {
-                url = 'clase 51.html';
+                url = 'clase51/index.html';
             } else {
                 // Para las clases 1 a 48, usa las carpetas normales
                 let folderName = `clase${formattedNumber}`;
