@@ -104,21 +104,23 @@
     <div class="grid-container" id="menu-container"></div>
 
     <script>
-        // Número total de clases
-        const totalClasses = 48;
+        // Número total de clases (Ahora son 51)
+        const totalClasses = 51;
         const container = document.getElementById('menu-container');
 
-        // 48 colores pasteles
+        // 51 colores pasteles (Agregamos 3 más para las nuevas clases)
         const colors = [
             "#FFADAD", "#FFD6A5", "#FDFFB6", "#CAFFBF", "#9BF6FF", "#A0C4FF", "#BDB2FF", "#FFC6FF",
             "#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#E8BAFF", "#FFB3E6", "#B3D9FF",
             "#FFCCB3", "#FFEDB3", "#D4FFB3", "#B3FFE0", "#B3D9FF", "#E6B3FF", "#FFB3D9", "#B3FFB3",
             "#F9B3B3", "#F9D9B3", "#F9F9B3", "#B3F9B3", "#B3F9D9", "#B3D9F9", "#D9B3F9", "#F9B3D9",
             "#FFC4B3", "#FFE4B3", "#F0FFB3", "#B3FFD4", "#B3E4FF", "#C4B3FF", "#FFB3E4", "#D4FFB3",
-            "#FFAD85", "#FFD185", "#F5FF85", "#85FFB5", "#85D1FF", "#AD85FF", "#FF85D1", "#B5FF85"
+            "#FFAD85", "#FFD185", "#F5FF85", "#85FFB5", "#85D1FF", "#AD85FF", "#FF85D1", "#B5FF85",
+            /* Nuevos colores para 49, 50 y 51 */
+            "#A1C4FD", "#FBC2EB", "#FDD982" 
         ];
 
-        // 48 temas en inglés
+        // 51 temas en inglés
         const classData = [
             { topic: "The Alphabet", icon: "https://cdn-icons-png.flaticon.com/512/2436/2436874.png" },
             { topic: "Pronouns", icon: "https://cdn-icons-png.flaticon.com/512/3014/3014456.png" },
@@ -133,13 +135,9 @@
             { topic: "Mix to be", icon: "https://cdn-icons-png.flaticon.com/512/263/263115.png" },
             { topic: "adjectives", icon: "https://cdn-icons-png.flaticon.com/512/616/616554.png" },
             { topic: "dialogs to be", icon: "https://cdn-icons-png.flaticon.com/512/854/854878.png" },
-            
-            /* CLASES MODIFICADAS AQUÍ */
             { topic: "Verbs (Part 1)", icon: "https://cdn-icons-png.flaticon.com/512/3081/3081840.png" },
             { topic: "Verbs (Part 2)", icon: "https://cdn-icons-png.flaticon.com/512/2921/2921312.png" },
             { topic: "Verbs (Part 3)", icon: "https://cdn-icons-png.flaticon.com/512/1166/1166746.png" },
-            /* FIN DE MODIFICACIÓN */
-            
             { topic: "Greetings", icon: "https://cdn-icons-png.flaticon.com/512/935/935692.png" },
             { topic: "Emotions", icon: "https://cdn-icons-png.flaticon.com/512/2620/2620399.png" },
             { topic: "School", icon: "https://cdn-icons-png.flaticon.com/512/2942/2942006.png" },
@@ -171,7 +169,12 @@
             { topic: "Flags", icon: "https://cdn-icons-png.flaticon.com/512/901/901386.png" },
             { topic: "Extreme Sports", icon: "https://cdn-icons-png.flaticon.com/512/2784/2784203.png" },
             { topic: "Seasons", icon: "https://cdn-icons-png.flaticon.com/512/992/992019.png" },
-            { topic: "Holidays", icon: "https://cdn-icons-png.flaticon.com/512/2493/2493230.png" }
+            { topic: "Holidays", icon: "https://cdn-icons-png.flaticon.com/512/2493/2493230.png" },
+            
+            /* Nuevas Clases 49, 50 y 51 */
+            { topic: "Present Simple (+)", icon: "https://cdn-icons-png.flaticon.com/512/2641/2641457.png" },
+            { topic: "Present Simple (- / ?)", icon: "https://cdn-icons-png.flaticon.com/512/5996/5996016.png" },
+            { topic: "Present Simple (Mix)", icon: "https://cdn-icons-png.flaticon.com/512/5996/5996016.png" }
         ];
 
         let htmlContent = '';
