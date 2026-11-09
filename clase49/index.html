@@ -3,46 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 51 - Present Simple (Mixed)</title>
+    <title>Class 49 - Present Simple (Positive)</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        body { margin:0; padding:20px; min-height:100vh; display:flex; justify-content:center; align-items:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); }
+        /* ESTILOS GENERALES */
+        body { margin:0; padding:20px; min-height:100vh; display:flex; justify-content:center; align-items:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
         .game-container { position:relative; z-index:1; background:rgba(255,255,255,0.95); backdrop-filter:blur(5px); padding:30px; border-radius:30px; box-shadow:0 15px 40px rgba(0,0,0,0.1); max-width:800px; width:100%; text-align:center; border:1px solid rgba(255,255,255,0.8); }
         .title { font-size:2.5rem; font-weight:900; color:#1c3d3b; margin:0; }
         .sub { color:#6c757d; margin-bottom:20px; }
+
+        /* EXPLICACIÓN */
         #theory-screen { display:block; text-align:left; background:#f8f9fa; padding:20px; border-radius:15px; margin-bottom:20px; border: 1px solid #e9ecef; }
-        #theory-screen h2 { color:#2980b9; font-size: 1.4rem; margin-bottom: 10px; }
+        #theory-screen h2 { color:#2980b9; font-size: 1.5rem; margin-bottom: 10px; }
         #theory-screen p { color:#2c3e50; line-height: 1.6; margin-bottom: 10px; }
         #theory-screen ul { margin-left: 20px; color:#2c3e50; margin-bottom: 15px; }
         #theory-screen .btn-start { background:#2d6a4f; color:white; border:none; padding:12px 30px; border-radius:30px; font-weight:bold; font-size:1.1rem; cursor:pointer; display:block; margin: 20px auto 0; box-shadow:0 4px 0 #1b4332; }
+        #theory-screen .btn-start:hover { transform:translateY(-2px); }
+
+        /* JUEGO */
         #game-screen { display:none; }
         .status-bar { display:flex; justify-content:space-between; align-items:center; background:#f8f9fa; padding:10px 20px; border-radius:15px; margin-bottom:20px; border:1px solid #e9ecef; }
-        #part-title { font-weight:bold; color:#2980b9; font-size:1.1rem; }
+        #part-title { font-weight:bold; color:#2980b9; font-size:1.2rem; }
         #contador { font-weight:bold; color:#2c3e50; }
+        
         #pregunta { font-size:1.3rem; margin:20px 0; color:#2c3e50; font-weight:600; min-height: 50px; }
-        .btn-opcion { background: #e67e22; color:white; border:none; padding:12px 20px; margin:6px; border-radius:15px; font-weight:bold; cursor:pointer; font-size:1rem; transition:0.3s; width:90%; max-width:450px; box-shadow:0 4px 0 #b85e19; }
-        .btn-opcion:hover { transform:translateY(-3px); box-shadow:0 6px 0 #b85e19; }
+        .btn-opcion { background: #3498db; color:white; border:none; padding:12px 20px; margin:6px; border-radius:15px; font-weight:bold; cursor:pointer; font-size:1rem; transition:0.3s; width:90%; max-width:400px; box-shadow:0 4px 0 #2176ae; }
+        .btn-opcion:hover { transform:translateY(-3px); box-shadow:0 6px 0 #2176ae; }
         .btn-opcion:disabled { opacity:0.6; cursor:not-allowed; }
         .btn-opcion.correct { background: #2ecc71; box-shadow:0 4px 0 #27ae60; }
         .btn-opcion.wrong { background: #e74c3c; box-shadow:0 4px 0 #c0392b; }
+        
         .resultado { font-size:1.1rem; font-weight:bold; margin-top:15px; min-height: 30px; }
         .back-btn { display:inline-block; text-decoration:none; color:#495057; background:#e9ecef; padding:12px 35px; border-radius:30px; font-weight:bold; margin-top:20px; border:1px solid #ced4da; }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <h1 class="title">Class 51: Mixed Present Simple</h1>
-        <p class="sub">Positive, Negative & Interrogative</p>
+        <h1 class="title">Class 49: Present Simple</h1>
+        <p class="sub">Positive Sentences & Routines</p>
 
         <div id="theory-screen">
-            <h2>📖 Present Simple Review</h2>
-            <p>Let's review the three structures:</p>
+            <h2>📖 Present Simple (Routines)</h2>
+            <p>We use the <b>Present Simple</b> to talk about <b>routines</b>, habits, and things we do every day (e.g., <i>I wake up at 7:00 am</i>).</p>
+            
+            <h2 style="font-size: 1.2rem; margin-top: 15px;">⚠️ The "S" Rule (He, She, It)</h2>
+            <p>When the subject is <b>He</b>, <b>She</b>, or <b>It</b>, you MUST add an <b>-s</b> or <b>-es</b> to the verb.</p>
             <ul>
-                <li><b>Positive (+):</b> Subject + verb (+s/es for He/She/It). <br><i>She works every day.</i></li>
-                <li><b>Negative (-):</b> Subject + don't/doesn't + base verb. <br><i>He doesn't work on Sundays.</i></li>
-                <li><b>Interrogative (?):</b> Do/Does + subject + base verb? <br><i>Do you work here?</i></li>
+                <li>I <b>work</b> in an office. (No S)</li>
+                <li>You <b>play</b> soccer. (No S)</li>
+                <li>He <b>works</b> in an office. (+ S)</li>
+                <li>She <b>plays</b> soccer. (+ S)</li>
+                <li>It <b>rains</b> a lot. (+ S)</li>
             </ul>
-            <button class="btn-start" onclick="iniciarJuego()">Start Mixed Exercises</button>
+            <button class="btn-start" onclick="iniciarJuego()">Start Exercises</button>
         </div>
 
         <div id="game-screen">
@@ -58,60 +71,134 @@
     </div>
 
     <script>
-        let currentPart = 'A'; let currentQuestionIndex = 0; let totalScore = 0; let currentQuestions = [];
+        let currentPart = 'A'; // A, B, C
+        let currentQuestionIndex = 0;
+        let totalScore = 0;
+        let currentQuestions = [];
+
+        // --- BANCO DE PREGUNTAS ---
+        // PART A: Multiple Choice (10)
         const partA = [
-            { q: "She _____ to school every day.", o: ["go", "goes", "going"], c: 1 },
-            { q: "I _____ like coffee.", o: ["don't", "doesn't", "not"], c: 0 },
-            { q: "_____ you play soccer?", o: ["Do", "Does", "Is"], c: 0 },
+            { q: "I _____ to school every day.", o: ["go", "goes", "going"], c: 0 },
+            { q: "She _____ breakfast at 7:00 am.", o: ["eat", "eats", "eating"], c: 1 },
+            { q: "They _____ soccer on weekends.", o: ["play", "plays", "playing"], c: 0 },
             { q: "He _____ his teeth twice a day.", o: ["brush", "brushes", "brushing"], c: 1 },
-            { q: "They _____ go to the gym.", o: ["don't", "doesn't", "not"], c: 0 },
-            { q: "_____ she work in a hospital?", o: ["Do", "Does", "Is"], c: 1 },
-            { q: "The cat _____ on the sofa.", o: ["sleep", "sleeps", "sleeping"], c: 1 },
-            { q: "We _____ watch TV in the morning.", o: ["don't", "doesn't", "not"], c: 0 },
-            { q: "_____ they need help?", o: ["Do", "Does", "Is"], c: 0 },
-            { q: "My dad _____ to work every day.", o: ["drive", "drives", "driving"], c: 1 }
+            { q: "We _____ TV in the evening.", o: ["watch", "watches", "watching"], c: 0 },
+            { q: "My mom _____ dinner every night.", o: ["cook", "cooks", "cooking"], c: 1 },
+            { q: "The dog _____ a lot.", o: ["bark", "barks", "barking"], c: 1 },
+            { q: "You _____ English very well.", o: ["speak", "speaks", "speaking"], c: 0 },
+            { q: "It _____ in summer.", o: ["rain", "rains", "raining"], c: 1 },
+            { q: "My friends _____ to music.", o: ["listen", "listens", "listening"], c: 0 }
         ];
+
+        // PART B: Fill in the Gaps (10) - Simulamos con opciones
         const partB = [
             { q: "I _____ (wake up) at 6:00 am.", o: ["wake up", "wakes up", "waking up"], c: 0 },
-            { q: "She _____ (not / eat) breakfast.", o: ["don't eat", "doesn't eat", "not eat"], c: 1 },
-            { q: "_____ he _____ (study) English?", o: ["Do / study", "Does / study", "Does / studies"], c: 1 },
+            { q: "She _____ (take) a shower every morning.", o: ["take", "takes", "taking"], c: 1 },
             { q: "We _____ (have) lunch at 12:00 pm.", o: ["have", "has", "having"], c: 0 },
-            { q: "They _____ (not / play) video games.", o: ["don't play", "doesn't play", "not play"], c: 0 },
-            { q: "_____ you _____ (like) pizza?", o: ["Do / like", "Does / like", "Do / likes"], c: 0 },
-            { q: "My mom _____ (cook) dinner every night.", o: ["cook", "cooks", "cooking"], c: 1 },
-            { q: "He _____ (not / do) his homework.", o: ["don't do", "doesn't do", "not do"], c: 1 },
-            { q: "_____ it _____ (rain) a lot here?", o: ["Do / rain", "Does / rain", "Does / rains"], c: 1 },
-            { q: "You _____ (speak) English very well.", o: ["speak", "speaks", "speaking"], c: 0 }
+            { q: "He _____ (do) his homework after school.", o: ["do", "does", "doing"], c: 1 },
+            { q: "They _____ (play) video games at night.", o: ["play", "plays", "playing"], c: 0 },
+            { q: "My dad _____ (drive) to work.", o: ["drive", "drives", "driving"], c: 1 },
+            { q: "I _____ (read) a book before bed.", o: ["read", "reads", "reading"], c: 0 },
+            { q: "The cat _____ (sleep) on the sofa.", o: ["sleep", "sleeps", "sleeping"], c: 1 },
+            { q: "You _____ (study) for the exam.", o: ["study", "studies", "studying"], c: 0 },
+            { q: "She _____ (watch) movies on Fridays.", o: ["watch", "watches", "watching"], c: 1 }
         ];
+
+        // PART C: Order the words (10) - Simulamos con oraciones
         const partC = [
-            { q: "Order: (every day / she / goes / to school).", o: ["She goes to school every day.", "She go to school every day.", "Goes she to school every day."], c: 0 },
-            { q: "Order: (don't / I / like / broccoli).", o: ["I don't like broccoli.", "I don't likes broccoli.", "I not like broccoli."], c: 0 },
-            { q: "Order: (play / Do / you / soccer?).", o: ["Do you play soccer?", "You do play soccer?", "Do you plays soccer?"], c: 0 },
+            { q: "Order: (to school / I / go / every day).", o: ["I go to school every day.", "I goes to school every day.", "Go I to school every day."], c: 0 },
+            { q: "Order: (breakfast / eats / she / at 7:00 am).", o: ["She eats breakfast at 7:00 am.", "She eat breakfast at 7:00 am.", "Eats she breakfast at 7:00 am."], c: 0 },
+            { q: "Order: (soccer / they / play / on weekends).", o: ["They play soccer on weekends.", "They plays soccer on weekends.", "Play they soccer on weekends."], c: 0 },
             { q: "Order: (his teeth / brushes / he / twice a day).", o: ["He brushes his teeth twice a day.", "He brush his teeth twice a day.", "Brushes he his teeth twice a day."], c: 0 },
-            { q: "Order: (doesn't / she / play / tennis).", o: ["She doesn't play tennis.", "She doesn't plays tennis.", "She not play tennis."], c: 0 },
-            { q: "Order: (Does / work / she / in a hospital?).", o: ["Does she work in a hospital?", "She does work in a hospital?", "Does she works in a hospital?"], c: 0 },
-            { q: "Order: (cooks / my mom / dinner / every night).", o: ["My mom cooks dinner every night.", "My mom cook dinner every night.", "Cooks my mom dinner every night."], c: 0 },
-            { q: "Order: (don't / they / go / to the gym).", o: ["They don't go to the gym.", "They don't goes to the gym.", "They not go to the gym."], c: 0 },
-            { q: "Order: (need / Do / they / help?).", o: ["Do they need help?", "They do need help?", "Do they needs help?"], c: 0 },
-            { q: "Order: (drives / my dad / to work / every day).", o: ["My dad drives to work every day.", "My dad drive to work every day.", "Drives my dad to work every day."], c: 0 }
+            { q: "Order: (TV / we / watch / in the evening).", o: ["We watch TV in the evening.", "We watches TV in the evening.", "Watch we TV in the evening."], c: 0 },
+            { q: "Order: (dinner / cooks / my mom / every night).", o: ["My mom cooks dinner every night.", "My mom cook dinner every night.", "Cooks my mom dinner every night."], c: 0 },
+            { q: "Order: (a lot / the dog / barks).", o: ["The dog barks a lot.", "The dog bark a lot.", "Barks the dog a lot."], c: 0 },
+            { q: "Order: (English / you / speak / very well).", o: ["You speak English very well.", "You speaks English very well.", "Speak you English very well."], c: 0 },
+            { q: "Order: (in summer / it / rains).", o: ["It rains in summer.", "It rain in summer.", "Rains it in summer."], c: 0 },
+            { q: "Order: (to music / my friends / listen).", o: ["My friends listen to music.", "My friends listens to music.", "Listen my friends to music."], c: 0 }
         ];
-        function iniciarJuego() { document.getElementById('theory-screen').style.display = "none"; document.getElementById('game-screen').style.display = "block"; currentPart = 'A'; currentQuestionIndex = 0; totalScore = 0; currentQuestions = partA; renderQuestion(); }
+
+        function iniciarJuego() {
+            document.getElementById('theory-screen').style.display = "none";
+            document.getElementById('game-screen').style.display = "block";
+            
+            currentPart = 'A';
+            currentQuestionIndex = 0;
+            totalScore = 0;
+            currentQuestions = partA;
+            renderQuestion();
+        }
+
         function renderQuestion() {
+            // Actualizar barra de estado
             document.getElementById('part-title').innerHTML = `Part ${currentPart}: ${currentPart === 'A' ? 'Multiple Choice' : currentPart === 'B' ? 'Fill in the Gaps' : 'Order the words'}`;
             document.getElementById('contador').innerHTML = `${totalScore} / 30`;
+
             if (currentQuestionIndex >= currentQuestions.length) {
-                if (currentPart === 'A') { currentPart = 'B'; currentQuestions = partB; currentQuestionIndex = 0; alert("🎉 Part A Completed! Let's go to Part B."); renderQuestion(); return; }
-                else if (currentPart === 'B') { currentPart = 'C'; currentQuestions = partC; currentQuestionIndex = 0; alert("🎉 Part B Completed! Let's go to Part C."); renderQuestion(); return; }
-                else { document.getElementById('pregunta').innerHTML = "🏁 Game Completed!"; document.getElementById('botones').innerHTML = `<h3 style="color:#2d6a4f;">Your final score is ${totalScore} out of 30!</h3>`; document.getElementById('respuesta').innerHTML = ""; document.getElementById('contador').innerHTML = ""; localStorage.setItem('class51_puntos', totalScore); return; }
+                // Pasar a la siguiente parte
+                if (currentPart === 'A') {
+                    currentPart = 'B';
+                    currentQuestions = partB;
+                    currentQuestionIndex = 0;
+                    alert("🎉 Part A Completed! Let's go to Part B.");
+                    renderQuestion();
+                    return;
+                } else if (currentPart === 'B') {
+                    currentPart = 'C';
+                    currentQuestions = partC;
+                    currentQuestionIndex = 0;
+                    alert("🎉 Part B Completed! Let's go to Part C.");
+                    renderQuestion();
+                    return;
+                } else {
+                    // Fin del juego
+                    document.getElementById('pregunta').innerHTML = "🏁 Game Completed!";
+                    document.getElementById('botones').innerHTML = `<h3 style="color:#2d6a4f;">Your final score is ${totalScore} out of 30!</h3>`;
+                    document.getElementById('respuesta').innerHTML = "";
+                    document.getElementById('contador').innerHTML = "";
+                    localStorage.setItem('class49_puntos', totalScore); // Guardar puntaje
+                    return;
+                }
             }
-            const q = currentQuestions[currentQuestionIndex]; document.getElementById('pregunta').innerHTML = `<p><b>${currentQuestionIndex + 1}.</b> ${q.q}</p>`;
-            let html = ""; q.o.forEach((opt, idx) => { html += `<button class="btn-opcion" onclick="verificar(${idx})">${opt}</button>`; }); document.getElementById('botones').innerHTML = html; document.getElementById('respuesta').innerHTML = "";
+
+            const q = currentQuestions[currentQuestionIndex];
+            document.getElementById('pregunta').innerHTML = `<p><b>${currentQuestionIndex + 1}.</b> ${q.q}</p>`;
+            
+            let html = "";
+            q.o.forEach((opt, idx) => {
+                html += `<button class="btn-opcion" onclick="verificar(${idx})">${opt}</button>`;
+            });
+            document.getElementById('botones').innerHTML = html;
+            document.getElementById('respuesta').innerHTML = "";
         }
+
         function verificar(selectedIdx) {
-            const q = currentQuestions[currentQuestionIndex]; const btns = document.querySelectorAll('.btn-opcion'); const res = document.getElementById('respuesta');
-            btns.forEach((btn, idx) => { btn.disabled = true; if (idx === q.c) btn.classList.add('correct'); if (idx === selectedIdx && idx !== q.c) btn.classList.add('wrong'); });
-            if (selectedIdx === q.c) { totalScore++; res.innerHTML = "✅ Correct!"; res.style.color = "#2d6a4f"; } else { res.innerHTML = `❌ Incorrect. The correct answer is: <b>${q.o[q.c]}</b>`; res.style.color = "#e74c3c"; }
-            document.getElementById('contador').innerHTML = `${totalScore} / 30`; setTimeout(() => { currentQuestionIndex++; renderQuestion(); }, 1500);
+            const q = currentQuestions[currentQuestionIndex];
+            const btns = document.querySelectorAll('.btn-opcion');
+            const res = document.getElementById('respuesta');
+            
+            btns.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.c) btn.classList.add('correct');
+                if (idx === selectedIdx && idx !== q.c) btn.classList.add('wrong');
+            });
+
+            if (selectedIdx === q.c) {
+                totalScore++;
+                res.innerHTML = "✅ Correct!";
+                res.style.color = "#2d6a4f";
+            } else {
+                res.innerHTML = `❌ Incorrect. The correct answer is: <b>${q.o[q.c]}</b>`;
+                res.style.color = "#e74c3c";
+            }
+
+            document.getElementById('contador').innerHTML = `${totalScore} / 30`;
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                renderQuestion();
+            }, 1500);
         }
     </script>
 </body>
